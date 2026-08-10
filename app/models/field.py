@@ -16,7 +16,7 @@ class Field(Base):
 
     # Relationships
     farm = relationship("Farm", backref="fields")
-    boundary = relationship("FieldBoundary", back_populates="field", uselist=False)
+    boundary = relationship("FieldBoundary", back_populates="field", uselist=False, passive_deletes=True)
 
     def __repr__(self) -> str:
         return f"<Field(id={self.id}, name={self.name}, farm_id={self.farm_id})>"

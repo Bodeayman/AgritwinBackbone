@@ -14,6 +14,7 @@ class CropCycle(Base):
     expected_harvest_date: Mapped[date] = mapped_column(Date, nullable=False)
     actual_harvest_date: Mapped[date] = mapped_column(Date, nullable=True)
     status: Mapped[str] = mapped_column(String(20), default="growing", nullable=False)
+    planted_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
     created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=func.now(), onupdate=func.now())
 

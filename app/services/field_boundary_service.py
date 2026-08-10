@@ -32,7 +32,7 @@ class FieldBoundaryService:
         existing = self.repo.get_by_field_id(field_id)
         wkt = _coords_to_wkt(boundary_in.coordinates)
         if existing:
-            updated = self.repo.update(existing, {"boundary": wkt})
+            updated = self.repo.update_boundary_geometry(existing.id, wkt)
             return self._to_out(updated)
         new_boundary = FieldBoundary(field_id=field_id, boundary=wkt)
         obj = self.repo.create(new_boundary)
