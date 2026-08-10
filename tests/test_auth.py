@@ -18,7 +18,7 @@ def test_register_duplicate_email(client, db_session):
     assert resp1.status_code == status.HTTP_201_CREATED
     # Duplicate attempt
     resp2 = client.post("/api/v1/auth/register", json=payload)
-    assert resp2.status_code == status.HTTP_400_BAD_REQUEST
+    assert resp2.status_code == status.HTTP_409_CONFLICT
     assert resp2.json()["detail"] == "Email already registered"
 
 def test_login_success_and_failure(client, db_session):

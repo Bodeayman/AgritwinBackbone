@@ -20,7 +20,7 @@ def register(user_in: UserCreate, auth_svc: AuthService = Depends(get_auth_servi
     existing = auth_svc.db.query(User).filter(User.email == user_in.email).first()
     if existing:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_409_CONFLICT,
             detail="Email already registered"
         )
     user = auth_svc.register_user(email=user_in.email, password=user_in.password)
