@@ -1,0 +1,16 @@
+{
+  "yield_predictions": [
+    {
+      "id": 1,
+      "field_id": 1,
+      "model_id": 4,
+      "crop_type": "Barley",
+      "predicted_yield": 4500.0,
+      "unit": "kg/ha",
+      "confidence": 0.89,
+      "status": "processed",
+      "prediction_date": "2026-08-08",
+      "created_at": "2026-08-08T13:00:00Z"
+    }
+  ]
+}
