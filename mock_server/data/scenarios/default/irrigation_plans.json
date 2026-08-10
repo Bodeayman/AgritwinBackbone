@@ -1,0 +1,13 @@
+{
+  "irrigation_plans": [
+    {
+      "id": 1,
+      "field_id": 1,
+      "model_id": 3,
+      "water_requirement": 40.0,
+      "unit": "mm",
+      "recommended_date": "2026-08-10",
+      "created_at": "2026-08-08T12:00:00Z"
+    }
+  ]
+}

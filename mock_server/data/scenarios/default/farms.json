@@ -1,0 +1,12 @@
+{
+  "farms": [
+    {
+      "id": 1,
+      "owner_id": 1,
+      "name": "Green Valley Farm",
+      "location": "Nairobi County, Kenya",
+      "created_at": "2026-08-01T08:00:00Z",
+      "updated_at": "2026-08-01T08:00:00Z"
+    }
+  ]
+}

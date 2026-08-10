@@ -1,0 +1,21 @@
+{
+  "diagnoses": [
+    {
+      "id": 1,
+      "field_id": 1,
+      "model_id": 2,
+      "image_reference": "fields/1/diag_001.jpg",
+      "crop_type": "Barley",
+      "disease_or_pest": "Fall Armyworm",
+      "severity": 0.35,
+      "confidence": 0.91,
+      "latitude": -1.292,
+      "longitude": 36.821,
+      "status": "processed",
+      "diagnosed_at": "2026-08-08T11:00:00Z",
+      "explanation": "Pest damage observed on leaves.",
+      "treatment_suggestion": "Apply targeted bio-pesticide.",
+      "created_at": "2026-08-08T11:05:00Z"
+    }
+  ]
+}

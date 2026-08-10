@@ -1,0 +1,16 @@
+{
+  "satellite_observations": [
+    {
+      "id": 1,
+      "field_id": 1,
+      "model_id": 1,
+      "ndvi": 0.78,
+      "ndmi": 0.42,
+      "evi": 0.65,
+      "status": "processed",
+      "image_reference": "fields/1/sat_001.tif",
+      "captured_at": "2026-08-08T08:00:00Z",
+      "created_at": "2026-08-08T08:05:00Z"
+    }
+  ]
+}
