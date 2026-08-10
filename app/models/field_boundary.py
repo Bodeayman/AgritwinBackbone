@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Integer, DateTime, ForeignKey, func, UniqueConstraint
+from sqlalchemy import Integer, DateTime, ForeignKey, func, UniqueConstraint, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from geoalchemy2 import Geometry
 from app.models.base import Base
@@ -16,11 +16,15 @@ class FieldBoundary(Base):
     boundary: Mapped[Geometry] = mapped_column(
         Geometry(geometry_type="POLYGON", srid=4326, spatial_index=True), nullable=False
     )
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=func.now(), onupdate=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, server_default=func.now()
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime, server_default=func.now(), server_onupdate=text("now()")
+    )
 
     # Relationships
-    field = relationship("Field", back_populates="boundary")
+    field = relationship("Field", back_populates="boundary", passive_deletes=True)
 
     def __repr__(self) -> str:
         return f"<FieldBoundary(id={self.id}, field_id={self.field_id})>"

@@ -37,3 +37,26 @@ class FieldBoundaryRepository(BaseRepository[FieldBoundary]):
             return [[list(pt) for pt in shape.exterior.coords]]
         except Exception:
             return []
+
+    def update_boundary_geometry(self, boundary_id: int, wkt: str) -> FieldBoundary:
+        """Update only the geometry column via a direct SQL UPDATE.
+
+        We expunge any cached ORM instance first so that SQLAlchemy does not
+        flush stale attribute values (e.g. a None field_id) alongside the
+        targeted UPDATE statement.
+        """
+        from sqlalchemy import update as sa_update
+
+        # Expunge the stale instance from the identity map if present
+        existing = self.db.get(FieldBoundary, boundary_id)
+        if existing is not None:
+            self.db.expunge(existing)
+
+        stmt = (
+            sa_update(FieldBoundary)
+            .where(FieldBoundary.id == boundary_id)
+            .values(boundary=wkt)
+        )
+        self.db.execute(stmt)
+        self.db.commit()
+        return self.db.get(FieldBoundary, boundary_id)
