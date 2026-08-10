@@ -16,12 +16,10 @@ class FieldBoundary(Base):
     boundary: Mapped[Geometry] = mapped_column(
         Geometry(geometry_type="POLYGON", srid=4326, spatial_index=True), nullable=False
     )
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.now()
-    )
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.now(), server_onupdate=text("now()")
-    )
+    # Use client-side default so INSERT always sends a value (works in test
+    # nested-savepoint sessions where server_default returns NULL on RETURNING).
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now(), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=func.now(), nullable=False)
 
     # Relationships
     field = relationship("Field", back_populates="boundary", passive_deletes=True)
