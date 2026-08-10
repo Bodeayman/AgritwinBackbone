@@ -11,9 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      # We can use GitHub Actions service containers or run docker compose.
-      # Running docker compose in a step is simpler and exactly matches the local setup.
-      # But since we only run tests on the runner, we can spin up compose.
+      db:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: agritwin
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      minio:
+        image: minio/minio
+        env:
+          MINIO_ROOT_USER: minioadmin
+          MINIO_ROOT_PASSWORD: minioadminpassword
+        command: server /data
+        ports: ["9000:9000"]
+        options: >-
+          --health-cmd "curl -f http://localhost:9000/minio/health/live || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout code
@@ -31,8 +52,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-level: '3.11'
           python-version: '3.11'
+
           cache: 'pip'
 
       - name: Install dependencies
