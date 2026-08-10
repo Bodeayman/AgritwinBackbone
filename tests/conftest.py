@@ -1,18 +1,36 @@
 import sys, os
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CRITICAL: point tests at the isolated test database BEFORE any app modules
+# are imported so the SQLAlchemy engine is created with the test URL.
+# This prevents pytest from ever touching the live `agritwin` database.
+# ─────────────────────────────────────────────────────────────────────────────
+TEST_DATABASE_URL = (
+    "postgresql://postgres:BODE%40999BODE%40999@localhost:5432/agritwin_test"
+)
+os.environ["DATABASE_URL"] = TEST_DATABASE_URL
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from unittest.mock import MagicMock, patch
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import text
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import sessionmaker
 from app.main import app
-from app.core.database import engine, SessionLocal, get_db
+from app.core.database import get_db
 from app.core.storage import StorageService, get_storage
 from app.models.base import Base
+from app import models as app_models  # noqa: F401 — ensure all models are registered
+
+
+# ── Test-only engine pointing at agritwin_test ────────────────────────────────
+test_engine = create_engine(TEST_DATABASE_URL)
+TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
 
 
 @pytest.fixture(scope="session", autouse=True)
 def mock_init_storage_on_startup():
-    """Mock init_storage on startup so test client starts instantly without MinIO network retries."""
+    """Mock init_storage on startup so test client starts instantly without MinIO."""
     with patch("app.main.init_storage") as mock_init:
         mock_init.return_value = None
         yield mock_init
@@ -21,62 +39,57 @@ def mock_init_storage_on_startup():
 @pytest.fixture(scope="session", autouse=True)
 def setup_test_db():
     """
-    Creates test database tables and cleans them up after test session.
+    Creates all tables in agritwin_test before the test session and drops
+    them cleanly afterwards.  The live `agritwin` database is never touched.
     """
+    # Enable PostGIS on the test DB
     try:
-        with engine.begin() as conn:
+        with test_engine.begin() as conn:
             conn.execute(text("CREATE EXTENSION IF NOT EXISTS postgis;"))
+            print("PostGIS extension checked/enabled on agritwin_test.")
     except Exception as e:
-        print(f"Skipping PostGIS extension creation: {e}")
+        print(f"Skipping PostGIS on test DB: {e}")
 
-    Base.metadata.create_all(bind=engine)
+    # Create all app tables
+    Base.metadata.create_all(bind=test_engine)
+    print("Database tables initialized on agritwin_test.")
+
     yield
-    try:
-        with engine.begin() as conn:
-            conn.execute(text("DROP TABLE IF EXISTS crop_mix_allocations CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS crop_mix_recommendations CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS yield_predictions CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS irrigation_plans CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS diagnoses CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS disease_detections CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS satellite_observations CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS satellite_data CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS sensor_readings CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS field_boundaries CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS crop_cycles CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS weather CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS fields CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS farms CASCADE;"))
-            conn.execute(text("DROP TABLE IF EXISTS users CASCADE;"))
-    except Exception as e:
-        print(f"Cleanup error: {e}")
+
+    # Tear down — drop everything in the test DB only
+    Base.metadata.drop_all(bind=test_engine)
+    print("agritwin_test tables dropped after test session.")
 
 
 @pytest.fixture
 def db_session():
     """
-    Runs each test inside a database transaction, rolling back modifications
-    after completion.
+    Runs each test inside a transaction on agritwin_test, rolling back
+    all changes after the test completes so tests stay isolated.
     """
-    connection = engine.connect()
+    connection = test_engine.connect()
     transaction = connection.begin()
-    session = SessionLocal(bind=connection)
+    session = TestSessionLocal(bind=connection)
 
     yield session
 
     session.close()
-    transaction.rollback()
+    try:
+        transaction.rollback()
+    except Exception:
+        pass
     connection.close()
 
 
 @pytest.fixture
 def mock_storage():
-    """
-    Mocks storage operations to eliminate network dependencies on MinIO during testing.
-    """
+    """Mock MinIO storage so tests never need a real MinIO instance."""
     service = MagicMock(spec=StorageService)
     service.upload_file.return_value = "locations/mock-uuid/mock_image.jpg"
-    service.get_download_url.return_value = "http://localhost:9000/agritwin-bucket/locations/mock-uuid/mock_image.jpg?token=mock_sig"
+    service.get_download_url.return_value = (
+        "http://localhost:9000/agritwin-bucket/locations/mock-uuid/mock_image.jpg"
+        "?token=mock_sig"
+    )
     service.delete_file.return_value = None
     return service
 
@@ -84,7 +97,7 @@ def mock_storage():
 @pytest.fixture
 def client(db_session, mock_storage):
     """
-    Provides a FastAPI TestClient with database session and storage service overrides.
+    FastAPI TestClient wired to the agritwin_test session and mocked storage.
     """
     def _override_get_db():
         yield db_session
