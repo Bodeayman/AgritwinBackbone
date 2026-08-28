@@ -21,7 +21,6 @@ class YieldPrediction(Base):
     confidence: Mapped[float | None] = mapped_column(Float, nullable=True)
     status: Mapped[str] = mapped_column(String(50), nullable=False, default="processed")
     prediction_date: Mapped[date] = mapped_column(Date, nullable=False)
-    model_version: Mapped[str | None] = mapped_column(String(50), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.utcnow)
 
     ai_model = relationship("AIModel", foreign_keys=[model_id])

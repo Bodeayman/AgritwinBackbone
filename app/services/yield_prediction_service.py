@@ -20,7 +20,6 @@ class YieldPredictionService:
             unit=pred_in.unit,
             confidence=pred_in.confidence,
             prediction_date=pred_in.prediction_date,
-            model_version=pred_in.model_version,
         )
         self.repo.db.add(obj)
         self.repo.db.commit()

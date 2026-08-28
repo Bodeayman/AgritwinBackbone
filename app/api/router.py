@@ -14,6 +14,8 @@ from app.api.v1 import (
     irrigation_plans,
     yield_predictions,
     crop_mix_recommendations,
+    imagery,
+    satellites,
 )
 
 api_router = APIRouter()
@@ -34,3 +36,5 @@ api_router.include_router(diagnoses.router, prefix="/diagnoses", tags=["Diagnose
 api_router.include_router(irrigation_plans.router, prefix="/irrigation-plans", tags=["IrrigationPlans"], dependencies=[Depends(get_current_user)])
 api_router.include_router(yield_predictions.router, prefix="/yield-predictions", tags=["YieldPredictions"], dependencies=[Depends(get_current_user)])
 api_router.include_router(crop_mix_recommendations.router, prefix="/crop-mix-recommendations", tags=["CropMixRecommendations"], dependencies=[Depends(get_current_user)])
+api_router.include_router(imagery.router, prefix="/imagery", tags=["Imagery"], dependencies=[Depends(get_current_user)])
+api_router.include_router(satellites.router, prefix="/satellites", tags=["Satellites"], dependencies=[Depends(get_current_user)])

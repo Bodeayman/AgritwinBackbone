@@ -4,7 +4,7 @@
       "id": 1,
       "field_id": 1,
       "model_id": 2,
-      "image_reference": "fields/1/diag_001.jpg",
+      "imagery_id": 1,
       "crop_type": "Barley",
       "disease_or_pest": "Fall Armyworm",
       "severity": 0.35,

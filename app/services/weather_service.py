@@ -16,7 +16,7 @@ class WeatherService:
             humidity=weather_in.humidity,
             rainfall=weather_in.rainfall,
             forecast_rain=weather_in.forecast_rain,
-            wind_speed=weather_in.wind_speed,
+            pressure=weather_in.pressure,
             recorded_at=weather_in.recorded_at or datetime.utcnow(),
         )
         obj = self.repo.create(obj)

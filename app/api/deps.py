@@ -23,6 +23,8 @@ from app.services.yield_prediction_service import YieldPredictionService
 from app.services.crop_mix_service import CropMixService
 from app.services.weather_service import WeatherService
 from app.services.ai_model_service import AIModelService
+from app.services.imagery_service import ImageryService
+from app.services.satellite_service import SatelliteService
 from app.core.security import decode_access_token
 from app.models.user import User
 
@@ -79,6 +81,14 @@ def get_weather_service(db: Session = Depends(get_db)) -> WeatherService:
 
 def get_ai_model_service(db: Session = Depends(get_db)) -> AIModelService:
     return AIModelService(db)
+
+
+def get_imagery_service(db: Session = Depends(get_db)) -> ImageryService:
+    return ImageryService(db)
+
+
+def get_satellite_service(db: Session = Depends(get_db)) -> SatelliteService:
+    return SatelliteService(db)
 
 
 # ── Internal Module API-Key authentication ────────────────────────────────────

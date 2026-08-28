@@ -8,7 +8,7 @@ class YieldPredictionBase(BaseModel):
     field_id: int = Field(..., examples=[1])
     model_id: Optional[int] = Field(None, description="FK ID to ai_models entity", examples=[1])
     model_name: Optional[str] = Field(None, description="Name of the AI model used", examples=["MaizeYieldPredictor"])
-    model_version: Optional[str] = Field(None, max_length=50, examples=["v2.1.0"])
+    model_version: Optional[str] = Field(None, description="Version of the AI model used", examples=["v2.1.0"])
     crop_type: str = Field(..., max_length=100, examples=["Maize"])
     predicted_yield: float = Field(..., gt=0, examples=[4200.0])
     unit: str = Field("kg/ha", max_length=50, examples=["kg/ha"])

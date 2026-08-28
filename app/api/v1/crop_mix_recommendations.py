@@ -2,17 +2,26 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from app.schemas.crop_mix_recommendation import CropMixRecommendationCreate, CropMixRecommendationOut
 from app.services.crop_mix_service import CropMixService
-from app.api.deps import get_crop_mix_service
+from app.services.ai_model_service import AIModelService
+from app.api.deps import get_crop_mix_service, get_ai_model_service
 
 router = APIRouter()
 
 
 @router.post("/", response_model=CropMixRecommendationOut, status_code=status.HTTP_201_CREATED,
              summary="Create a crop-mix recommendation")
-def create(rec_in: CropMixRecommendationCreate, svc: CropMixService = Depends(get_crop_mix_service)):
+def create(
+    rec_in: CropMixRecommendationCreate,
+    svc: CropMixService = Depends(get_crop_mix_service),
+    ai_model_svc: AIModelService = Depends(get_ai_model_service),
+):
     """Store a new optimization result with all crop allocations in one request.
     Each call creates a new historical recommendation record.
     """
+    # Resolve model_id to ensure it exists in ai_models table
+    rec_in.model_id = ai_model_svc.resolve_model_id(
+        rec_in.model_id, rec_in.model_name, rec_in.model_version
+    )
     return svc.create(rec_in)
 
 

@@ -1,6 +1,7 @@
 import pytest
 from fastapi import status
 from app.models.user import User
+from datetime import datetime
 
 
 def test_health_check_public(client):
@@ -59,8 +60,7 @@ def test_auth_and_protected_flow(client, db_session):
     # 5. Create a field for that farm
     field_payload = {
         "farm_id": farm_data["id"],
-        "name": "East Barley Field",
-        "crop_type": "Barley"
+        "name": "East Barley Field"
     }
     response = client.post("/api/v1/fields", json=field_payload, headers=headers)
     assert response.status_code == status.HTTP_201_CREATED
@@ -69,12 +69,38 @@ def test_auth_and_protected_flow(client, db_session):
     assert isinstance(field_data["id"], int)
     assert field_data["farm_id"] == farm_data["id"]
 
-    # 6. Set field boundary
+    # 6. Set field boundary (using larger coordinates to meet minimum area requirement)
     boundary_payload = {
-        "coordinates": [[[-122.084, 37.422], [-122.083, 37.422], [-122.083, 37.421], [-122.084, 37.421], [-122.084, 37.422]]]
+        "coordinates": [[[-122.084, 37.422], [-122.082, 37.422], [-122.082, 37.420], [-122.084, 37.420], [-122.084, 37.422]]]
     }
     response = client.post(f"/api/v1/fields/{field_data['id']}/boundary", json=boundary_payload, headers=headers)
     assert response.status_code == status.HTTP_200_OK
     boundary_data = response.json()
     assert boundary_data["field_id"] == field_data["id"]
     assert "area_hectares" in boundary_data
+
+    # 7. Test satellite observations with non-existent model_id (should auto-create via model_name/version)
+    satellite_payload = {
+        "field_id": field_data["id"],
+        "model_id": 999,  # Non-existent model_id
+        "model_name": "Sentinel2_NDVI_Extractor",
+        "model_version": "v1.0.0",
+        "satellite_name": "Sentinel-2A",
+        "ndvi": 0.72,
+        "ndmi": 0.45,
+        "evi": 0.58,
+        "status": "processed",
+        "captured_at": "2026-08-08T08:30:00Z"
+    }
+    response = client.post("/api/v1/satellite-observations/", json=satellite_payload, headers=headers)
+    assert response.status_code == status.HTTP_201_CREATED
+    sat_data = response.json()
+    assert sat_data["field_id"] == field_data["id"]
+    assert sat_data["ndvi"] == 0.72
+    # The AI model should be auto-created and linked
+    assert sat_data["ai_model"] is not None
+    assert sat_data["ai_model"]["name"] == "Sentinel2_NDVI_Extractor"
+    assert sat_data["ai_model"]["version"] == "v1.0.0"
+    # The satellite should be auto-created and linked
+    assert sat_data["satellite"] is not None
+    assert sat_data["satellite"]["name"] == "Sentinel-2A"

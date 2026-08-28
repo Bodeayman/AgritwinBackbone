@@ -37,9 +37,8 @@ def test_farm_and_field_service(db_session):
     assert farm_out.name == "Service Farm"
 
     field_svc = FieldService(db_session)
-    field_out = field_svc.create_field(FieldCreate(farm_id=farm_out.id, name="Field 1", crop_type="Corn"))
+    field_out = field_svc.create_field(FieldCreate(farm_id=farm_out.id, name="Field 1"))
     assert field_out.id is not None
-    assert field_out.crop_type == "Corn"
 
     fields = field_svc.list_by_farm(farm_out.id)
     assert len(fields) == 1
@@ -65,10 +64,10 @@ def test_field_boundary_service(db_session):
         boundary_svc.set_boundary(99999, FieldBoundaryCreate(coordinates=[[[36.8, -1.2], [36.9, -1.2], [36.9, -1.3], [36.8, -1.3], [36.8, -1.2]]]))
     assert exc_info.value.status_code == 404
 
-    # 2. Set boundary for valid field
+    # 2. Set boundary for valid field (using larger coordinates to meet validation requirements)
     res = boundary_svc.set_boundary(
         field.id,
-        FieldBoundaryCreate(coordinates=[[[36.8, -1.2], [36.9, -1.2], [36.9, -1.3], [36.8, -1.3], [36.8, -1.2]]])
+        FieldBoundaryCreate(coordinates=[[[36.8, -1.2], [36.9, -1.2], [36.9, -1.4], [36.8, -1.4], [36.8, -1.2]]])
     )
     assert res.field_id == field.id
     assert res.area_hectares is not None
@@ -95,7 +94,8 @@ def test_satellite_and_diagnosis_services(db_session):
         ndvi=0.82,
         ndmi=0.51,
         evi=0.70,
-        captured_at=datetime.utcnow()
+        captured_at=datetime.utcnow(),
+        observation_type="processed"
     ))
     assert sat_out.id is not None
     assert sat_out.ndvi == 0.82

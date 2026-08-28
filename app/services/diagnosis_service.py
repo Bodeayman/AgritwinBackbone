@@ -14,8 +14,8 @@ class DiagnosisService:
         obj = Diagnosis(
             field_id=diag_in.field_id,
             model_id=diag_in.model_id,
+            imagery_id=diag_in.imagery_id,
             status=diag_in.status,
-            image_reference=diag_in.image_reference,
             crop_type=diag_in.crop_type,
             disease_or_pest=diag_in.disease_or_pest,
             severity=diag_in.severity,

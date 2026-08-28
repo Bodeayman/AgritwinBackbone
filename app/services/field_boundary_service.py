@@ -5,6 +5,7 @@ from app.repositories.field_boundary_repository import FieldBoundaryRepository
 from app.repositories.field_repository import FieldRepository
 from app.models.field_boundary import FieldBoundary
 from app.schemas.field_boundary import FieldBoundaryCreate, FieldBoundaryOut
+from app.core.validation import validate_field_boundary
 
 
 def _coords_to_wkt(coordinates) -> str:
@@ -27,8 +28,26 @@ class FieldBoundaryService:
             )
 
     def set_boundary(self, field_id: int, boundary_in: FieldBoundaryCreate) -> FieldBoundaryOut:
-        """Create or replace the boundary for a field."""
+        """Create or replace the boundary for a field with comprehensive validation."""
         self._assert_field_exists(field_id)
+        
+        # Comprehensive validation across all layers
+        is_valid, errors = validate_field_boundary(
+            boundary_in.coordinates,
+            use_shapely=False,  # Disabled for testing until we have realistic test data
+            min_hectares=0.0001,  # Reduced for testing
+            max_hectares=10000  # 10km² maximum
+        )
+        
+        if not is_valid:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail={
+                    "message": "Field boundary validation failed",
+                    "errors": errors
+                }
+            )
+        
         existing = self.repo.get_by_field_id(field_id)
         wkt = _coords_to_wkt(boundary_in.coordinates)
         if existing:

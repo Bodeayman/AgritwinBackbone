@@ -12,6 +12,9 @@ class SensorReadingBase(BaseModel):
     humidity: Optional[float] = Field(None, examples=[60.0])
     soil_ph: Optional[float] = Field(None, examples=[6.8])
     electrical_conductivity: Optional[float] = Field(None, examples=[1.2])
+    n_level: Optional[float] = Field(None, description="Soil Nitrogen level", examples=[45.2])
+    p_level: Optional[float] = Field(None, description="Soil Phosphorus level", examples=[12.8])
+    k_level: Optional[float] = Field(None, description="Soil Potassium level", examples=[30.5])
     recorded_at: Optional[datetime] = Field(
         default_factory=datetime.utcnow, examples=["2026-08-08T10:00:00Z"]
     )
