@@ -1,47 +1,79 @@
 from typing import List, Optional
-from datetime import datetime
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from app.repositories.satellite_repository import SatelliteRepository
-from app.schemas.satellite_data import SatelliteCreate, SatelliteOut
+from app.models.satellite import Satellite
+from app.schemas.satellite import SatelliteCreate, SatelliteUpdate, SatelliteOut
 
 
 class SatelliteService:
     def __init__(self, db: Session):
         self.repo = SatelliteRepository(db)
 
-    def create_satellite(self, sat_in: SatelliteCreate) -> SatelliteOut:
-        from app.models.satellite_data import SatelliteData
-        obj = SatelliteData(
-            field_id=sat_in.field_id,
-            ndvi=sat_in.ndvi,
-            ndmi=sat_in.ndmi,
-            captured_at=sat_in.captured_at or datetime.utcnow(),
+    def create(self, satellite_in: SatelliteCreate) -> SatelliteOut:
+        obj = Satellite(
+            name=satellite_in.name,
+            operator=satellite_in.operator,
+            launch_date=satellite_in.launch_date,
+            sensor_type=satellite_in.sensor_type,
+            resolution_m=satellite_in.resolution_m,
+            revisit_period_days=satellite_in.revisit_period_days,
+            status=satellite_in.status,
+            description=satellite_in.description,
         )
-        obj = self.repo.create(obj)
+        self.repo.db.add(obj)
+        self.repo.db.commit()
+        self.repo.db.refresh(obj)
         return SatelliteOut.model_validate(obj)
 
-    def get_satellite(self, sat_id: int) -> Optional[SatelliteOut]:
-        obj = self.repo.get(sat_id)
+    def get(self, satellite_id: int) -> Optional[SatelliteOut]:
+        obj = self.repo.get(satellite_id)
         return SatelliteOut.model_validate(obj) if obj else None
 
-    def list_satellite(self, field_id: Optional[int] = None, skip: int = 0, limit: int = 100) -> List[SatelliteOut]:
-        if field_id:
-            objs = self.repo.db.query(self.repo.model).filter(self.repo.model.field_id == field_id).offset(skip).limit(limit).all()
-        else:
-            objs = self.repo.get_multi(skip=skip, limit=limit)
+    def get_with_observations(self, satellite_id: int) -> Optional[SatelliteOut]:
+        """Get satellite with its observations loaded."""
+        from app.models.satellite_observation import SatelliteObservation
+        obj = self.repo.db.query(Satellite).options(
+            selectinload(Satellite.observations)
+        ).filter(Satellite.id == satellite_id).first()
+        return SatelliteOut.model_validate(obj) if obj else None
+
+    def get_by_name(self, name: str) -> Optional[SatelliteOut]:
+        obj = self.repo.get_by_name(name)
+        return SatelliteOut.model_validate(obj) if obj else None
+
+    def list(self, skip: int = 0, limit: int = 100) -> List[SatelliteOut]:
+        objs = self.repo.get_multi(skip=skip, limit=limit)
         return [SatelliteOut.model_validate(o) for o in objs]
 
-    def update_satellite(self, sat_id: int, sat_in: SatelliteCreate) -> Optional[SatelliteOut]:
-        obj = self.repo.get(sat_id)
+    def list_all(self, skip: int = 0, limit: int = 100) -> List[SatelliteOut]:
+        objs = self.repo.get_multi(skip=skip, limit=limit)
+        return [SatelliteOut.model_validate(o) for o in objs]
+
+    def list_active(self, skip: int = 0, limit: int = 100) -> List[SatelliteOut]:
+        objs = self.repo.get_active(skip=skip, limit=limit)
+        return [SatelliteOut.model_validate(o) for o in objs]
+
+    def get_or_create(self, name: str, **kwargs) -> SatelliteOut:
+        obj = self.repo.get_or_create_by_name(name, **kwargs)
+        return SatelliteOut.model_validate(obj)
+
+    def update(self, satellite_id: int, satellite_in: SatelliteUpdate) -> Optional[SatelliteOut]:
+        obj = self.repo.get(satellite_id)
         if not obj:
             return None
-        data = sat_in.model_dump(exclude_unset=True)
-        updated = self.repo.update(obj, data)
-        return SatelliteOut.model_validate(updated)
+        
+        update_data = satellite_in.model_dump(exclude_unset=True)
+        for field, value in update_data.items():
+            setattr(obj, field, value)
+        
+        self.repo.db.commit()
+        self.repo.db.refresh(obj)
+        return SatelliteOut.model_validate(obj)
 
-    def delete_satellite(self, sat_id: int) -> bool:
-        obj = self.repo.get(sat_id)
+    def delete(self, satellite_id: int) -> bool:
+        obj = self.repo.get(satellite_id)
         if not obj:
             return False
-        self.repo.remove(sat_id)
+        self.repo.db.delete(obj)
+        self.repo.db.commit()
         return True

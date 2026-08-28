@@ -38,7 +38,7 @@ def test_farm_and_field_repository_crud(db_session):
 
     # 3. Create Field
     field_repo = FieldRepository(db_session)
-    field = Field(farm_id=farm.id, name="Block A", crop_type="Wheat")
+    field = Field(farm_id=farm.id, name="Block A")
     field_repo.create(field)
     assert field.id is not None
 

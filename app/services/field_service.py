@@ -15,7 +15,6 @@ class FieldService:
         field = Field(
             farm_id=field_in.farm_id,
             name=field_in.name,
-            crop_type=field_in.crop_type,
         )
         obj = self.repo.create(field)
         self.event_service.publish_event("field_created", {"id": obj.id})

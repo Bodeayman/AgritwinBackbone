@@ -4,11 +4,18 @@
       "id": 1,
       "field_id": 1,
       "model_id": 1,
+      "satellite_id": 1,
+      "imagery_id": 2,
       "ndvi": 0.78,
       "ndmi": 0.42,
       "evi": 0.65,
       "status": "processed",
-      "image_reference": "fields/1/sat_001.tif",
+      "observation_type": "processed",
+      "cloud_cover_pct": 0.15,
+      "additional_metadata": {
+        "sun_azimuth": 60.5,
+        "sun_elevation": 30.1
+      },
       "captured_at": "2026-08-08T08:00:00Z",
       "created_at": "2026-08-08T08:05:00Z"
     }

@@ -16,6 +16,9 @@ class SensorReading(Base):
     humidity: Mapped[float | None] = mapped_column(Float, nullable=True)
     soil_ph: Mapped[float | None] = mapped_column(Float, nullable=True)
     electrical_conductivity: Mapped[float | None] = mapped_column(Float, nullable=True)
+    n_level: Mapped[float | None] = mapped_column(Float, nullable=True)
+    p_level: Mapped[float | None] = mapped_column(Float, nullable=True)
+    k_level: Mapped[float | None] = mapped_column(Float, nullable=True)
     recorded_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.utcnow)
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.utcnow)
 

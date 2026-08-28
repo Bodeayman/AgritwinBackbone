@@ -1,0 +1,40 @@
+{
+  "satellites": [
+    {
+      "id": 1,
+      "name": "Sentinel-2A",
+      "operator": "ESA",
+      "launch_date": "2015-06-23",
+      "sensor_type": "MSI",
+      "resolution_m": 10.0,
+      "revisit_period_days": 5,
+      "status": "active",
+      "description": "ESA Earth observation satellite for land monitoring",
+      "created_at": "2026-08-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Landsat 8",
+      "operator": "NASA/USGS",
+      "launch_date": "2013-02-11",
+      "sensor_type": "OLI/TIRS",
+      "resolution_m": 30.0,
+      "revisit_period_days": 16,
+      "status": "active",
+      "description": "Joint NASA/USGS Earth observation satellite",
+      "created_at": "2026-08-01T00:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "PlanetScope",
+      "operator": "Planet Labs",
+      "launch_date": "2014-01-01",
+      "sensor_type": "SuperDove",
+      "resolution_m": 3.0,
+      "revisit_period_days": 1,
+      "status": "active",
+      "description": "Constellation of Earth observation satellites",
+      "created_at": "2026-08-01T00:00:00Z"
+    }
+  ]
+}

@@ -21,6 +21,9 @@ class SensorService:
             humidity=reading_in.humidity,
             soil_ph=reading_in.soil_ph,
             electrical_conductivity=reading_in.electrical_conductivity,
+            n_level=reading_in.n_level,
+            p_level=reading_in.p_level,
+            k_level=reading_in.k_level,
         )
         self.repo.db.add(obj)
         self.repo.db.commit()

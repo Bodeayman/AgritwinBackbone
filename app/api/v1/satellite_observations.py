@@ -3,15 +3,32 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from app.schemas.satellite_observation import SatelliteObservationCreate, SatelliteObservationOut
 from app.services.satellite_observation_service import SatelliteObservationService
-from app.api.deps import get_satellite_observation_service
+from app.services.ai_model_service import AIModelService
+from app.services.satellite_service import SatelliteService
+from app.api.deps import get_satellite_observation_service, get_ai_model_service, get_satellite_service
 
 router = APIRouter()
 
 
 @router.post("/", response_model=SatelliteObservationOut, status_code=status.HTTP_201_CREATED,
              summary="Record a satellite observation")
-def create(obs_in: SatelliteObservationCreate, svc: SatelliteObservationService = Depends(get_satellite_observation_service)):
+def create(
+    obs_in: SatelliteObservationCreate,
+    svc: SatelliteObservationService = Depends(get_satellite_observation_service),
+    ai_model_svc: AIModelService = Depends(get_ai_model_service),
+    satellite_svc: SatelliteService = Depends(get_satellite_service),
+):
     """Store a new satellite observation. Historical records are never overwritten."""
+    # Resolve model_id to ensure it exists in ai_models table
+    obs_in.model_id = ai_model_svc.resolve_model_id(
+        obs_in.model_id, obs_in.model_name, obs_in.model_version
+    )
+    
+    # Resolve satellite_id to ensure it exists in satellites table
+    if obs_in.satellite_name and not obs_in.satellite_id:
+        satellite = satellite_svc.get_or_create(obs_in.satellite_name)
+        obs_in.satellite_id = satellite.id
+    
     return svc.create(obs_in)
 
 

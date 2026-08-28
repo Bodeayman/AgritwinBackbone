@@ -15,6 +15,8 @@ from app.api.deps import (
     get_yield_prediction_service,
     get_crop_mix_service,
     get_ai_model_service,
+    get_imagery_service,
+    get_satellite_service,
 )
 from app.core.local_storage import get_local_image_storage, LocalDiskImageStorage
 
@@ -27,6 +29,8 @@ from app.schemas.irrigation_plan import IrrigationPlanCreate, IrrigationPlanOut
 from app.schemas.yield_prediction import YieldPredictionCreate, YieldPredictionOut
 from app.schemas.crop_mix_recommendation import CropMixRecommendationCreate, CropMixRecommendationOut
 from app.schemas.ai_model import AIModelCreate, AIModelOut
+from app.schemas.imagery import ImageryCreate, ImageryOut
+from app.schemas.satellite import SatelliteCreate, SatelliteOut
 from app.services.field_service import FieldService
 from app.services.field_boundary_service import FieldBoundaryService
 from app.services.farm_service import FarmService
@@ -37,6 +41,8 @@ from app.services.irrigation_plan_service import IrrigationPlanService
 from app.services.yield_prediction_service import YieldPredictionService
 from app.services.crop_mix_service import CropMixService
 from app.services.ai_model_service import AIModelService
+from app.services.imagery_service import ImageryService
+from app.services.satellite_service import SatelliteService
 
 internal_router = APIRouter(dependencies=[Depends(verify_api_key)])
 
@@ -92,6 +98,181 @@ def list_ai_models(
     return ai_model_svc.list_models(skip=skip, limit=limit)
 
 
+# ── IMAGERY ENTITY MANAGEMENT ───────────────────────────────────────────────
+
+@internal_router.post(
+    "/imagery",
+    response_model=ImageryOut,
+    status_code=status.HTTP_201_CREATED,
+    summary="[Internal] Create imagery record",
+    tags=["Internal Imagery"],
+)
+def create_imagery(
+    imagery_in: ImageryCreate,
+    imagery_svc: ImageryService = Depends(get_imagery_service),
+):
+    """Create a new imagery record."""
+    return imagery_svc.create(imagery_in)
+
+
+@internal_router.get(
+    "/imagery",
+    response_model=List[ImageryOut],
+    summary="[Internal] List imagery records",
+    tags=["Internal Imagery"],
+)
+def list_imagery(
+    skip: int = 0,
+    limit: int = 100,
+    imagery_svc: ImageryService = Depends(get_imagery_service),
+):
+    """List all imagery records."""
+    return imagery_svc.list_all(skip=skip, limit=limit)
+
+
+@internal_router.get(
+    "/imagery/{imagery_id}",
+    response_model=ImageryOut,
+    summary="[Internal] Get imagery by ID",
+    tags=["Internal Imagery"],
+)
+def get_imagery(
+    imagery_id: int,
+    imagery_svc: ImageryService = Depends(get_imagery_service),
+):
+    """Get a specific imagery record by ID."""
+    imagery = imagery_svc.get(imagery_id)
+    if not imagery:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Imagery with ID {imagery_id} not found"
+        )
+    return imagery
+
+
+@internal_router.get(
+    "/imagery/field/{field_id}",
+    response_model=List[ImageryOut],
+    summary="[Internal] List imagery for field",
+    tags=["Internal Imagery"],
+)
+def list_imagery_by_field(
+    field_id: int,
+    skip: int = 0,
+    limit: int = 100,
+    imagery_svc: ImageryService = Depends(get_imagery_service),
+):
+    """List all imagery records for a specific field."""
+    return imagery_svc.list_by_field(field_id, skip=skip, limit=limit)
+
+
+# ── SATELLITE ENTITY MANAGEMENT ─────────────────────────────────────────────
+
+@internal_router.post(
+    "/satellites",
+    response_model=SatelliteOut,
+    status_code=status.HTTP_201_CREATED,
+    summary="[Internal] Create satellite record",
+    tags=["Internal Satellites"],
+)
+def create_satellite(
+    satellite_in: SatelliteCreate,
+    satellite_svc: SatelliteService = Depends(get_satellite_service),
+):
+    """Create a new satellite record."""
+    return satellite_svc.create(satellite_in)
+
+
+@internal_router.get(
+    "/satellites",
+    response_model=List[SatelliteOut],
+    summary="[Internal] List satellite records",
+    tags=["Internal Satellites"],
+)
+def list_satellites(
+    skip: int = 0,
+    limit: int = 100,
+    satellite_svc: SatelliteService = Depends(get_satellite_service),
+):
+    """List all satellite records."""
+    return satellite_svc.list_all(skip=skip, limit=limit)
+
+
+@internal_router.get(
+    "/satellites/active",
+    response_model=List[SatelliteOut],
+    summary="[Internal] List active satellites",
+    tags=["Internal Satellites"],
+)
+def list_active_satellites(
+    skip: int = 0,
+    limit: int = 100,
+    satellite_svc: SatelliteService = Depends(get_satellite_service),
+):
+    """List only active satellite records."""
+    return satellite_svc.list_active(skip=skip, limit=limit)
+
+
+@internal_router.get(
+    "/satellites/{satellite_id}",
+    response_model=SatelliteOut,
+    summary="[Internal] Get satellite by ID",
+    tags=["Internal Satellites"],
+)
+def get_satellite(
+    satellite_id: int,
+    satellite_svc: SatelliteService = Depends(get_satellite_service),
+):
+    """Get a specific satellite record by ID."""
+    satellite = satellite_svc.get(satellite_id)
+    if not satellite:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Satellite with ID {satellite_id} not found"
+        )
+    return satellite
+
+
+@internal_router.get(
+    "/satellites/name/{name}",
+    response_model=SatelliteOut,
+    summary="[Internal] Get satellite by name",
+    tags=["Internal Satellites"],
+)
+def get_satellite_by_name(
+    name: str,
+    satellite_svc: SatelliteService = Depends(get_satellite_service),
+):
+    """Get a specific satellite record by name."""
+    satellite = satellite_svc.get_by_name(name)
+    if not satellite:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Satellite with name {name} not found"
+        )
+    return satellite
+
+
+@internal_router.get(
+    "/satellites/{satellite_id}/observations",
+    response_model=SatelliteOut,
+    summary="[Internal] Get satellite with observations",
+    tags=["Internal Satellites"],
+)
+def get_satellite_with_observations(
+    satellite_id: int,
+    satellite_svc: SatelliteService = Depends(get_satellite_service),
+):
+    """Get a specific satellite record with its observations."""
+    satellite = satellite_svc.get_with_observations(satellite_id)
+    if not satellite:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Satellite with ID {satellite_id} not found"
+        )
+    return satellite
+
+
 # ── INGESTION ENDPOINTS ───────────────────────────────────────────────────────
 
 @internal_router.post(
@@ -125,10 +306,17 @@ def ingest_satellite_observation(
     field_svc: FieldService = Depends(get_field_service),
     sat_svc: SatelliteObservationService = Depends(get_satellite_observation_service),
     ai_model_svc: AIModelService = Depends(get_ai_model_service),
+    satellite_svc: SatelliteService = Depends(get_satellite_service),
 ):
     _assert_field_exists(field_id, field_svc)
     obs_in.field_id = field_id
     obs_in.model_id = ai_model_svc.resolve_model_id(obs_in.model_id, obs_in.model_name, obs_in.model_version)
+    
+    # Resolve satellite_id if satellite_name is provided
+    if obs_in.satellite_name and not obs_in.satellite_id:
+        satellite = satellite_svc.get_or_create(obs_in.satellite_name)
+        obs_in.satellite_id = satellite.id
+    
     return sat_svc.create(obs_in)
 
 
@@ -145,10 +333,14 @@ def ingest_diagnosis(
     field_svc: FieldService = Depends(get_field_service),
     diag_svc: DiagnosisService = Depends(get_diagnosis_service),
     ai_model_svc: AIModelService = Depends(get_ai_model_service),
+    imagery_svc: ImageryService = Depends(get_imagery_service),
 ):
     _assert_field_exists(field_id, field_svc)
     diag_in.field_id = field_id
     diag_in.model_id = ai_model_svc.resolve_model_id(diag_in.model_id, diag_in.model_name, diag_in.model_version)
+    
+    # Note: Imagery resolution would need to be implemented based on image_reference
+    # For now, we keep the existing imagery_id if provided
     return diag_svc.create(diag_in)
 
 

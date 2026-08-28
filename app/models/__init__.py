@@ -7,12 +7,14 @@ from app.models.crop_cycle import CropCycle
 from app.models.sensor_reading import SensorReading
 from app.models.weather import Weather
 from app.models.satellite_observation import SatelliteObservation
+from app.models.satellite import Satellite
 from app.models.diagnosis import Diagnosis
 from app.models.irrigation_plan import IrrigationPlan
 from app.models.yield_prediction import YieldPrediction
 from app.models.crop_mix_recommendation import CropMixRecommendation
 from app.models.crop_mix_allocation import CropMixAllocation
 from app.models.ai_model import AIModel
+from app.models.imagery import Imagery
 
 __all__ = [
     "Base",
@@ -24,10 +26,12 @@ __all__ = [
     "SensorReading",
     "Weather",
     "SatelliteObservation",
+    "Satellite",
     "Diagnosis",
     "IrrigationPlan",
     "YieldPrediction",
     "CropMixRecommendation",
     "CropMixAllocation",
     "AIModel",
+    "Imagery",
 ]

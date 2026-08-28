@@ -3,15 +3,24 @@ from datetime import date
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from app.schemas.yield_prediction import YieldPredictionCreate, YieldPredictionOut
 from app.services.yield_prediction_service import YieldPredictionService
-from app.api.deps import get_yield_prediction_service
+from app.services.ai_model_service import AIModelService
+from app.api.deps import get_yield_prediction_service, get_ai_model_service
 
 router = APIRouter()
 
 
 @router.post("/", response_model=YieldPredictionOut, status_code=status.HTTP_201_CREATED,
              summary="Create a yield prediction")
-def create(pred_in: YieldPredictionCreate, svc: YieldPredictionService = Depends(get_yield_prediction_service)):
+def create(
+    pred_in: YieldPredictionCreate,
+    svc: YieldPredictionService = Depends(get_yield_prediction_service),
+    ai_model_svc: AIModelService = Depends(get_ai_model_service),
+):
     """Store a new yield prediction. Multiple predictions per field are preserved historically."""
+    # Resolve model_id to ensure it exists in ai_models table
+    pred_in.model_id = ai_model_svc.resolve_model_id(
+        pred_in.model_id, pred_in.model_name, pred_in.model_version
+    )
     return svc.create(pred_in)
 
 

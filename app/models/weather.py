@@ -12,5 +12,5 @@ class Weather(Base):
     humidity: Mapped[float] = mapped_column(Float, nullable=True)
     rainfall: Mapped[float] = mapped_column(Float, nullable=True)
     forecast_rain: Mapped[float] = mapped_column(Float, nullable=True)
-    wind_speed: Mapped[float] = mapped_column(Float, nullable=True)
+    pressure: Mapped[float] = mapped_column(Float, nullable=True)
     recorded_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

@@ -5,10 +5,11 @@ from datetime import date, datetime
 class CropCycleBase(BaseModel):
     field_id: int = Field(..., examples=[1])
     crop: str = Field(..., max_length=100, examples=["Corn (Sweet)"])
+    variety: str | None = Field(None, max_length=100, description="Crop variety (optional)", examples=["Silver Queen"])
     planting_date: date = Field(..., description="Date of planting", examples=["2026-04-15"])
     expected_harvest_date: date = Field(..., description="Projected harvest date", examples=["2026-09-15"])
     actual_harvest_date: date | None = Field(None, description="Actual harvest date when known", examples=["2026-09-12"])
-    status: str = Field("growing", max_length=20, description="Current cycle status", examples=["growing"])
+    status: str = Field("growing", max_length=20, description="Current cycle status: planning, planted, growing, harvested, failed", examples=["growing"])
 
 
 class CropCycleCreate(CropCycleBase):
@@ -21,6 +22,7 @@ class CropCycleCreate(CropCycleBase):
 
 class CropCycleUpdate(BaseModel):
     crop: str | None = Field(None, examples=["Wheat (Durum)"])
+    variety: str | None = Field(None, examples=["Golden"])
     planting_date: date | None = Field(None, examples=["2026-05-01"])
     expected_harvest_date: date | None = Field(None, examples=["2026-10-01"])
     actual_harvest_date: date | None = Field(None, examples=["2026-09-28"])

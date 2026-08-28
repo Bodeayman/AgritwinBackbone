@@ -8,7 +8,7 @@ class WeatherBase(BaseModel):
     humidity: Optional[float] = Field(None, examples=[55.0])
     rainfall: Optional[float] = Field(None, examples=[0.0])
     forecast_rain: Optional[float] = Field(None, examples=[10.5])
-    wind_speed: Optional[float] = Field(None, examples=[15.0])
+    pressure: Optional[float] = Field(None, description="Atmospheric pressure in hPa", examples=[1013.2])
     recorded_at: Optional[datetime] = Field(None, examples=["2026-08-08T12:00:00Z"])
 
 class WeatherCreate(WeatherBase):

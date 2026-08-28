@@ -3,15 +3,24 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from app.schemas.diagnosis import DiagnosisCreate, DiagnosisOut
 from app.services.diagnosis_service import DiagnosisService
-from app.api.deps import get_diagnosis_service
+from app.services.ai_model_service import AIModelService
+from app.api.deps import get_diagnosis_service, get_ai_model_service
 
 router = APIRouter()
 
 
 @router.post("/", response_model=DiagnosisOut, status_code=status.HTTP_201_CREATED,
              summary="Create a diagnosis")
-def create(diag_in: DiagnosisCreate, svc: DiagnosisService = Depends(get_diagnosis_service)):
+def create(
+    diag_in: DiagnosisCreate,
+    svc: DiagnosisService = Depends(get_diagnosis_service),
+    ai_model_svc: AIModelService = Depends(get_ai_model_service),
+):
     """Store a disease/pest diagnosis. Multiple diagnoses per field are supported."""
+    # Resolve model_id to ensure it exists in ai_models table
+    diag_in.model_id = ai_model_svc.resolve_model_id(
+        diag_in.model_id, diag_in.model_name, diag_in.model_version
+    )
     return svc.create(diag_in)
 
 

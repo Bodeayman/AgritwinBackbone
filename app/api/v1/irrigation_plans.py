@@ -3,15 +3,24 @@ from datetime import date
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from app.schemas.irrigation_plan import IrrigationPlanCreate, IrrigationPlanOut
 from app.services.irrigation_plan_service import IrrigationPlanService
-from app.api.deps import get_irrigation_plan_service
+from app.services.ai_model_service import AIModelService
+from app.api.deps import get_irrigation_plan_service, get_ai_model_service
 
 router = APIRouter()
 
 
 @router.post("/", response_model=IrrigationPlanOut, status_code=status.HTTP_201_CREATED,
              summary="Create an irrigation plan")
-def create(plan_in: IrrigationPlanCreate, svc: IrrigationPlanService = Depends(get_irrigation_plan_service)):
+def create(
+    plan_in: IrrigationPlanCreate,
+    svc: IrrigationPlanService = Depends(get_irrigation_plan_service),
+    ai_model_svc: AIModelService = Depends(get_ai_model_service),
+):
     """Store a new irrigation recommendation. Historical plans are preserved."""
+    # Resolve model_id to ensure it exists in ai_models table
+    plan_in.model_id = ai_model_svc.resolve_model_id(
+        plan_in.model_id, plan_in.model_name, plan_in.model_version
+    )
     return svc.create(plan_in)
 
 

@@ -28,7 +28,11 @@ class AIModelService:
     ) -> Optional[int]:
         """Helper to resolve or auto-register AIModel and return its model_id."""
         if model_id:
-            return model_id
+            # Validate that the model_id exists in the database
+            existing = self.repo.get(model_id)
+            if existing:
+                return model_id
+            # If model_id doesn't exist, fall through to try name/version
         if model_name and model_version:
             obj = self.repo.get_or_create(model_name, model_version)
             return obj.id
