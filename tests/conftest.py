@@ -5,8 +5,9 @@ import sys, os
 # are imported so the SQLAlchemy engine is created with the test URL.
 # This prevents pytest from ever touching the live `agritwin` database.
 # ─────────────────────────────────────────────────────────────────────────────
-TEST_DATABASE_URL = (
-    "postgresql://postgres:REDACTED_DB_PASSWORD@localhost:5432/agritwin_test"
+TEST_DATABASE_URL = os.getenv(
+    "TEST_DATABASE_URL",
+    "postgresql://postgres:REDACTED_DB_PASSWORD@localhost:5432/agritwin_test",
 )
 os.environ["DATABASE_URL"] = TEST_DATABASE_URL
 

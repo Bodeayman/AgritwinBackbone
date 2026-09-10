@@ -1,10 +1,10 @@
-name: CI/CD Workflow
+name: CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
   test:
@@ -12,87 +12,55 @@ jobs:
 
     services:
       db:
-        image: postgres:14
+        image: postgis/postgis:15-3.4
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: agritwin
-        ports: ["5432:5432"]
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: agritwin_test
+        ports:
+          - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U postgres"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      minio:
-        image: minio/minio
-        env:
-          MINIO_ROOT_USER: minioadmin
-          MINIO_ROOT_PASSWORD: REDACTED_MINIO_SECRET
-        command: server /data
-        ports: ["9000:9000"]
-        options: >-
-          --health-cmd "curl -f http://localhost:9000/minio/health/live || exit 1"
+          --health-cmd "pg_isready -U postgres -d agritwin_test"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Start Services (DB & MinIO)
-        run: |
-          docker compose up -d db minio
-          # Wait for services to be healthy
-          docker compose ps
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-
-          cache: 'pip'
+          python-version: "3.11"
+          cache: "pip"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Wait for services to be ready
+      - name: Wait for database
         run: |
-          # Simple bash wait loop for db and minio health
           for i in {1..30}; do
-            if docker compose exec -T db pg_isready -U postgres -d agritwin; then
-              echo "Database is ready!"
+            if (echo > /dev/tcp/127.0.0.1/5432) 2>/dev/null; then
+              echo "Database is accepting connections!"
               break
             fi
             echo "Waiting for database..."
             sleep 2
           done
-          
-          for i in {1..30}; do
-            if curl -s -f http://localhost:9000/minio/health/live; then
-              echo "MinIO is ready!"
-              break
-            fi
-            echo "Waiting for MinIO..."
-            sleep 2
-          done
 
-      - name: Run Tests
+      - name: Run tests
         env:
-          DATABASE_URL: postgresql://postgres:password@localhost:5432/agritwin
+          TEST_DATABASE_URL: postgresql://postgres:testpassword@localhost:5432/agritwin_test
+          DATABASE_URL: postgresql://postgres:testpassword@localhost:5432/agritwin_test
           MINIO_ENDPOINT: localhost:9000
           MINIO_ACCESS_KEY: minioadmin
           MINIO_SECRET_KEY: REDACTED_MINIO_SECRET
-          MINIO_SECURE: False
+          MINIO_SECURE: "False"
           MINIO_BUCKET_NAME: agritwin-test-bucket
-        run: |
-          pytest tests/
+        run: pytest tests/ -v
 
-      - name: Build Web Docker Image
-        run: |
-          docker build -t agritwin-web:latest .
+      - name: Build Docker image
+        run: docker build -t agritwin-web:ci-${{ github.sha }} .
