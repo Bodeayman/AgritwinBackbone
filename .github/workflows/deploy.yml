@@ -142,7 +142,7 @@ jobs:
               exit 1
             fi
 
-            COMPOSE="docker compose -f docker-compose.yml"
+            COMPOSE="docker compose -f $DEPLOY_DIR/docker-compose.yml"
 
             # Preserve the current deployed image for rollback (if any)
             if docker image inspect "$IMAGE_NAME:latest" >/dev/null 2>&1; then
@@ -180,7 +180,7 @@ jobs:
                 echo "Rolling back to previous image..."
                 if docker image inspect "$IMAGE_NAME:previous" >/dev/null 2>&1; then
                   docker tag "$IMAGE_NAME:previous" "$IMAGE_NAME:latest"
-                  cd "$DEPLOY_DIR" && docker compose -f docker-compose.yml up -d --force-recreate --no-deps web
+                  docker compose -f "$DEPLOY_DIR/docker-compose.yml" up -d --force-recreate --no-deps web
                   echo "Rollback to previous image completed."
                 else
                   echo "No previous image found; leaving current state for manual inspection."
