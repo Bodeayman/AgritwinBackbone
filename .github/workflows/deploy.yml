@@ -122,12 +122,27 @@ jobs:
             # Navigate to deploy directory
             cd "$DEPLOY_DIR"
 
+            echo "Deploy directory contents:"
+            ls -la
+
             # Ensure .env exists
             if [ ! -f .env ]; then
               echo "ERROR: .env file not found at $DEPLOY_DIR/.env"
               echo "Please create it from .env.example with production values."
               exit 1
             fi
+
+            # Ensure docker-compose.yml exists (download from repo as fallback)
+            if [ ! -f docker-compose.yml ]; then
+              echo "docker-compose.yml missing; downloading from repository..."
+              curl -sfL -o docker-compose.yml "https://raw.githubusercontent.com/${{ github.repository }}/$COMMIT_SHA/docker-compose.yml"
+            fi
+            if [ ! -f docker-compose.yml ]; then
+              echo "ERROR: docker-compose.yml not available at $DEPLOY_DIR/docker-compose.yml"
+              exit 1
+            fi
+
+            COMPOSE="docker compose -f docker-compose.yml"
 
             # Preserve the current deployed image for rollback (if any)
             if docker image inspect "$IMAGE_NAME:latest" >/dev/null 2>&1; then
@@ -150,7 +165,7 @@ jobs:
 
             # Pull any updated service images and recreate web container
             echo "Recreating services..."
-            docker compose up -d --force-recreate --no-deps web
+            $COMPOSE up -d --force-recreate --no-deps web
 
             # Wait for health check
             echo "Waiting for application to become healthy..."
@@ -165,7 +180,7 @@ jobs:
                 echo "Rolling back to previous image..."
                 if docker image inspect "$IMAGE_NAME:previous" >/dev/null 2>&1; then
                   docker tag "$IMAGE_NAME:previous" "$IMAGE_NAME:latest"
-                  docker compose up -d --force-recreate --no-deps web
+                  cd "$DEPLOY_DIR" && docker compose -f docker-compose.yml up -d --force-recreate --no-deps web
                   echo "Rollback to previous image completed."
                 else
                   echo "No previous image found; leaving current state for manual inspection."
@@ -180,7 +195,7 @@ jobs:
             docker image prune -f
 
             echo "=== Deployment complete: $COMMIT_SHA ==="
-            docker compose ps
+            $COMPOSE ps
 
       - name: Verify deployment
         uses: appleboy/ssh-action@v1.0.3
