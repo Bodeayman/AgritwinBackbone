@@ -13,6 +13,8 @@ from app.models.irrigation_plan import IrrigationPlan
 from app.models.yield_prediction import YieldPrediction
 from app.models.crop_mix_recommendation import CropMixRecommendation
 from app.models.crop_mix_allocation import CropMixAllocation
+from app.models.crop_catalog import CropCatalog
+from app.models.crop_rotation_matrix import CropRotationMatrix
 from app.models.ai_model import AIModel
 from app.models.imagery import Imagery
 
@@ -32,6 +34,8 @@ __all__ = [
     "YieldPrediction",
     "CropMixRecommendation",
     "CropMixAllocation",
+    "CropCatalog",
+    "CropRotationMatrix",
     "AIModel",
     "Imagery",
 ]

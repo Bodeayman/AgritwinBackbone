@@ -17,28 +17,28 @@ class CropMixRecommendationRepository(BaseRepository[CropMixRecommendation]):
             .first()
         )
 
-    def list_by_field(
+    def list_by_farm(
         self,
-        field_id: int,
+        farm_id: int,
         skip: int = 0,
         limit: int = 100,
     ) -> List[CropMixRecommendation]:
         return (
             self.db.query(CropMixRecommendation)
             .options(joinedload(CropMixRecommendation.allocations))
-            .filter(CropMixRecommendation.field_id == field_id)
+            .filter(CropMixRecommendation.farm_id == farm_id)
             .order_by(CropMixRecommendation.created_at.desc())
             .offset(skip)
             .limit(limit)
             .all()
         )
 
-    def get_latest_by_field(self, field_id: int) -> Optional[CropMixRecommendation]:
-        """Return the most recent recommendation for a field."""
+    def get_latest_by_farm(self, farm_id: int) -> Optional[CropMixRecommendation]:
+        """Return the most recent recommendation for a farm."""
         return (
             self.db.query(CropMixRecommendation)
             .options(joinedload(CropMixRecommendation.allocations))
-            .filter(CropMixRecommendation.field_id == field_id)
+            .filter(CropMixRecommendation.farm_id == farm_id)
             .order_by(CropMixRecommendation.created_at.desc())
             .first()
         )

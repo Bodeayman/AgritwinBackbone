@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import String, DateTime, Integer, ForeignKey, func
+from sqlalchemy import String, DateTime, Integer, ForeignKey, func, Float, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.models.base import Base
 
@@ -40,11 +40,29 @@ class Farm(Base):
     )
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     location: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    
+    # Crop Mix Business Planner fields
+    zone: Mapped[str] = mapped_column(String(100), nullable=False, default="Delta")
+    total_area_feddans: Mapped[float] = mapped_column(Float, nullable=False, default=100.0)
+    water_budget_m3: Mapped[float] = mapped_column(Float, nullable=False, default=500000.0)
+    labor_budget_hours: Mapped[float] = mapped_column(Float, nullable=False, default=2500.0)
+    fertilizer_budget_kg: Mapped[float] = mapped_column(Float, nullable=False, default=15000.0)
+    labor_rate_egp_per_hour: Mapped[float] = mapped_column(Float, nullable=False, default=20.0)
+    fertilizer_rate_egp_per_kg: Mapped[float] = mapped_column(Float, nullable=False, default=1.50)
+    
     created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=func.now(), onupdate=func.now())
 
     # Relationships
     owner = relationship("User", backref="farms")
+
+    __table_args__ = (
+        CheckConstraint("zone IN ('Delta', 'Middle Egypt', 'Upper Egypt', 'Sinai / Reclaimed Lands')", name='check_farm_zone'),
+        CheckConstraint("total_area_feddans > 0", name='check_farm_area_positive'),
+        CheckConstraint("water_budget_m3 >= 0", name='check_water_budget_non_negative'),
+        CheckConstraint("labor_budget_hours >= 0", name='check_labor_budget_non_negative'),
+        CheckConstraint("fertilizer_budget_kg >= 0", name='check_fertilizer_budget_non_negative'),
+    )
 
     def __repr__(self) -> str:
         return f"<Farm(id={self.id}, name={self.name}, owner_id={self.owner_id})>"

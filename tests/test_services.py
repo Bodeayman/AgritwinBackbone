@@ -144,24 +144,42 @@ def test_irrigation_yield_and_crop_mix_services(db_session):
         crop_type="Beans",
         predicted_yield=2100.0,
         unit="kg/ha",
-        prediction_date=date(2026, 8, 8)
+        prediction_date=date(2026, 8, 8),
+        input_timestamp=datetime(2026, 8, 8, 10, 0, 0),
     ))
     assert pred_out.predicted_yield == 2100.0
 
     # Crop mix recommendation with allocations
+    from app.models.crop_catalog import CropCatalog
+
+    crop = CropCatalog(
+        name_en="Beans", name_ar="فاصوليا", category="Legume",
+        expected_yield_tons_per_feddan=15.0, price_egp_per_ton=12000.0,
+        production_cost_egp_per_feddan=8000.0, water_requirement_m3_per_feddan=4000.0,
+    )
+    db_session.add(crop)
+    db_session.commit()
+
     crop_mix_svc = CropMixService(db_session)
     mix_out = crop_mix_svc.create(CropMixRecommendationCreate(
-        field_id=field.id,
-        expected_profit=85000.0,
-        binding_constraint="Soil nitrogen",
+        farm_id=farm.id,
+        total_land_used_feddans=15.0,
+        total_water_used_m3=60000.0,
+        total_labor_used_hours=200.0,
+        total_fertilizer_used_kg=1500.0,
+        total_expected_revenue_egp=1200000.0,
+        total_production_cost_egp=120000.0,
+        total_labor_cost_egp=10000.0,
+        total_fertilizer_cost_egp=2250.0,
+        net_profit_egp=1067750.0,
         allocations=[
-            CropMixAllocationCreate(crop_type="Beans", allocated_area=5.0, unit="ha"),
-            CropMixAllocationCreate(crop_type="Sorghum", allocated_area=10.0, unit="ha")
+            CropMixAllocationCreate(field_id=field.id, crop_id=crop.id, allocated_area_feddans=5.0, expected_profit_contribution_egp=360000.0),
+            CropMixAllocationCreate(field_id=field.id, crop_id=crop.id, allocated_area_feddans=10.0, expected_profit_contribution_egp=720000.0),
         ]
     ))
     assert mix_out.id is not None
     assert len(mix_out.allocations) == 2
 
-    latest_mix = crop_mix_svc.get_latest_by_field(field.id)
+    latest_mix = crop_mix_svc.get_latest_by_farm(farm.id)
     assert latest_mix is not None
-    assert latest_mix.expected_profit == 85000.0
+    assert latest_mix.total_expected_revenue_egp == 1200000.0

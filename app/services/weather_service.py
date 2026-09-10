@@ -33,6 +33,22 @@ class WeatherService:
             objs = self.repo.get_multi(skip=skip, limit=limit)
         return [WeatherOut.model_validate(o) for o in objs]
 
+    def list_by_field_date_range(
+        self,
+        field_id: int,
+        from_dt: Optional[datetime] = None,
+        to_dt: Optional[datetime] = None,
+        skip: int = 0,
+        limit: int = 100,
+    ) -> List[WeatherOut]:
+        query = self.repo.db.query(self.repo.model).filter(self.repo.model.field_id == field_id)
+        if from_dt:
+            query = query.filter(self.repo.model.recorded_at >= from_dt)
+        if to_dt:
+            query = query.filter(self.repo.model.recorded_at <= to_dt)
+        objs = query.offset(skip).limit(limit).all()
+        return [WeatherOut.model_validate(o) for o in objs]
+
     def update_weather(self, weather_id: int, weather_in: WeatherCreate) -> Optional[WeatherOut]:
         obj = self.repo.get(weather_id)
         if not obj:

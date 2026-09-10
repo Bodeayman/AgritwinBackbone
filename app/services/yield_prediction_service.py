@@ -13,6 +13,7 @@ class YieldPredictionService:
     def create(self, pred_in: YieldPredictionCreate) -> YieldPredictionOut:
         obj = YieldPrediction(
             field_id=pred_in.field_id,
+            crop_cycle_id=pred_in.crop_cycle_id,
             model_id=pred_in.model_id,
             status=pred_in.status,
             crop_type=pred_in.crop_type,
@@ -20,6 +21,8 @@ class YieldPredictionService:
             unit=pred_in.unit,
             confidence=pred_in.confidence,
             prediction_date=pred_in.prediction_date,
+            input_timestamp=pred_in.input_timestamp,
+            input_data_snapshot=pred_in.input_data_snapshot.model_dump() if pred_in.input_data_snapshot else None,
         )
         self.repo.db.add(obj)
         self.repo.db.commit()

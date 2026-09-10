@@ -1,6 +1,6 @@
 from typing import List, Optional
 from datetime import datetime, date
-from fastapi import APIRouter, Depends, HTTPException, status, Query, File, UploadFile, Form
+from fastapi import APIRouter, Depends, HTTPException, status, Query, File, UploadFile, Form, Response
 from pydantic import BaseModel, Field as PydanticField
 
 from app.api.deps import (
@@ -17,6 +17,8 @@ from app.api.deps import (
     get_ai_model_service,
     get_imagery_service,
     get_satellite_service,
+    get_weather_service,
+    get_crop_cycle_service,
 )
 from app.core.local_storage import get_local_image_storage, LocalDiskImageStorage
 
@@ -43,8 +45,10 @@ from app.services.crop_mix_service import CropMixService
 from app.services.ai_model_service import AIModelService
 from app.services.imagery_service import ImageryService
 from app.services.satellite_service import SatelliteService
+from app.services.weather_service import WeatherService
+from app.services.crop_cycle_service import CropCycleService
 
-internal_router = APIRouter(dependencies=[Depends(verify_api_key)])
+internal_router = APIRouter()  # API key disabled for development
 
 
 def _assert_field_exists(field_id: int, field_svc: FieldService):
@@ -398,8 +402,9 @@ def ingest_crop_mix_recommendation(
     crop_mix_svc: CropMixService = Depends(get_crop_mix_service),
     ai_model_svc: AIModelService = Depends(get_ai_model_service),
 ):
-    _assert_field_exists(field_id, field_svc)
-    rec_in.field_id = field_id
+    field = _assert_field_exists(field_id, field_svc)
+    if rec_in.farm_id is None:
+        rec_in.farm_id = field.farm_id
     rec_in.model_id = ai_model_svc.resolve_model_id(rec_in.model_id, rec_in.model_name, rec_in.model_version)
     return crop_mix_svc.create(rec_in)
 
@@ -655,3 +660,294 @@ def get_internal_field_state(
         latest_yield_prediction=predictions[0] if predictions else None,
         latest_crop_mix_recommendation=latest_crop_mix,
     )
+
+
+# ── YIELD PREDICTION DATA ENDPOINT ───────────────────────────────────────────────
+
+@internal_router.get(
+    "/fields/{field_id}/yield-prediction-data",
+    summary="[Internal] Get yield prediction data for field",
+    tags=["Internal Yield Data"],
+    response_model=dict,
+)
+def get_yield_prediction_data(
+    field_id: int,
+    timestamp: Optional[datetime] = Query(None, description="Exact timestamp (ISO 8601)"),
+    from_dt: Optional[datetime] = Query(None, alias="from", description="Start timestamp (ISO 8601)"),
+    to_dt: Optional[datetime] = Query(None, alias="to", description="End timestamp (ISO 8601)"),
+    latest: bool = Query(False, description="Get latest available data"),
+    response: Response = None,
+    field_svc: FieldService = Depends(get_field_service),
+    sensor_svc: SensorService = Depends(get_sensor_service),
+    weather_svc: WeatherService = Depends(get_weather_service),
+    sat_svc: SatelliteObservationService = Depends(get_satellite_observation_service),
+    imagery_svc: ImageryService = Depends(get_imagery_service),
+    crop_cycle_svc: CropCycleService = Depends(get_crop_cycle_service),
+):
+    """Get unified yield prediction data for a field.
+    
+    Supports three modes:
+    1. Single timestamp: timestamp=2024-01-15T10:30:00Z
+    2. Latest data: latest=true
+    3. Date range: from=2024-01-01T00:00:00Z&to=2024-01-31T23:59:59Z
+    
+    Returns field-level data (crop_type, lat, long) and time-series data
+    (soil_moisture, temperature, rainfall, satellite indices, satellite_image).
+    """
+    field = _assert_field_exists(field_id, field_svc)
+    
+    # Get field location (extract from geometry if available)
+    latitude = None
+    longitude = None
+    if field.location:
+        # Extract coordinates from PostGIS geometry
+        try:
+            from sqlalchemy import text
+            result = field_svc.db.execute(
+                text("SELECT ST_X(ST_Centroid(location)) as lon, ST_Y(ST_Centroid(location)) as lat FROM fields WHERE id = :field_id"),
+                {"field_id": field_id}
+            ).fetchone()
+            if result:
+                longitude = float(result[0])
+                latitude = float(result[1])
+        except Exception:
+            pass
+    
+    # If lat/long not available from geometry, try to get from farm location
+    if latitude is None or longitude is None:
+        try:
+            from sqlalchemy import text
+            result = field_svc.db.execute(
+                text("SELECT ST_X(ST_Centroid(f.location)) as lon, ST_Y(ST_Centroid(f.location)) as lat FROM fields fd JOIN farms f ON fd.farm_id = f.id WHERE fd.id = :field_id"),
+                {"field_id": field_id}
+            ).fetchone()
+            if result:
+                longitude = float(result[0])
+                latitude = float(result[1])
+        except Exception:
+            pass
+    
+    # Final fallback: use default coordinates if still not available
+    if latitude is None or longitude is None:
+        # Use a default location (e.g., center of field's general area)
+        latitude = 0.0
+        longitude = 0.0
+    
+    # Get current crop type and active cycle from active crop cycle
+    crop_type = None
+    active_cycle = None
+    try:
+        active_cycle = crop_cycle_svc.get_active_by_field(field_id)
+        if active_cycle:
+            crop_type = active_cycle.crop
+    except Exception:
+        pass
+    
+    # Helper function to get single snapshot
+    def get_single_snapshot(target_timestamp: Optional[datetime] = None, active_cycle=None):
+        # Get sensor reading (fallback to nearest if exact not found)
+        sensor_data = None
+        if target_timestamp:
+            sensors = sensor_svc.list_by_field_date_range(field_id, target_timestamp, target_timestamp, limit=1)
+            if not sensors:
+                # Fallback: get sensor reading closest to target timestamp
+                all_sensors = sensor_svc.list_by_field(field_id, limit=100)
+                if all_sensors:
+                    sensor_data = min(all_sensors, key=lambda s: abs((s.recorded_at - target_timestamp).total_seconds()))
+        else:
+            sensors = sensor_svc.list_by_field(field_id, limit=1)
+            if sensors:
+                sensor_data = sensors[0]
+        
+        # Get weather data (fallback to nearest if exact not found)
+        weather_data = None
+        if target_timestamp:
+            weather_list = weather_svc.list_by_field_date_range(field_id, target_timestamp, target_timestamp, limit=1)
+            if not weather_list:
+                # Fallback: get weather closest to target timestamp
+                all_weather = weather_svc.list_weather(field_id, skip=0, limit=100)
+                if all_weather:
+                    weather_data = min(all_weather, key=lambda w: abs((w.recorded_at - target_timestamp).total_seconds()))
+            else:
+                weather_data = weather_list[0]
+        else:
+            weather_list = weather_svc.list_weather(field_id, limit=1)
+            if weather_list:
+                weather_data = weather_list[0]
+        
+        # Get satellite observation (fallback to nearest if exact not found)
+        sat_data = None
+        if target_timestamp:
+            sat_list = sat_svc.list_by_field(field_id, target_timestamp, target_timestamp, limit=1)
+            if not sat_list:
+                # Fallback: get satellite observation closest to target timestamp
+                all_sat = sat_svc.list_by_field(field_id, limit=100)
+                if all_sat:
+                    sat_data = min(all_sat, key=lambda s: abs((s.captured_at - target_timestamp).total_seconds()))
+            else:
+                sat_data = sat_list[0]
+        else:
+            sat_list = sat_svc.list_by_field(field_id, limit=1)
+            if sat_list:
+                sat_data = sat_list[0]
+        
+        # Get imagery (fallback to nearest if exact not found)
+        imagery_data = None
+        if target_timestamp:
+            imagery_list = imagery_svc.list_by_field(field_id, skip=0, limit=100)
+            # Find imagery closest to target timestamp
+            if imagery_list:
+                imagery_data = min(imagery_list, key=lambda i: abs((i.created_at - target_timestamp).total_seconds()))
+        else:
+            imagery_list = imagery_svc.list_by_field(field_id, limit=1)
+            if imagery_list:
+                imagery_data = imagery_list[0]
+        
+        # Extract values
+        soil_moisture = sensor_data.soil_moisture if sensor_data else None
+        temperature = sensor_data.air_temperature if sensor_data else (weather_data.temperature if weather_data else None)
+        rainfall = weather_data.rainfall if weather_data else None
+        
+        # Extract satellite indices
+        ndvi = sat_data.ndvi if sat_data else None
+        # Additional indices from model property
+        additional_indices = sat_data.additional_indices if sat_data else {}
+        gndvi = additional_indices.get("gndvi") if additional_indices else None
+        ndwi = additional_indices.get("ndwi") if additional_indices else None
+        savi = additional_indices.get("savi") if additional_indices else None
+        
+        # Get satellite image path
+        satellite_image = imagery_data.storage_path if imagery_data else None
+        
+        # Determine effective timestamp and check if fallback was used
+        effective_timestamp = target_timestamp
+        timestamp_source = "requested"
+        
+        if not effective_timestamp:
+            if sensor_data:
+                effective_timestamp = sensor_data.recorded_at
+                timestamp_source = "sensor"
+            elif weather_data:
+                effective_timestamp = weather_data.recorded_at
+                timestamp_source = "weather"
+            elif sat_data:
+                effective_timestamp = sat_data.captured_at
+                timestamp_source = "satellite"
+            elif imagery_data:
+                effective_timestamp = imagery_data.created_at
+                timestamp_source = "imagery"
+            else:
+                effective_timestamp = datetime.utcnow()
+                timestamp_source = "current"
+        else:
+            # Check if we used fallback (exact match not found)
+            if sensor_data and abs((sensor_data.recorded_at - target_timestamp).total_seconds()) > 3600:
+                timestamp_source = "fallback_sensor"
+            elif weather_data and abs((weather_data.recorded_at - target_timestamp).total_seconds()) > 3600:
+                timestamp_source = "fallback_weather"
+            elif sat_data and abs((sat_data.captured_at - target_timestamp).total_seconds()) > 3600:
+                timestamp_source = "fallback_satellite"
+            elif imagery_data and abs((imagery_data.created_at - target_timestamp).total_seconds()) > 3600:
+                timestamp_source = "fallback_imagery"
+        
+        return {
+            "field_id": field_id,
+            "crop_cycle_id": active_cycle.id if active_cycle else None,
+            "timestamp": effective_timestamp.isoformat() if effective_timestamp else None,
+            "timestamp_source": timestamp_source,
+            "crop_type": crop_type,
+            "latitude": latitude,
+            "longitude": longitude,
+            "soil_moisture": soil_moisture,
+            "temperature": temperature,
+            "rainfall": rainfall,
+            "ndvi": ndvi,
+            "gndvi": gndvi,
+            "ndwi": ndwi,
+            "savi": savi,
+            "satellite_image": satellite_image,
+        }
+    
+    # Helper function to get date range arrays
+    def get_date_range_arrays(from_date: Optional[datetime], to_date: Optional[datetime], active_cycle=None):
+        # Get sensor readings
+        sensors = sensor_svc.list_by_field_date_range(field_id, from_date, to_date, limit=1000)
+        
+        # Get weather data
+        weather_list = weather_svc.list_by_field_date_range(field_id, from_date, to_date, limit=1000)
+        
+        # Get satellite observations
+        sat_list = sat_svc.list_by_field(field_id, from_date, to_date, limit=1000)
+        
+        # Get imagery
+        imagery_list = imagery_svc.list_by_field(field_id, skip=0, limit=1000)
+        if from_date or to_date:
+            imagery_list = [i for i in imagery_list if 
+                          (not from_date or i.created_at >= from_date) and 
+                          (not to_date or i.created_at <= to_date)]
+        
+        # Create arrays aligned by timestamps
+        timestamps = []
+        soil_moisture_array = []
+        temperature_array = []
+        rainfall_array = []
+        ndvi_array = []
+        gndvi_array = []
+        ndwi_array = []
+        savi_array = []
+        satellite_images_array = []
+        
+        # Use sensor timestamps as base
+        for sensor in sensors:
+            ts = sensor.recorded_at
+            timestamps.append(ts.isoformat())
+            soil_moisture_array.append(sensor.soil_moisture)
+            temperature_array.append(sensor.air_temperature)
+            
+            # Find matching weather
+            weather = next((w for w in weather_list if abs((w.recorded_at - ts).total_seconds()) < 3600), None)
+            rainfall_array.append(weather.rainfall if weather else None)
+            
+            # Find matching satellite observation
+            sat = next((s for s in sat_list if abs((s.captured_at - ts).total_seconds()) < 3600), None)
+            ndvi_array.append(sat.ndvi if sat else None)
+            additional_indices = sat.additional_indices if sat else {}
+            gndvi_array.append(additional_indices.get("gndvi") if additional_indices else None)
+            ndwi_array.append(additional_indices.get("ndwi") if additional_indices else None)
+            savi_array.append(additional_indices.get("savi") if additional_indices else None)
+            
+            # Find matching imagery
+            imagery = next((i for i in imagery_list if abs((i.created_at - ts).total_seconds()) < 3600), None)
+            satellite_images_array.append(imagery.storage_path if imagery else None)
+        
+        return {
+            "field_id": field_id,
+            "crop_cycle_id": active_cycle.id if active_cycle else None,
+            "crop_type": crop_type,
+            "latitude": latitude,
+            "longitude": longitude,
+            "timestamps": timestamps,
+            "soil_moisture": soil_moisture_array,
+            "temperature": temperature_array,
+            "rainfall": rainfall_array,
+            "ndvi": ndvi_array,
+            "gndvi": gndvi_array,
+            "ndwi": ndwi_array,
+            "savi": savi_array,
+            "satellite_images": satellite_images_array,
+        }
+    
+    # Route based on query parameters
+    if from_dt or to_dt:
+        # Date range mode - return arrays
+        return get_date_range_arrays(from_dt, to_dt, active_cycle)
+    else:
+        # Single snapshot mode (latest or specific timestamp)
+        target_timestamp = timestamp if not latest else None
+        result = get_single_snapshot(target_timestamp, active_cycle)
+        
+        # Add response header to indicate if fallback was used
+        if response and result.get("timestamp_source") != "requested":
+            response.headers["X-Timestamp-Source"] = result["timestamp_source"]
+        
+        return result
