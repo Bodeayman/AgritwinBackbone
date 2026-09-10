@@ -36,3 +36,4 @@ class SatelliteObservationOut(SatelliteObservationBase):
     satellite: Optional[SatelliteOut] = Field(None, description="Nested Satellite entity details")
     imagery: Optional[ImageryOut] = Field(None, description="Nested Imagery entity details")
     created_at: Optional[datetime] = Field(None, examples=["2026-08-08T08:30:01Z"])
+    additional_indices: Optional[Dict[str, Any]] = Field(None, description="Additional vegetation indices from metadata (gndvi, ndwi, savi, etc.)")

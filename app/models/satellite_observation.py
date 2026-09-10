@@ -39,3 +39,15 @@ class SatelliteObservation(Base):
 
     def __repr__(self) -> str:
         return f"<SatelliteObservation(id={self.id}, field_id={self.field_id}, satellite_id={self.satellite_id}, status={self.status})>"
+
+    @property
+    def additional_indices(self) -> dict:
+        """Extract additional vegetation indices from additional_metadata.
+        Returns a dict with keys like gndvi, ndwi, savi if present in metadata.
+        """
+        indices = {}
+        if self.additional_metadata:
+            for key in ["gndvi", "ndwi", "savi", "msavi", "osavi"]:
+                if key in self.additional_metadata:
+                    indices[key] = self.additional_metadata[key]
+        return indices

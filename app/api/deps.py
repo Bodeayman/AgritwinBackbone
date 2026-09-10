@@ -14,6 +14,9 @@ from app.services.farm_service import FarmService
 from app.services.field_service import FieldService
 from app.services.field_boundary_service import FieldBoundaryService
 from app.services.crop_cycle_service import CropCycleService
+from app.services.crop_catalog_service import CropCatalogService
+from app.services.crop_rotation_service import CropRotationService
+from app.services.optimization_service import OptimizationService
 from app.services.auth_service import AuthService
 from app.services.sensor_service import SensorService
 from app.services.satellite_observation_service import SatelliteObservationService
@@ -54,6 +57,15 @@ def get_field_boundary_service(db: Session = Depends(get_db)) -> FieldBoundarySe
 
 def get_crop_cycle_service(db: Session = Depends(get_db)) -> CropCycleService:
     return CropCycleService(db)
+
+def get_crop_catalog_service(db: Session = Depends(get_db)) -> CropCatalogService:
+    return CropCatalogService(db)
+
+def get_crop_rotation_service(db: Session = Depends(get_db)) -> CropRotationService:
+    return CropRotationService(db)
+
+def get_optimization_service(db: Session = Depends(get_db)) -> OptimizationService:
+    return OptimizationService(db)
 
 def get_auth_service(db: Session = Depends(get_db)) -> AuthService:
     return AuthService(db)

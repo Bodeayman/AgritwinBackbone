@@ -69,3 +69,11 @@ class CropCycleService:
 
     def delete_crop_cycle(self, crop_cycle_id: int) -> bool:
         return self.repo.delete(crop_cycle_id)
+
+    def get_active_by_field(self, field_id: int) -> Optional[CropCycleOut]:
+        """Get the active crop cycle for a field."""
+        obj = self.repo.db.query(self.repo.model).filter(
+            self.repo.model.field_id == field_id,
+            self.repo.model.status == "active"
+        ).first()
+        return CropCycleOut.model_validate(obj) if obj else None

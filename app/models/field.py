@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import String, DateTime, ForeignKey, func
+from sqlalchemy import String, DateTime, ForeignKey, func, Float, CheckConstraint, ARRAY
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.models.base import Base
 
@@ -43,6 +43,17 @@ class Field(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     farm_id: Mapped[int] = mapped_column(ForeignKey("farms.id", ondelete="CASCADE"), nullable=False, index=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
+    
+    # Crop Mix Business Planner fields
+    name_en: Mapped[str] = mapped_column(String(255), nullable=True)
+    name_ar: Mapped[str] = mapped_column(String(255), nullable=True)
+    area_feddans: Mapped[float] = mapped_column(Float, nullable=True)
+    soil_ph: Mapped[float] = mapped_column(Float, nullable=True, default=6.5)
+    soil_ec_ds_m: Mapped[float] = mapped_column(Float, nullable=True, default=1.0)
+    soil_texture: Mapped[str] = mapped_column(String(50), nullable=True, default="Loam")
+    organic_matter_pct: Mapped[float] = mapped_column(Float, nullable=True, default=2.0)
+    previous_crop_name: Mapped[str] = mapped_column(String(100), nullable=True)
+    
     created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=func.now(), onupdate=func.now())
 
@@ -50,6 +61,14 @@ class Field(Base):
     farm = relationship("Farm", backref="fields")
     boundary = relationship("FieldBoundary", back_populates="field", uselist=False, passive_deletes=True)
     crop_cycles = relationship("CropCycle", back_populates="field")
+
+    __table_args__ = (
+        CheckConstraint("soil_ph BETWEEN 0 AND 14", name='check_field_ph_range'),
+        CheckConstraint("soil_ec_ds_m >= 0", name='check_field_ec_non_negative'),
+        CheckConstraint("soil_texture IN ('Loam', 'Clay', 'Silt', 'Sandy', 'Sandy Loam')", name='check_field_soil_texture'),
+        CheckConstraint("organic_matter_pct >= 0", name='check_field_organic_matter_non_negative'),
+        CheckConstraint("area_feddans > 0", name='check_field_area_positive'),
+    )
 
     @property
     def current_crop(self) -> str | None:
