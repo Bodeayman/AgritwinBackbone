@@ -235,8 +235,7 @@ AgriTwin/
 ├── .gitignore
 ├── .dockerignore
 ├── alembic.ini                  # Alembic configuration
-├── docker-compose.yml          # Docker orchestration
-├── docker-compose.example.yml  # Safe template with placeholders
+├── docker-compose.yml          # Docker orchestration (env-driven)
 ├── Dockerfile                  # Application container image
 ├── requirements.txt             # Python dependencies
 ├── postman_mock_collection.json # Postman API collection
@@ -562,6 +561,10 @@ docker build -t agritwin-backend:latest .
 ### Using Docker Compose
 
 ```bash
+# Copy environment template and configure
+cp .env.example .env
+# Edit .env with production credentials
+
 # Start all services
 docker compose up -d
 
@@ -574,6 +577,10 @@ docker compose logs -f web
 # Run migrations
 docker compose exec web alembic upgrade head
 ```
+
+### EC2 Production Deployment
+
+For full EC2 deployment instructions, CI/CD setup, and GitHub Actions configuration, see [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ### Production Considerations
 
@@ -677,13 +684,12 @@ ruff check app tests
 
 ### Secrets Found in Tracked Files
 
-The following files contain hardcoded credentials that should be moved to environment variables:
+The following files may contain hardcoded credentials that should be moved to environment variables:
 
-- `app/core/config.py`: Default JWT secret and API keys
+- `app/core/config.py`: Default JWT secret and API keys (overridden via `.env` in production)
 - `alembic.ini`: Database connection string with credentials
-- `docker-compose.yml`: Hardcoded database and MinIO credentials
 
-Use `docker-compose.example.yml` as a template with placeholders instead.
+Use `docker-compose.yml` with environment variables and a `.env` file instead of hardcoding credentials.
 
 ## Architecture Evolution Roadmap
 
