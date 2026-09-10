@@ -142,7 +142,7 @@ jobs:
               exit 1
             fi
 
-            COMPOSE="docker compose -f $DEPLOY_DIR/docker-compose.yml"
+            COMPOSE="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $DEPLOY_DIR:$DEPLOY_DIR -w $DEPLOY_DIR docker/compose:v2.24.6"
 
             # Preserve the current deployed image for rollback (if any)
             if docker image inspect "$IMAGE_NAME:latest" >/dev/null 2>&1; then
@@ -180,7 +180,7 @@ jobs:
                 echo "Rolling back to previous image..."
                 if docker image inspect "$IMAGE_NAME:previous" >/dev/null 2>&1; then
                   docker tag "$IMAGE_NAME:previous" "$IMAGE_NAME:latest"
-                  docker compose -f "$DEPLOY_DIR/docker-compose.yml" up -d --force-recreate --no-deps web
+                  docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$DEPLOY_DIR:$DEPLOY_DIR" -w "$DEPLOY_DIR" docker/compose:v2.24.6 up -d --force-recreate --no-deps web
                   echo "Rollback to previous image completed."
                 else
                   echo "No previous image found; leaving current state for manual inspection."
@@ -205,7 +205,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             echo "=== Verifying deployment ==="
-            docker compose -f ${{ env.DEPLOY_DIR }}/docker-compose.yml ps
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v ${{ env.DEPLOY_DIR }}:${{ env.DEPLOY_DIR }} -w ${{ env.DEPLOY_DIR }} docker/compose:v2.24.6 ps
             curl -sf http://localhost:${API_PORT:-8000}/ || echo "WARNING: Health check failed"
 
       - name: Cleanup local artifacts
