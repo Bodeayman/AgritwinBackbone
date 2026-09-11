@@ -1,7 +1,6 @@
-from typing import List, Union
+from typing import List
 import json
 import os
-from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -40,18 +39,14 @@ class Settings(BaseSettings):
     MINIO_SECURE: bool = False
     MINIO_BUCKET_NAME: str = "agritwin-bucket"
 
-    # CORS Origins (JSON list or comma-separated string or *)
-    BACKEND_CORS_ORIGINS: Union[str, List[str]] = ["*"]
+    # CORS Origins (JSON list or comma-separated string or *). Stored as raw string
+    # so pydantic-settings never attempts to json.loads() it from the environment.
+    BACKEND_CORS_ORIGINS: str = "*"
     RABBITMQ_URL: str = "amqp://guest:guest@localhost/"
 
-    @field_validator("BACKEND_CORS_ORIGINS", mode="before")
-    @classmethod
-    def parse_cors_origins(cls, v):
-        if v is None:
-            return ["*"]
-        if isinstance(v, list):
-            return v
-        s = str(v).strip()
+    @property
+    def cors_origins(self) -> List[str]:
+        s = (self.BACKEND_CORS_ORIGINS or "*").strip()
         if not s or s == "*":
             return ["*"]
         if s.startswith("["):
