@@ -15,13 +15,28 @@ API_KEY = os.environ.get("GEMINI_API_KEY", "")
 MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
 
 MAX_FIX_ATTEMPTS = int(os.environ.get("AUTOFIX_MAX_ATTEMPTS", "3"))
+MODE = os.environ.get("AUTOFIX_MODE", "test")
 
 SYSTEM_PROMPT = (
-    "You are an expert Python/FastAPI engineer fixing failing tests in a farm "
-    "management backend (FastAPI, SQLAlchemy, Pydantic, PostgreSQL/PostGIS). "
-    "Reply with ONLY a unified diff (git diff style). Do not explain. "
-    "The diff must fix the reported test failures and nothing else."
+    "You are an expert Python/FastAPI engineer fixing a farm management backend "
+    "(FastAPI, SQLAlchemy, Pydantic, PostgreSQL/PostGIS). Reply with ONLY a unified "
+    "diff (git diff style). Do not explain. The diff must fix the reported problem "
+    "and nothing else."
 )
+
+MODE_CONTEXT = {
+    "test": (
+        "The CI test job failed. Repo layout: app/ (api/, services/, schemas/, models/, "
+        "repositories/), tests/ (pytest). Fix the errors in the log."
+    ),
+    "deploy": (
+        "The production deployment fails its health check (the FastAPI web container on "
+        "EC2 does not respond on port 8000, or the container is crashing). Below are the "
+        "container logs from EC2. Repo layout: app/ (api/, services/, schemas/, models/, "
+        "repositories/), tests/ (pytest). Identify the root cause from the logs and "
+        "produce a code/config fix so the app starts and serves / correctly."
+    ),
+}
 
 
 def api_call(history, system_prompt):
@@ -83,8 +98,7 @@ def main():
                 {
                     "text": (
                         f"CI tests failed on commit {SHA} (run {RUN_ID}). "
-                        "Repo layout: app/ (FastAPI app: api/, services/, schemas/, models/, "
-                        "repositories/), tests/ (pytest). Fix the errors in the following log:\n\n"
+                        f"{MODE_CONTEXT[MODE]}\n\n"
                         f"{log_text}"
                     )
                 }
