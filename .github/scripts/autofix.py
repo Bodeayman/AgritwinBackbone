@@ -3,6 +3,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 import urllib.request
 
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
@@ -52,6 +53,8 @@ def api_call(history, system_prompt):
         raise RuntimeError(
             "GEMINI_API_KEY not configured; cannot call Gemini"
         )
+    max_retries = int(os.environ.get("GEMINI_MAX_RETRIES", "5"))
+    backend_wait = float(os.environ.get("GEMINI_RETRY_WAIT", "2"))
     last_err = None
     for model in MODELS:
         url = (
@@ -68,22 +71,38 @@ def api_call(history, system_prompt):
             data=json.dumps(payload).encode(),
             headers={"Content-Type": "application/json"},
         )
-        try:
-            with urllib.request.urlopen(req) as resp:
-                data = json.loads(resp.read())
-        except urllib.error.HTTPError as exc:
-            body = exc.read().decode("utf-8", errors="replace")
-            last_err = f"HTTP {exc.code} on model {model}: {body[:500]}"
+        for attempt in range(1, max_retries + 1):
+            try:
+                with urllib.request.urlopen(req, timeout=120) as resp:
+                    data = json.loads(resp.read())
+                try:
+                    return data["candidates"][0]["content"]["parts"][0]["text"]
+                except (KeyError, IndexError):
+                    raise RuntimeError(f"Gemini returned unexpected payload: {json.dumps(data)[:1000]}")
+            except urllib.error.HTTPError as exc:
+                body = exc.read().decode("utf-8", errors="replace")
+                if exc.code in (429, 500, 502, 503, 504):
+                    # Transient errors (throttled/temporarily unavailable): retry with backoff
+                    last_err = f"HTTP {exc.code} on model {model}: {body[:300]}"
+                    if attempt < max_retries:
+                        delay = backend_wait * attempt
+                        print(f"[autofix] {last_err} (attempt {attempt}/{max_retries}, retrying in {delay}s)")
+                        time.sleep(delay)
+                        continue
+            except (urllib.error.URLError, TimeoutError, OSError) as exc:
+                last_err = f"{exc}"
+                if attempt < max_retries:
+                    delay = backend_wait * attempt
+                    print(f"[autofix] connection failed: {last_err} (attempt {attempt}/{max_retries}, retrying in {delay}s)")
+                    time.sleep(delay)
+                    continue
+            except Exception as exc:
+                last_err = f"{exc}"
+                print(f"[autofix] call failed: {last_err}")
+                break
+            last_err = last_err or "request failed"
             print(f"[autofix] {last_err}")
-            continue
-        except Exception as exc:
-            last_err = f"{exc}"
-            print(f"[autofix] call failed: {last_err}")
-            continue
-        try:
-            return data["candidates"][0]["content"]["parts"][0]["text"]
-        except (KeyError, IndexError):
-            raise RuntimeError(f"Gemini returned unexpected payload: {json.dumps(data)[:1000]}")
+            break
     raise RuntimeError(f"All Gemini models failed. Last error: {last_err}")
 
 
