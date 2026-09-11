@@ -179,7 +179,9 @@ jobs:
               $COMPOSE up -d --force-recreate --no-deps web
             fi
 
-            # Single health check (no retries)
+            # Give the container time to boot, then do a single health check
+            echo "Waiting 20s for the app to start..."
+            sleep 20
             echo "Checking application health..."
             if curl -sf http://localhost:${API_PORT:-8000}/ > /dev/null 2>&1; then
               echo "Application is healthy!"
