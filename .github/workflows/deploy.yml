@@ -305,5 +305,6 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
           AUTOFIX_MODE: deploy
+          AUTOFIX_MAX_ATTEMPTS: 1
         run: |
           python .github/scripts/autofix.py /tmp/deploy_web_logs.txt 2>&1 || true
