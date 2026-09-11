@@ -170,9 +170,14 @@ jobs:
             echo "Previous image: $PREVIOUS_IMAGE"
             echo "$PREVIOUS_IMAGE" > "$DEPLOY_DIR/.previous_image"
 
-            # Pull any updated service images and recreate web container
+            # Bring up full stack on first deploy (db/minio/rabbitmq), otherwise just recreate web
             echo "Recreating services..."
-            $COMPOSE up -d --force-recreate --no-deps web
+            if [ -z "$(docker ps -aq -f name=agritwin_db)" ]; then
+              echo "First deploy detected; starting full stack (db, minio, rabbitmq, web)..."
+              $COMPOSE up -d
+            else
+              $COMPOSE up -d --force-recreate --no-deps web
+            fi
 
             # Wait for health check
             echo "Waiting for application to become healthy..."
