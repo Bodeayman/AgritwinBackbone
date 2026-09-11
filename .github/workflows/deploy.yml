@@ -189,6 +189,9 @@ jobs:
               fi
               if [ "$i" -eq "$RETRIES" ]; then
                 echo "ERROR: Application failed health check after $RETRIES attempts"
+                echo "----- agritwin_web logs -----"
+                docker logs agritwin_web --tail 60 2>&1 || echo "(no logs available)"
+                echo "-----------------------------"
                 echo "Rolling back to previous image..."
                 if docker image inspect "$IMAGE_NAME:previous" >/dev/null 2>&1; then
                   docker tag "$IMAGE_NAME:previous" "$IMAGE_NAME:latest"
