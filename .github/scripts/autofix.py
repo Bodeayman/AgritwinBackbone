@@ -10,11 +10,9 @@ REPO = os.environ["GITHUB_REPOSITORY"]
 SHA = os.environ["GITHUB_SHA"]
 RUN_ID = os.environ["GITHUB_RUN_ID"]
 
-ENDPOINT = os.environ.get("AZURE_OPENAI_ENDPOINT", "").rstrip("/")
-API_KEY = os.environ.get("AZURE_OPENAI_KEY", "")
-DEPLOYMENT = os.environ.get("AZURE_OPENAI_DEPLOYMENT", "")
-API_VERSION = os.environ.get("AZURE_OPENAI_API_VERSION", "2024-10-21")
-MODEL = os.environ.get("AUTOFIX_MODEL", "gpt-4o")
+ENDPOINT = os.environ.get("GEMINI_API_KEY", "")
+API_KEY = os.environ.get("GEMINI_API_KEY", "")
+MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
 
 MAX_FIX_ATTEMPTS = int(os.environ.get("AUTOFIX_MAX_ATTEMPTS", "3"))
 
@@ -26,32 +24,31 @@ SYSTEM_PROMPT = (
 )
 
 
-def api_call(messages):
-    if not ENDPOINT or not API_KEY:
+def api_call(history, system_prompt):
+    if not API_KEY:
         raise RuntimeError(
-            "AZURE_OPENAI_ENDPOINT/AZURE_OPENAI_KEY not configured; cannot call LLM"
+            "GEMINI_API_KEY not configured; cannot call Gemini"
         )
     url = (
-        f"{ENDPOINT}/openai/deployments/{DEPLOYMENT}/chat/completions"
-        f"?api-version={API_VERSION}"
+        f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}"
+        f":generateContent?key={API_KEY}"
     )
     payload = {
-        "messages": messages,
-        "temperature": 0.2,
+        "system_instruction": {"parts": [{"text": system_prompt}]},
+        "contents": history,
+        "generationConfig": {"temperature": 0.2},
     }
-    if MODEL:
-        payload["model"] = MODEL
     req = urllib.request.Request(
         url,
         data=json.dumps(payload).encode(),
-        headers={
-            "Content-Type": "application/json",
-            "api-key": API_KEY,
-        },
+        headers={"Content-Type": "application/json"},
     )
     with urllib.request.urlopen(req) as resp:
         data = json.loads(resp.read())
-    return data["choices"][0]["message"]["content"]
+    try:
+        return data["candidates"][0]["content"]["parts"][0]["text"]
+    except (KeyError, IndexError):
+        raise RuntimeError(f"Gemini returned unexpected payload: {json.dumps(data)[:1000]}")
 
 
 def extract_diff(text):
@@ -79,23 +76,26 @@ def main():
     if len(log_text) > MAX_LOG:
         log_text = log_text[-MAX_LOG:]
 
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
+    history = [
         {
             "role": "user",
-            "content": (
-                f"CI tests failed on commit {SHA} (run {RUN_ID}). "
-                "Repo layout: app/ (FastAPI app: api/, services/, schemas/, models/, "
-                "repositories/), tests/ (pytest). Fix the errors in the following log:\n\n"
-                f"{log_text}"
-            ),
-        },
+            "parts": [
+                {
+                    "text": (
+                        f"CI tests failed on commit {SHA} (run {RUN_ID}). "
+                        "Repo layout: app/ (FastAPI app: api/, services/, schemas/, models/, "
+                        "repositories/), tests/ (pytest). Fix the errors in the following log:\n\n"
+                        f"{log_text}"
+                    )
+                }
+            ],
+        }
     ]
 
     for attempt in range(1, MAX_FIX_ATTEMPTS + 1):
         print(f"[autofix] attempt {attempt}/{MAX_FIX_ATTEMPTS}: requesting patch from model")
         try:
-            response = api_call(messages)
+            response = api_call(history, SYSTEM_PROMPT)
         except Exception as exc:
             print(f"[autofix] LLM call failed: {exc}")
             _gh("issue", f"Autofix failed: LLM unavailable", f"```\n{exc}\n```\n\nFull run: .../actions/runs/{RUN_ID}")
@@ -104,8 +104,8 @@ def main():
         patch = extract_diff(response)
         if not patch.strip():
             print("[autofix] Model returned empty patch")
-            messages.append({"role": "assistant", "content": response})
-            messages.append({"role": "user", "content": "Your reply contained no diff. Return a unified diff only."})
+            history.append({"role": "model", "parts": [{"text": response}]})
+            history.append({"role": "user", "parts": [{"text": "Your reply contained no diff. Return a unified diff only."}]})
             continue
 
         with open("/tmp/autofix.patch", "w", encoding="utf-8") as f:
@@ -114,8 +114,8 @@ def main():
         res = run(["git", "apply", "--check", "/tmp/autofix.patch"])
         if res.returncode != 0:
             print("[autofix] patch does not apply cleanly")
-            messages.append({"role": "assistant", "content": response})
-            messages.append({"role": "user", "content": f"The patch failed to apply:\n{res.stderr}\nReturn a corrected unified diff only."})
+            history.append({"role": "model", "parts": [{"text": response}]})
+            history.append({"role": "user", "parts": [{"text": f"The patch failed to apply:\n{res.stderr}\nReturn a corrected unified diff only."}]})
             continue
 
         run(["git", "apply", "/tmp/autofix.patch"])
@@ -129,8 +129,8 @@ def main():
         # Tests still fail: feed the new tail back and retry
         tail = test_res.stdout + test_res.stderr
         tail = tail[-MAX_LOG:]
-        messages.append({"role": "assistant", "content": response})
-        messages.append({"role": "user", "content": f"Patch applied but tests still fail:\n{tail}\nReturn a corrected unified diff only."})
+        history.append({"role": "model", "parts": [{"text": response}]})
+        history.append({"role": "user", "parts": [{"text": f"Patch applied but tests still fail:\n{tail}\nReturn a corrected unified diff only."}]})
 
     # Exhausted attempts
     _gh(
