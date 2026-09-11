@@ -179,32 +179,25 @@ jobs:
               $COMPOSE up -d --force-recreate --no-deps web
             fi
 
-            # Wait for health check
-            echo "Waiting for application to become healthy..."
-            RETRIES=30
-            for i in $(seq 1 $RETRIES); do
-              if curl -sf http://localhost:${API_PORT:-8000}/ > /dev/null 2>&1; then
-                echo "Application is healthy!"
-                break
+            # Single health check (no retries)
+            echo "Checking application health..."
+            if curl -sf http://localhost:${API_PORT:-8000}/ > /dev/null 2>&1; then
+              echo "Application is healthy!"
+            else
+              echo "ERROR: Application failed health check"
+              echo "----- agritwin_web logs -----"
+              docker logs agritwin_web --tail 60 2>&1 || echo "(no logs available)"
+              echo "-----------------------------"
+              echo "Rolling back to previous image..."
+              if docker image inspect "$IMAGE_NAME:previous" >/dev/null 2>&1; then
+                docker tag "$IMAGE_NAME:previous" "$IMAGE_NAME:latest"
+                "$DEPLOY_DIR/docker-compose" -f "$DEPLOY_DIR/docker-compose.yml" up -d --force-recreate --no-deps web
+                echo "Rollback to previous image completed."
+              else
+                echo "No previous image found; leaving current state for manual inspection."
               fi
-              if [ "$i" -eq "$RETRIES" ]; then
-                echo "ERROR: Application failed health check after $RETRIES attempts"
-                echo "----- agritwin_web logs -----"
-                docker logs agritwin_web --tail 60 2>&1 || echo "(no logs available)"
-                echo "-----------------------------"
-                echo "Rolling back to previous image..."
-                if docker image inspect "$IMAGE_NAME:previous" >/dev/null 2>&1; then
-                  docker tag "$IMAGE_NAME:previous" "$IMAGE_NAME:latest"
-                  "$DEPLOY_DIR/docker-compose" -f "$DEPLOY_DIR/docker-compose.yml" up -d --force-recreate --no-deps web
-                  echo "Rollback to previous image completed."
-                else
-                  echo "No previous image found; leaving current state for manual inspection."
-                fi
-                exit 1
-              fi
-              echo "Attempt $i/$RETRIES - waiting..."
-              sleep 5
-            done
+              exit 1
+            fi
 
             # Clean up old images
             docker image prune -f
