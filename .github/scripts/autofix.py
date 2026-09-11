@@ -10,9 +10,17 @@ REPO = os.environ["GITHUB_REPOSITORY"]
 SHA = os.environ["GITHUB_SHA"]
 RUN_ID = os.environ["GITHUB_RUN_ID"]
 
-ENDPOINT = os.environ.get("GEMINI_API_KEY", "")
-API_KEY = os.environ.get("GEMINI_API_KEY", "")
-MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
+MODELS = [m.strip() for m in os.environ.get("GEMINI_MODELS", "").split(",") if m.strip()]
+if not MODELS:
+    MODELS = [
+        os.environ.get("GEMINI_MODEL", "").strip(),
+        "gemini-2.5-flash",
+        "gemini-2.0-flash",
+        "gemini-1.5-flash",
+        "gemini-flash-latest",
+    ]
+MODELS = [m for m in MODELS if m]
 
 MAX_FIX_ATTEMPTS = int(os.environ.get("AUTOFIX_MAX_ATTEMPTS", "3"))
 MODE = os.environ.get("AUTOFIX_MODE", "test")
@@ -44,26 +52,39 @@ def api_call(history, system_prompt):
         raise RuntimeError(
             "GEMINI_API_KEY not configured; cannot call Gemini"
         )
-    url = (
-        f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}"
-        f":generateContent?key={API_KEY}"
-    )
-    payload = {
-        "system_instruction": {"parts": [{"text": system_prompt}]},
-        "contents": history,
-        "generationConfig": {"temperature": 0.2},
-    }
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(payload).encode(),
-        headers={"Content-Type": "application/json"},
-    )
-    with urllib.request.urlopen(req) as resp:
-        data = json.loads(resp.read())
-    try:
-        return data["candidates"][0]["content"]["parts"][0]["text"]
-    except (KeyError, IndexError):
-        raise RuntimeError(f"Gemini returned unexpected payload: {json.dumps(data)[:1000]}")
+    last_err = None
+    for model in MODELS:
+        url = (
+            f"https://generativelanguage.googleapis.com/v1beta/models/{model}"
+            f":generateContent?key={API_KEY}"
+        )
+        payload = {
+            "system_instruction": {"parts": [{"text": system_prompt}]},
+            "contents": history,
+            "generationConfig": {"temperature": 0.2},
+        }
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(payload).encode(),
+            headers={"Content-Type": "application/json"},
+        )
+        try:
+            with urllib.request.urlopen(req) as resp:
+                data = json.loads(resp.read())
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", errors="replace")
+            last_err = f"HTTP {exc.code} on model {model}: {body[:500]}"
+            print(f"[autofix] {last_err}")
+            continue
+        except Exception as exc:
+            last_err = f"{exc}"
+            print(f"[autofix] call failed: {last_err}")
+            continue
+        try:
+            return data["candidates"][0]["content"]["parts"][0]["text"]
+        except (KeyError, IndexError):
+            raise RuntimeError(f"Gemini returned unexpected payload: {json.dumps(data)[:1000]}")
+    raise RuntimeError(f"All Gemini models failed. Last error: {last_err}")
 
 
 def extract_diff(text):
