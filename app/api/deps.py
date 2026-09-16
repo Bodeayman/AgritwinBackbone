@@ -17,6 +17,7 @@ from app.services.crop_cycle_service import CropCycleService
 from app.services.crop_catalog_service import CropCatalogService
 from app.services.crop_rotation_service import CropRotationService
 from app.services.optimization_service import OptimizationService
+from app.services.disease_service import DiseaseService
 from app.services.auth_service import AuthService
 from app.services.sensor_service import SensorService
 from app.services.satellite_observation_service import SatelliteObservationService
@@ -67,6 +68,9 @@ def get_crop_rotation_service(db: Session = Depends(get_db)) -> CropRotationServ
 def get_optimization_service(db: Session = Depends(get_db)) -> OptimizationService:
     return OptimizationService(db)
 
+def get_disease_service(db: Session = Depends(get_db)) -> DiseaseService:
+    return DiseaseService(db)
+
 def get_auth_service(db: Session = Depends(get_db)) -> AuthService:
     return AuthService(db)
 
@@ -77,7 +81,9 @@ def get_satellite_observation_service(db: Session = Depends(get_db)) -> Satellit
     return SatelliteObservationService(db)
 
 def get_diagnosis_service(db: Session = Depends(get_db)) -> DiagnosisService:
-    return DiagnosisService(db)
+    from app.services.disease_service import DiseaseService
+    disease_svc = DiseaseService(db)
+    return DiagnosisService(db, disease_svc)
 
 def get_irrigation_plan_service(db: Session = Depends(get_db)) -> IrrigationPlanService:
     return IrrigationPlanService(db)

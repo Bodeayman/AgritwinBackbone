@@ -4,17 +4,28 @@ from sqlalchemy.orm import Session
 from app.repositories.diagnosis_repository import DiagnosisRepository
 from app.models.diagnosis import Diagnosis
 from app.schemas.diagnosis import DiagnosisCreate, DiagnosisOut
+from app.services.disease_service import DiseaseService
 
 
 class DiagnosisService:
-    def __init__(self, db: Session):
+    def __init__(self, db: Session, disease_service: Optional[DiseaseService] = None):
         self.repo = DiagnosisRepository(db)
+        self.disease_service = disease_service or DiseaseService(db)
 
     def create(self, diag_in: DiagnosisCreate) -> DiagnosisOut:
+        # Find or create disease based on disease_name and crop_type
+        disease = None
+        if diag_in.disease_or_pest and diag_in.crop_type:
+            disease = self.disease_service.find_or_create_disease(
+                disease_name=diag_in.disease_or_pest,
+                crop_type=diag_in.crop_type
+            )
+        
         obj = Diagnosis(
             field_id=diag_in.field_id,
             model_id=diag_in.model_id,
             imagery_id=diag_in.imagery_id,
+            disease_id=disease.id if disease else None,
             status=diag_in.status,
             crop_type=diag_in.crop_type,
             disease_or_pest=diag_in.disease_or_pest,

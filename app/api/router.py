@@ -10,6 +10,7 @@ from app.api.v1 import (
     weather,
     satellite_observations,
     diagnoses,
+    diseases,
     sensor_readings,
     irrigation_plans,
     yield_predictions,
@@ -36,6 +37,7 @@ api_router.include_router(weather.router, prefix="/weather", tags=["Weather"], d
 api_router.include_router(sensor_readings.router, prefix="/sensor-readings", tags=["SensorReadings"], dependencies=[Depends(get_current_user)])
 api_router.include_router(satellite_observations.router, prefix="/satellite-observations", tags=["SatelliteObservations"], dependencies=[Depends(get_current_user)])
 api_router.include_router(diagnoses.router, prefix="/diagnoses", tags=["Diagnoses"], dependencies=[Depends(get_current_user)])
+api_router.include_router(diseases.router, prefix="/diseases", tags=["Diseases"], dependencies=[Depends(get_current_user)])
 api_router.include_router(irrigation_plans.router, prefix="/irrigation-plans", tags=["IrrigationPlans"], dependencies=[Depends(get_current_user)])
 api_router.include_router(yield_predictions.router, prefix="/yield-predictions", tags=["YieldPredictions"], dependencies=[Depends(get_current_user)])
 api_router.include_router(crop_mix_recommendations.router, prefix="/crop-mix-recommendations", tags=["CropMixRecommendations"], dependencies=[Depends(get_current_user)])

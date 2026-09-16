@@ -8,6 +8,7 @@ from app.models.sensor_reading import SensorReading
 from app.models.weather import Weather
 from app.models.satellite_observation import SatelliteObservation
 from app.models.satellite import Satellite
+from app.models.disease import Disease
 from app.models.diagnosis import Diagnosis
 from app.models.irrigation_plan import IrrigationPlan
 from app.models.yield_prediction import YieldPrediction
@@ -29,6 +30,7 @@ __all__ = [
     "Weather",
     "SatelliteObservation",
     "Satellite",
+    "Disease",
     "Diagnosis",
     "IrrigationPlan",
     "YieldPrediction",
