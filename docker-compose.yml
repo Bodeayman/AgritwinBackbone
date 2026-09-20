@@ -1,110 +1,122 @@
-version: "3.8"
+version: '3.8'
 
 services:
+  # PostgreSQL Database
   db:
     image: postgis/postgis:15-3.4
     container_name: agritwin_db
-    restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: REDACTED_DB_PASSWORD
+      POSTGRES_DB: agritwin
     ports:
-      - "127.0.0.1:5432:5432"
+      - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
       timeout: 5s
       retries: 5
-    networks:
-      - agritwin
 
+  # MinIO Object Storage
   minio:
     image: minio/minio:RELEASE.2024-06-06T09-36-42Z
     container_name: agritwin_minio
-    restart: always
-    ports:
-      - "127.0.0.1:9000:9000"
-      - "127.0.0.1:9001:9001"
+    command: sh -c "minio server /data --console-address ':9001'"
     environment:
-      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-    entrypoint: sh
-    command: -c "minio server /data --console-address ':9001'"
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: REDACTED_MINIO_SECRET
+    ports:
+      - "9000:9000"
+      - "9001:9001"
     volumes:
-      - miniodata:/data
+      - minio_data:/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    networks:
-      - agritwin
+      interval: 30s
+      timeout: 20s
+      retries: 3
 
+  # RabbitMQ Message Queue
   rabbitmq:
     image: rabbitmq:3-management
     container_name: agritwin_rabbitmq
-    restart: always
-    ports:
-      - "127.0.0.1:5672:5672"
-      - "127.0.0.1:15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     healthcheck:
-      test: ["CMD", "rabbitmqctl", "status"]
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 30s
       timeout: 10s
       retries: 5
-    networks:
-      - agritwin
 
-  web:
-    build: .
-    image: ${DOCKER_IMAGE:-agritwin-web:latest}
-    container_name: agritwin_web
-    restart: always
+  # AgriTwin Backend Service
+  backbone:
+    build:
+      context: ./backbone
+      dockerfile: Dockerfile
+    container_name: agritwin_backbone
     ports:
-      - "${API_PORT:-8000}:8000"
+      - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
-      - MINIO_ENDPOINT=minio:9000
-      - MINIO_ACCESS_KEY=${MINIO_ROOT_USER}
-      - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD}
-      - MINIO_SECURE=${MINIO_SECURE:-False}
-      - MINIO_BUCKET_NAME=${MINIO_BUCKET_NAME}
-      - RABBITMQ_HOST=rabbitmq
-      - RABBITMQ_PORT=5672
-      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
-      - RABBITMQ_URL=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@rabbitmq:5672
-      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
-      - JWT_ALGORITHM=${JWT_ALGORITHM:-HS256}
-      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES:-10080}
-      - INTERN_2_API_KEY=${INTERN_2_API_KEY}
-      - INTERN_3_API_KEY=${INTERN_3_API_KEY}
-      - INTERN_4A_API_KEY=${INTERN_4A_API_KEY}
-      - INTERN_4B_API_KEY=${INTERN_4B_API_KEY}
-      - INTERN_5_API_KEY=${INTERN_5_API_KEY}
-      - INTERN_7_API_KEY=${INTERN_7_API_KEY}
-      - INTERN_8_API_KEY=${INTERN_8_API_KEY}
-      - BACKEND_CORS_ORIGINS=${BACKEND_CORS_ORIGINS}
+      DATABASE_URL: postgresql://postgres:REDACTED_DB_PASSWORD@db:5432/agritwin
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: REDACTED_MINIO_SECRET
+      MINIO_SECURE: "False"
+      MINIO_BUCKET_NAME: agritwin-bucket
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      BACKEND_CORS_ORIGINS: "[\"*\"]"
     depends_on:
       db:
         condition: service_healthy
       minio:
         condition: service_healthy
       rabbitmq:
-        condition: service_started
-    networks:
-      - agritwin
+        condition: service_healthy
+    volumes:
+      - ./backbone:/app
+    restart: unless-stopped
+
+  # Classical Classifier Service
+  classical-classifier:
+    build:
+      context: ./classical-classifier
+      dockerfile: Dockerfile
+    container_name: agritwin_classical_classifier
+    ports:
+      - "8001:8000"
+    environment:
+      BACKEND_URL: http://backbone:8000
+    depends_on:
+      - backbone
+    restart: unless-stopped
+
+  # VLM Classifier Service
+  vlm-classifier:
+    build:
+      context: ./vlm-classifier
+      dockerfile: Dockerfile
+    container_name: agritwin_vlm_classifier
+    ports:
+      - "8002:8000"
+    environment:
+      BACKEND_URL: http://backbone:8000
+    depends_on:
+      - backbone
+    restart: unless-stopped
 
 volumes:
-  pgdata:
-  miniodata:
+  postgres_data:
+  minio_data:
 
 networks:
-  agritwin:
-    driver: bridge
+  default:
+    name: agritwin-network

@@ -37,7 +37,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=builder /root/.local /root/.local
 
 # Copy application code
-COPY ./app ./app
+COPY . .
 
 # Expose port
 EXPOSE 8000
