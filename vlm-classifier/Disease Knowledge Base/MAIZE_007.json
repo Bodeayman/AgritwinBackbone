@@ -1,0 +1,173 @@
+{
+  "disease_id": "MAIZE_007",
+  "crop": "Maize (Zea mays L.)",
+  "country_scope": "Egypt",
+  "problem_type": "Insect pest damage, not a plant disease",
+  "disease_name": "Fall Armyworm Damage",
+  "common_request_name": "Armyworm in maize",
+  "pest": "Spodoptera frugiperda (J.E. Smith)",
+  "pest_genus": "Spodoptera",
+  "family": "Noctuidae",
+  "pest_stage_causing_visible_damage": "Larvae, especially late instars",
+  "egypt_status": {
+    "first_report": "2019 in Aswan Governorate, including Kom Ombo",
+    "subsequent_egypt_records": [
+      "Assiut",
+      "Nubaria and Beheira",
+      "Nile Delta",
+      "Upper Egypt"
+    ],
+    "egypt_research": "Egyptian field studies have documented infestation on maize, yield impacts, seasonal generations, growth-stage susceptibility, and characteristic leaf and whorl damage.",
+    "important_scope_note": "The term armyworm can refer to several caterpillar species. This Egypt-focused record uses fall armyworm, Spodoptera frugiperda, because it is the armyworm species specifically documented as an invasive maize pest in Egypt."
+  },
+  "visual_damage_symptoms": {
+    "early_stage": [
+      "Transparent elongated scraped patches or window-pane areas where young larvae feed on the leaf surface",
+      "Small shot holes after damaged leaves expand",
+      "Fine linear scratches or translucent streaks on young leaves"
+    ],
+    "whorl_stage": [
+      "Irregular elongated holes in newly emerging leaves",
+      "Ragged, shredded whorl leaves",
+      "Clusters of holes and windowing concentrated in the central whorl",
+      "Wet or dry sawdust-like frass inside the whorl and around leaf axils"
+    ],
+    "advanced_stage": [
+      "Large irregular holes and torn leaf margins",
+      "Extensive loss of green photosynthetic tissue or leaf skeletonisation",
+      "Dead or torn central leaves, sometimes described as a damaged or dead heart",
+      "Holes or feeding injuries in stems in heavy infestations",
+      "Damage to tassels, silks, and ears at later growth stages"
+    ],
+    "larval_visual_features": [
+      "Caterpillars may be green, tan, brown, or nearly black depending on age and conditions",
+      "Head commonly shows a pale inverted Y-shaped marking",
+      "Four dark spots arranged approximately as a square can occur near the rear abdominal segments",
+      "Larvae hide deep in the whorl during the day and leave frass near feeding sites"
+    ],
+    "image_annotation_targets": [
+      "window-pane or transparent feeding patches",
+      "shot holes in expanded leaves",
+      "ragged elongated holes",
+      "whorl damage severity",
+      "frass quantity and location",
+      "dead-heart or torn central leaves",
+      "stem, silk, tassel, or ear feeding damage",
+      "visible larval head pattern and body markings"
+    ]
+  },
+  "symptoms": [
+    "transparent window-pane patches",
+    "elongated scratches",
+    "shot holes",
+    "irregular leaf holes",
+    "ragged leaf margins",
+    "shredded whorl leaves",
+    "sawdust-like frass",
+    "dead or torn central leaves",
+    "stem holes",
+    "silk, tassel, or ear injury",
+    "reduced photosynthetic area"
+  ],
+  "damage_color": [
+    "translucent",
+    "pale green",
+    "yellow-green",
+    "brown at dead tissue",
+    "black-brown frass",
+    "green/brown/black larval body"
+  ],
+  "damage_shape": [
+    "elongated scratch",
+    "window-like patch",
+    "shot hole",
+    "irregular hole",
+    "ragged tear",
+    "skeletonised area"
+  ],
+  "distribution_on_plant": "Often concentrated in the central whorl and on newly expanding leaves, but older larvae may feed on outer leaves, stems, tassels, silks, ears, and kernels.",
+  "progression": [
+    "Eggs hatch and young larvae scrape the leaf surface, producing translucent window panes.",
+    "As leaves expand, scraped areas appear as shot holes or elongated transparent patches.",
+    "Larger larvae feed deep in the whorl, producing irregular holes, ragged leaves, and frass accumulation.",
+    "Heavy whorl injury can kill the central growing point and cause a dead-heart or severely torn plant centre.",
+    "Later infestations can injure stems, tassels, silks, ears, and kernels and reduce grain yield."
+  ],
+  "egypt_field_evidence": {
+    "nile_delta": "A 2024 report documented fall armyworm as a new invasive pest on maize in the Nile Delta and noted its earlier Egyptian records in Aswan in 2019 and Assiut in 2021.",
+    "nubaria_beheira": "Field experiments in Nubaria, Beheira, recorded five generations on maize from 1 May to 30 November in both study seasons.",
+    "yield_loss": "Untreated Nubaria plots recorded quantitative grain-yield losses of 77.76% and 78.89% in the two study seasons; these are experiment-specific results, not a national average.",
+    "growth_stage": "An Egyptian study found the late-whorl stage to be among the most susceptible stages, while mature plants had the lowest infestation rate.",
+    "seasonal_hybrid_evidence": "A 2025 Egyptian study reported the highest infestation across tested hybrids in the 15 July sowing date, with SC-2088 showing the highest mean infestation among the evaluated hybrids."
+  },
+  "environment": {
+    "temperature_and_season": "Warm maize-growing periods favour rapid development; Egyptian studies recorded activity from spring/summer through harvest, with infestations beginning around the third week of June in one field study.",
+    "humidity": "Humidity is not required to produce visible feeding injury, but rainfall, irrigation, and dense maize can influence egg survival, larval development, and plant attractiveness.",
+    "crop_stage": "Young maize through the whorl stage is particularly vulnerable; late-whorl plants can show severe central-leaf damage.",
+    "field_risk_factors": [
+      "late or staggered planting",
+      "nearby infested maize or grassy hosts",
+      "warm weather",
+      "unprotected whorls",
+      "continuous maize production"
+    ]
+  },
+  "similar_problems": [
+    {
+      "name": "Maize stem borer damage",
+      "causal_group": "Chilo or Sesamia species",
+      "visual_difference": "Stem borers commonly produce entry holes, frass, and dead hearts, but fall armyworm characteristically produces window-pane feeding and ragged holes in the whorl."
+    },
+    {
+      "name": "Cutworm injury",
+      "causal_group": "Agrotis and related noctuid larvae",
+      "visual_difference": "Cutworms usually cut seedlings at or near the soil surface rather than producing extensive windowing deep in the maize whorl."
+    },
+    {
+      "name": "Hail, wind, or mechanical injury",
+      "causal_group": "Abiotic damage",
+      "visual_difference": "Tearing may be widespread and random but normally lacks larvae, concentrated whorl feeding, and fresh frass."
+    },
+    {
+      "name": "Leaf-feeding beetles",
+      "causal_group": "Various Coleoptera",
+      "visual_difference": "Often create small round holes or edge feeding without the deep whorl injury and sawdust-like frass typical of fall armyworm."
+    }
+  ],
+  "recommended_image_search_terms": [
+    "fall armyworm maize Egypt whorl damage",
+    "Spodoptera frugiperda maize Egypt window pane leaves",
+    "fall armyworm Nubaria maize frass",
+    "fall armyworm Egypt maize ragged holes dead heart"
+  ],
+  "diagnostic_caution": "Do not identify fall armyworm from leaf holes alone. Inspect the whorl for larvae and frass, and examine larval markings when possible. Confirm species using morphological or molecular identification if regulatory or management decisions depend on the diagnosis.",
+  "sources": [
+    {
+      "title": "FAO and MALR resuming efforts to face Fall Armyworm infestation in Egypt",
+      "relevance_to_egypt": "Official Egypt report describing the 2019 arrival and importance of fall armyworm on maize.",
+      "url": "https://www.fao.org/egypt/news/detail/FAO-and-MALR-resuming-efforts-to-face-Fall-Armyworm-(FAW)-infestation-in-Egypt/en/"
+    },
+    {
+      "title": "Impact of Fall Armyworm Spodoptera frugiperda on Maize ...",
+      "relevance_to_egypt": "Nubaria, Beheira field experiments, yield loss, generations, and Egyptian management context.",
+      "url": "https://journals.ekb.eg/article_302708.html"
+    },
+    {
+      "title": "Appearance of Fall Armyworm ... on Maize Plants in the Nile Delta, Egypt",
+      "relevance_to_egypt": "Egyptian records in Aswan, Assiut, and the Nile Delta.",
+      "url": "https://bu.edu.eg/staff/kamal.Khalawy-publications/53108"
+    },
+    {
+      "title": "Egyptian Academy of Biological Sciences: Fall Armyworm damage symptoms",
+      "relevance_to_egypt": "Egyptian visual documentation of transparent patches, irregular holes, stem holes, and sawdust-like faeces.",
+      "url": "https://eajbsa.journals.ekb.eg/article_214719_23fc3282a5feff8aacbd29177c1ac0c2.pdf"
+    },
+    {
+      "title": "CABI Fall Armyworm Field Handbook",
+      "relevance": "Image-oriented descriptions of window panes, ragged whorl leaves, holes, and frass.",
+      "url": "https://www.cabi.org/wp-content/uploads/FAW-pocket-guide.pdf"
+    }
+  ],
+  "evidence_level": "expert_verified_for_Egypt_occurrence_and_impact; high_for_visual_damage_symptoms; moderate_for_current_distribution",
+  "research_notes": "Armyworm is an insect pest rather than a plant disease. This Egypt-focused record uses fall armyworm, Spodoptera frugiperda, because it is the species documented in the Egyptian maize literature and official Egypt reports."
+}

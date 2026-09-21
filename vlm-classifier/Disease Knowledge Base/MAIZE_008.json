@@ -1,0 +1,154 @@
+{
+  "disease_id": "MAIZE_008",
+  "crop": "Maize (Zea mays L.)",
+  "country_scope": "Egypt",
+  "disease_name": "Gray Leaf Spot (GLS)",
+  "synonyms": [
+    "Grey Leaf Spot",
+    "Corn Gray Leaf Spot",
+    "Maize Gray Leaf Spot"
+  ],
+  "pathogen": "Cercospora zeae-maydis Tehon & E.Y. Daniels and/or Cercospora zeina Crous & U. Braun",
+  "pathogen_genus": "Cercospora",
+  "pathogen_type": "Fungal foliar pathogen",
+  "egypt_evidence_status": {
+    "confirmed_egypt_specific_field_record_found": false,
+    "interpretation": "The Egypt-only search did not locate a reliable Egyptian maize field survey, isolate record, or official distribution entry specifically confirming GLS caused by C. zeae-maydis or C. zeina. Do not confuse Egyptian records of Cercospora beticola on sugar beet or Cephalosporium maydis, the late-wilt pathogen of maize, with maize GLS.",
+    "regional_context": "GLS is well documented in maize-growing regions of Africa, but the reviewed continental sources did not establish Egypt as a confirmed GLS location.",
+    "diagnostic_priority": "Any suspected Egyptian case should be confirmed by microscopy, isolation, and/or PCR before being labelled GLS."
+  },
+  "visual_symptoms_for_image_annotation": {
+    "early_stage": [
+      "Tiny pinpoint brown, tan, or dark moist-looking spots",
+      "Small lesions may have a thin yellow chlorotic halo",
+      "Early lesions can be translucent when the leaf is held against light"
+    ],
+    "mature_stage": [
+      "Long, narrow, sharply rectangular lesions",
+      "Grey, tan, or brown lesions running parallel to the leaf veins",
+      "Lesion width is limited by adjacent secondary and tertiary veins",
+      "Mature lesions become opaque and may show small dark fungal sporulation points"
+    ],
+    "advanced_stage": [
+      "Lesions merge into large grey-brown blotches",
+      "Large areas of leaf tissue become necrotic",
+      "Whole leaves may blight, dry, and die prematurely",
+      "Severe upper-canopy infection can weaken stalks and increase lodging risk"
+    ],
+    "image_annotation_targets": [
+      "pinpoint lesions and yellow halos",
+      "rectangular vein-limited outline",
+      "grey-to-tan colour transition",
+      "parallel alignment with leaf veins",
+      "dark sporulation points on lesion surfaces",
+      "lesion coalescence",
+      "percentage of necrotic leaf area",
+      "lower-to-upper canopy progression"
+    ]
+  },
+  "symptoms": [
+    "pinpoint brown or tan spots",
+    "yellow chlorotic halos",
+    "translucent early lesions",
+    "grey-to-tan rectangular lesions",
+    "vein-limited necrotic lesions",
+    "dark fungal sporulation points",
+    "lesion coalescence",
+    "leaf blighting",
+    "premature leaf death",
+    "possible stalk weakening and lodging"
+  ],
+  "lesion_color": [
+    "yellow halo",
+    "light brown",
+    "tan",
+    "grey",
+    "grey-brown",
+    "dark brown",
+    "black specks"
+  ],
+  "lesion_shape": [
+    "pinpoint",
+    "small spot",
+    "long narrow rectangle",
+    "vein-limited band",
+    "irregular after coalescence"
+  ],
+  "lesion_dimensions": {
+    "reported_general_range": "Approximately 5–70 mm long and 2–4 mm wide, with substantial variation among host genotypes and pathogen populations.",
+    "egypt_specific_measurement": "Not available from the Egypt-only sources reviewed."
+  },
+  "distribution_on_plant": "Typically begins on lower leaves before or around flowering and progresses upward during continued warm, humid weather. Egypt-specific canopy distribution has not been confirmed by a located field survey.",
+  "affected_parts": [
+    "leaf blade",
+    "leaf sheath in severe infection",
+    "stalk indirectly through weakening and lodging"
+  ],
+  "progression": [
+    "Pinpoint lesions appear on lower leaves, sometimes surrounded by a yellow halo.",
+    "Lesions enlarge into narrow rectangular bands parallel to the leaf veins.",
+    "The lesions become grey, tan, or brown and may develop dark sporulation points.",
+    "Lesions merge and destroy increasing areas of leaf tissue.",
+    "Severe infection before grain filling can cause premature leaf death, reduced photosynthesis, stalk weakening, and poor grain development."
+  ],
+  "environment": {
+    "humidity": "High humidity, frequent dew, fog, and extended periods of leaf wetness favour infection and lesion development.",
+    "temperature": "Warm conditions around 25–30 °C are generally favourable; an Egypt-specific optimum was not identified.",
+    "leaf_wetness": "Prolonged wet leaves support spore germination and repeated infection cycles.",
+    "residue": "The pathogen can survive and produce inoculum on infected maize residue at the soil surface.",
+    "egypt_context": "These conditions may occur in irrigated or humid Egyptian maize environments, but this is a biological-risk interpretation, not evidence of confirmed Egyptian GLS prevalence."
+  },
+  "similar_diseases": [
+    {
+      "name": "Northern Leaf Blight",
+      "pathogen": "Exserohilum turcicum",
+      "visual_difference": "Long grey-green to tan cigar-shaped lesions, generally broader and less sharply rectangular than GLS lesions."
+    },
+    {
+      "name": "Maydis Leaf Blight / Southern Leaf Blight",
+      "pathogen": "Bipolaris maydis",
+      "visual_difference": "Usually produces smaller tan or brown diamond-shaped lesions that may become rectangular, but typically lacks the sharply grey, vein-limited GLS appearance."
+    },
+    {
+      "name": "Late Wilt of Maize",
+      "pathogen": "Cephalosporium maydis",
+      "visual_difference": "Causes systemic yellowing, wilting, vascular browning, and plant death rather than characteristic rectangular leaf lesions. It is documented in Egypt but is not GLS."
+    },
+    {
+      "name": "Cercospora Leaf Spot of Sugar Beet",
+      "pathogen": "Cercospora beticola",
+      "visual_difference": "Can produce Cercospora-type spots on sugar beet in Egypt but is a different host-pathogen disease and should not be used as evidence for maize GLS."
+    }
+  ],
+  "recommended_image_search_terms": [
+    "suspected gray leaf spot maize Egypt",
+    "Cercospora zeae-maydis maize Egypt diagnosis",
+    "maize gray leaf spot rectangular vein limited lesions",
+    "maize GLS grey tan lesions leaf veins"
+  ],
+  "diagnostic_caution": "This JSON records a limited or unconfirmed Egypt-specific status. Rectangular grey lesions alone are not sufficient to establish GLS in Egypt because other foliar diseases can resemble it. Laboratory confirmation and a documented Egyptian host/pathogen record are recommended.",
+  "sources": [
+    {
+      "title": "Recent advances in the population biology and management of maize foliar fungal pathogens",
+      "relevance": "Continental African context, GLS pathogen taxonomy, and distinction between C. zeae-maydis and C. zeina; does not confirm Egypt-specific GLS.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11324496/"
+    },
+    {
+      "title": "Gray Leaf Spot: A Disease of Global Importance in Maize Production",
+      "relevance": "Disease identity and general pathogen biology.",
+      "url": "https://apsjournals.apsnet.org/doi/pdf/10.1094/PDIS.1999.83.10.884"
+    },
+    {
+      "title": "Grey Leaf Spot of Maize",
+      "relevance": "General visual symptoms, lesion geometry, progression, and environmental conditions; not Egypt-specific.",
+      "url": "https://plantix.net/en/library/plant-diseases/100107/grey-leaf-spot-of-maize/"
+    },
+    {
+      "title": "Influence of Cercospora Leaf Spot on Sugar Beet Yield Components in Egypt",
+      "relevance": "Included to distinguish the Egyptian sugar-beet disease C. beticola from maize GLS; it is not evidence of maize GLS.",
+      "url": "https://ejp.journals.ekb.eg/article_96721.html"
+    }
+  ],
+  "evidence_level": "limited_for_Egypt_occurrence; high_for_general_visual_symptoms; unconfirmed_for_Egypt_specific_pathogen_presence",
+  "research_notes": "This is intentionally a conservative Egypt-only record. It avoids treating global GLS symptom descriptions or Egyptian Cercospora diseases on other crops as proof that maize GLS is established in Egypt."
+}

@@ -1,0 +1,151 @@
+{
+  "disease_id": "MAIZE_001",
+  "crop": "Maize (Zea mays L.)",
+  "country_scope": "Egypt",
+  "disease_name": "Northern Leaf Blight (NLB)",
+  "local_synonyms": [
+    "Northern Corn Leaf Blight (NCLB)",
+    "Turcicum Leaf Blight (TLB)"
+  ],
+  "pathogen": "Exserohilum turcicum (Pass.) K.J. Leonard & Suggs",
+  "pathogen_genus": "Exserohilum",
+  "older_or_alternative_names": [
+    "Helminthosporium turcicum",
+    "Setosphaeria turcica (teleomorph)"
+  ],
+  "pathogen_type": "Ascomycete fungus; primarily a foliar pathogen",
+  "host_parts_affected": [
+    "leaf blade",
+    "leaf sheath",
+    "husk/ear covering in susceptible plants"
+  ],
+  "visual_diagnosis": {
+    "early_symptoms": [
+      "Small oval to elongated pale green, grey-green, or water-soaked spots",
+      "Initial spots usually begin on lower leaves"
+    ],
+    "mature_lesions": [
+      "Long elliptical, spindle-shaped, or cigar-shaped lesions",
+      "Lesions are grey-green to tan/straw-coloured",
+      "Lesions are typically slender, oblong, and tapered at both ends",
+      "Lesions run broadly parallel to leaf veins or leaf margins",
+      "Typical reported length in Egyptian research is about 3–15 cm"
+    ],
+    "sporulation_features": [
+      "Dark grey to olive-grey dusty or sooty fungal sporulation in mature lesions",
+      "Sporulation is especially visible on the underside of infected leaves under humid conditions"
+    ],
+    "advanced_symptoms": [
+      "Individual lesions enlarge and merge into irregular areas of dead tissue",
+      "Extensive leaf blighting, drying, brittleness, and premature leaf death",
+      "Severe foliage damage can resemble frost injury"
+    ],
+    "image_annotation_targets": [
+      "lesion_count and size",
+      "cigar-shaped outline and tapered ends",
+      "grey-green-to-tan colour transition",
+      "dark/sooty sporulation at lesion centres or undersides",
+      "lower-to-upper canopy progression",
+      "lesion coalescence and percentage of dead leaf area"
+    ]
+  },
+  "symptoms": [
+    "water-soaked oval spots",
+    "grey-green lesions",
+    "long tan cigar-shaped lesions",
+    "dark grey or olive sporulation",
+    "lesion coalescence",
+    "leaf necrosis and blighting",
+    "brittle, frost-like foliage in severe infections"
+  ],
+  "lesion_color": [
+    "pale green",
+    "grey-green",
+    "tan",
+    "straw",
+    "olive-grey",
+    "dark grey"
+  ],
+  "lesion_shape": [
+    "oval",
+    "elliptical",
+    "spindle-shaped",
+    "cigar-shaped",
+    "irregular after coalescence"
+  ],
+  "lesion_dimensions": {
+    "typical_length_cm": "3–15",
+    "note": "Size varies with cultivar, infection timing, and environment."
+  },
+  "distribution_on_plant": "Usually starts on lower leaves and progresses upward; late infections may be distributed throughout the canopy.",
+  "progression": [
+    "Initial water-soaked or pale spots appear on lower leaves.",
+    "Spots elongate into grey-green, elliptical or cigar-shaped lesions.",
+    "Lesions become tan/straw-coloured and may develop dark sporulation, particularly in humid conditions.",
+    "Lesions expand and coalesce, destroying photosynthetic tissue and causing whole-leaf or extensive canopy blighting."
+  ],
+  "egypt_distribution_and_epidemiology": {
+    "reported_regions": [
+      "Northern Delta",
+      "north-western Delta",
+      "Nubaria",
+      "Sakha/Kafr El-Sheikh"
+    ],
+    "seasonal_pattern": "Most commonly reported in late-summer or off-season maize in the northern and north-western Delta.",
+    "favourable_field_conditions": [
+      "High humidity and prolonged leaf wetness/dew",
+      "Moderate temperatures; an Egyptian field study cites 18–27 °C and 6–18 hours of free water on leaves as favourable for infection",
+      "Sprinkler irrigation in newly reclaimed lands can increase field moisture and disease incidence",
+      "Late-summer planting dates that coincide with suitable humidity and infection conditions"
+    ],
+    "egyptian_impact_evidence": "Egyptian studies report grain-yield losses of about 30% or more in the Northern Delta under favourable disease conditions; losses are strongly dependent on cultivar, disease severity, and timing."
+  },
+  "egypt_specific_research": [
+    {
+      "location": "Nubaria and Sakha Agricultural Research Stations, Egypt",
+      "finding": "Natural and artificial infection trials evaluated Egyptian maize lines and hybrids. Sids 63, Giza 602, and Giza 628 were resistant in both locations, while Nubaria 39 and Gemmiza 18 were susceptible.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8913385/"
+    },
+    {
+      "location": "Kafr El-Sheikh University research farm, Egypt",
+      "finding": "Inoculated trials during 2020 and 2021 found lower disease severity in SC10 and SC176 than in the Balady variety; disease severity was higher with fresh animal manure than with stored/decomposed manure.",
+      "source_url": "https://jsas.journals.ekb.eg/article_271522_0f6d5167f03ab58172d5812809dfbc54.pdf"
+    },
+    {
+      "location": "Nubaria and Sakha, Egypt",
+      "finding": "Egyptian breeding research described the characteristic 3–15 cm grey-green to tan cigar-shaped lesions and grey sporulation, mainly on lesion undersides, and evaluated resistance using field disease nurseries.",
+      "source_url": "https://www.curresweb.com/mejar/mejar/2015/417-426.pdf"
+    }
+  ],
+  "similar_diseases_for_visual_differential": [
+    {
+      "disease": "Southern corn leaf blight",
+      "pathogen": "Bipolaris maydis",
+      "distinguishing_visual_hint": "Usually smaller, more uniformly oval or rectangular lesions; NLB is more characteristically long, cigar-shaped, and tapered."
+    },
+    {
+      "disease": "Gray leaf spot",
+      "pathogen": "Cercospora zeae-maydis",
+      "distinguishing_visual_hint": "More rectangular, vein-limited grey lesions; NLB lesions are generally broader, longer, and spindle/cigar-shaped."
+    },
+    {
+      "disease": "Common rust",
+      "pathogen": "Puccinia sorghi",
+      "distinguishing_visual_hint": "Rust produces many small raised orange-brown pustules rather than long necrotic cigar lesions."
+    }
+  ],
+  "recommended_image_search_terms": [
+    "Northern corn leaf blight maize Egypt lower leaves",
+    "Exserohilum turcicum cigar lesions maize Egypt",
+    "Turcicum leaf blight Kafr El-Sheikh maize",
+    "maize NLB grey green tan lesions underside sporulation"
+  ],
+  "diagnostic_caution": "Visual symptoms are strongly suggestive but not definitive. Confirm doubtful cases by microscopic examination of conidia/sporulation or laboratory isolation/molecular identification, especially where Southern corn leaf blight or gray leaf spot is also present.",
+  "source": [
+    "Abdelsalam et al., Saudi Journal of Biological Sciences, 2022; Egypt trials in Nubaria and Sakha: https://pmc.ncbi.nlm.nih.gov/articles/PMC8913385/",
+    "Elsayed et al., Journal of Sustainable Agricultural Sciences, 2023; Kafr El-Sheikh University, Egypt: https://jsas.journals.ekb.eg/article_271522_0f6d5167f03ab58172d5812809dfbc54.pdf",
+    "Osman et al., Middle East Journal of Agricultural Research, 2015; Nubaria and Sakha, Egypt: https://www.curresweb.com/mejar/mejar/2015/417-426.pdf"
+  ],
+  "evidence_level": "expert_verified_for_Egypt_context",
+  "research_notes": "This record prioritizes Egypt-based field and breeding studies. General symptom descriptors are included only where they are consistent with the Egyptian sources and are intended for visual disease-image annotation, not stand-alone diagnosis."
+}

@@ -1,0 +1,76 @@
+{
+  "disease_id": "MAIZE_009",
+  "visual_features": {
+    "earliest_visible_sign": {
+      "description": "Small oval, pale green, yellowish, or water-soaked spots",
+      "colors": [
+        "pale green",
+        "yellowish",
+        "water-soaked"
+      ],
+      "shape": "oval",
+      "size_mm": "null",
+      "location_on_plant": "lower leaves"
+    },
+    "characteristic_sign_or_lesion": {
+      "description": "Long elliptical, spindle-shaped, or cigar-shaped lesions that run broadly parallel to leaf veins",
+      "colors": {
+        "primary": [
+          "grey-green",
+          "grey",
+          "tan",
+          "straw-brown"
+        ],
+        "secondary": [
+          "dark grey",
+          "olive"
+        ],
+        "color_progression": "Grey-green lesions that mature to grey, tan, or straw-brown"
+      },
+      "shape": {
+        "primary_shape": "cigar_shaped",
+        "shape_descriptors": [
+          "elliptical",
+          "spindle-shaped",
+          "taper at the ends",
+          "broadly parallel to leaf veins"
+        ],
+        "shape_progression": "Oval spots elongate into elliptical or cigar-shaped lesions, becoming irregular after coalescence"
+      },
+      "size": {
+        "length_mm": "30-150 mm",
+        "width_mm": "null",
+        "diameter_mm": "null",
+        "size_variation_note": "Dimensions vary with cultivar, infection timing, weather, and disease severity"
+      },
+      "texture_and_surface": {
+        "surface": "flat",
+        "sporulation_or_sign": "Dark grey or olive fungal sporulation visible in humid weather, especially on lesion undersides",
+        "other_surface_details": "null"
+      },
+      "border_and_margin": {
+        "margin_type": "diffuse",
+        "halo": "null"
+      }
+    },
+    "advanced_or_severe_stage": {
+      "description": "Extensive leaf blighting and premature drying",
+      "coalescence": "Lesions enlarge and merge into irregular necrotic areas",
+      "tissue_death_appearance": "Large parts of the leaf become brown, dry, and brittle; whole leaves may wither and die",
+      "secondary_signs": [
+        "reduced grain filling",
+        "lodging"
+      ],
+      "percentage_affected_tissue_note": "Severe infections can affect most of the foliage"
+    },
+    "distribution_on_plant": {
+      "vertical_pattern": "Usually starts on lower leaves and progresses upward",
+      "horizontal_pattern": "broadly parallel to leaf veins",
+      "other_parts_if_severe": "can affect most of the foliage"
+    },
+    "pathognomonic_features": [
+      "Long cigar-shaped lesions 3-15 cm long, tapering at the ends",
+      "Grey-green lesions maturing to tan with dark grey or olive sporulation on the underside"
+    ]
+  }
+}

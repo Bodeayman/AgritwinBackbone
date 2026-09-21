@@ -1,0 +1,77 @@
+{
+  "disease_id": "MAIZE_011",
+  "visual_features": {
+    "earliest_visible_sign": {
+      "description": "Minute pale green, white, or yellow circular flecks on the youngest newly expanding leaves",
+      "colors": [
+        "pale green",
+        "white",
+        "yellow"
+      ],
+      "shape": "minute fleck, circular spot",
+      "size_mm": "0.5-2 mm",
+      "location_on_plant": "youngest newly expanding leaves"
+    },
+    "characteristic_sign_or_lesion": {
+      "description": "Narrow broken or continuous chlorotic streaks running parallel to leaf veins, commonly more visible along secondary and tertiary veins.",
+      "colors": {
+        "primary": [
+          "yellow",
+          "white"
+        ],
+        "secondary": [
+          "red or reddish in some isolates"
+        ],
+        "color_progression": "pale green, white, or yellow flecks elongate into yellow or white streaks, sometimes with red pigmentation"
+      },
+      "shape": {
+        "primary_shape": "streak | stripe",
+        "shape_descriptors": [
+          "fine linear",
+          "broken parallel stripe",
+          "continuous parallel stripe",
+          "fused band along leaf veins",
+          "vein-parallel"
+        ],
+        "shape_progression": "tiny pale circular flecks elongate along secondary and tertiary veins into broken streaks, which merge into continuous stripes"
+      },
+      "size": {
+        "length_mm": null,
+        "width_mm": null,
+        "diameter_mm": null,
+        "size_variation_note": "Streaks can fuse laterally into longer stripes covering much of the leaf"
+      },
+      "texture_and_surface": {
+        "surface": "flat",
+        "sporulation_or_sign": null,
+        "other_surface_details": null
+      },
+      "border_and_margin": {
+        "margin_type": "vein-limited",
+        "halo": null
+      }
+    },
+    "advanced_or_severe_stage": {
+      "description": "Severe stunting, shortened leaves, and abnormal ear development.",
+      "coalescence": "Streaks merge and may extend over much of each new leaf.",
+      "tissue_death_appearance": "Stunting and possible plant death if infected early.",
+      "secondary_signs": [
+        "severe stunting",
+        "shortened leaves and internodes",
+        "weak or abnormal growth",
+        "small, misshapen, poorly filled, or barren ears",
+        "abnormal bunching of shoots or flowers"
+      ],
+      "percentage_affected_tissue_note": "Streaks can cover most of newly formed leaves in severe cases."
+    },
+    "distribution_on_plant": {
+      "vertical_pattern": "Symptoms occur primarily on leaves that emerge after infection; older leaves formed before infection may remain healthy.",
+      "horizontal_pattern": "Streaks extend along secondary and tertiary veins.",
+      "other_parts_if_severe": "Growing point (curved/abnormal apical growth) and ears/cobs."
+    },
+    "pathognomonic_features": [
+      "Minute pale green, white, or yellow circular flecks on the youngest newly expanding leaves.",
+      "Narrow broken or continuous yellow/white chlorotic streaks running parallel to secondary and tertiary leaf veins."
+    ]
+  }
+}

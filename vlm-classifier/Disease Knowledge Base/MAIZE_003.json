@@ -1,0 +1,164 @@
+{
+  "disease_id": "MAIZE_003",
+  "crop": "Maize (Zea mays L.)",
+  "country_scope": "Egypt",
+  "disease_name": "Maydis Leaf Blight (MLB)",
+  "synonyms": [
+    "Southern Leaf Blight",
+    "Southern Corn Leaf Blight",
+    "Southern Leaf Spot"
+  ],
+  "pathogen": "Bipolaris maydis (Y. Nisik. & C. Miyake) Shoemaker",
+  "pathogen_genus": "Bipolaris",
+  "former_names": [
+    "Helminthosporium maydis",
+    "Drechslera maydis"
+  ],
+  "sexual_name": "Cochliobolus heterostrophus",
+  "pathogen_type": "Fungal foliar pathogen",
+  "egypt_scope_and_evidence": {
+    "reported_in_egypt": true,
+    "egypt_evidence": "A 2024 review of African maize foliar pathogens includes Egypt among countries where Bipolaris maydis-associated southern corn leaf blight has been reported. Egyptian literature also records Bipolaris-related fungi associated with maize and sorghum material.",
+    "evidence_limit": "A detailed Egypt-only survey of MLB incidence, regional prevalence, pathogen races, and yield losses was not located in the reviewed sources. The visual symptom description is therefore disease-specific, while Egypt-specific claims are kept separate and explicitly qualified."
+  },
+  "visual_symptoms": {
+    "early": [
+      "Tiny yellow or pale chlorotic flecks",
+      "Small oval or water-soaked spots, commonly beginning on lower leaves"
+    ],
+    "characteristic_leaf_lesions": [
+      "Small diamond-shaped lesions that elongate with age",
+      "Tan, straw-coloured, or light-brown centres",
+      "Reddish-brown to dark-brown margins",
+      "Elongated rectangular lesions constrained by adjacent leaf veins",
+      "Lesions may initially remain between veins and later merge"
+    ],
+    "advanced": [
+      "Coalescing lesions form large brown necrotic areas",
+      "Premature drying and death of leaves",
+      "Complete foliage blight in severe infections",
+      "Black or dark mould may appear on affected silks, husks, cobs, or kernels in severe/race-specific infections"
+    ],
+    "image_annotation_targets": [
+      "yellow flecks versus mature brown lesions",
+      "diamond-shaped early lesions",
+      "rectangular vein-limited mature lesions",
+      "light centre and dark margin contrast",
+      "lesion length, width, and density",
+      "lesion coalescence and percentage of necrotic tissue",
+      "lower-leaf-first pattern",
+      "black mould on cob or husk when present"
+    ]
+  },
+  "symptoms": [
+    "yellow chlorotic flecks",
+    "small oval spots",
+    "diamond-shaped lesions",
+    "tan or straw-coloured lesion centres",
+    "dark reddish-brown margins",
+    "rectangular vein-limited lesions",
+    "lesion coalescence",
+    "premature leaf drying",
+    "complete leaf blighting",
+    "possible black mould on husks, silks, cobs, or kernels"
+  ],
+  "lesion_color": [
+    "yellow",
+    "pale tan",
+    "straw",
+    "light brown",
+    "reddish-brown",
+    "dark brown",
+    "dark grey or black when sporulating/rotting"
+  ],
+  "lesion_shape": [
+    "fleck-like",
+    "oval",
+    "diamond-shaped",
+    "elongated",
+    "rectangular",
+    "irregular after coalescence"
+  ],
+  "lesion_size": {
+    "common_range": "Approximately 3–22 mm long and 2–6 mm wide for typical early-to-mature leaf lesions",
+    "note": "Lesion size and shape vary with the pathogen race, maize genotype, and disease severity."
+  },
+  "distribution": "Usually begins on lower leaves and increases upward through the canopy; severe disease can affect most foliage and, in some host-race combinations, above-ground reproductive tissues.",
+  "affected_parts": [
+    "leaf blade",
+    "leaf sheath",
+    "lower canopy",
+    "husks",
+    "silks",
+    "cob/ear",
+    "kernels in severe infections"
+  ],
+  "progression": [
+    "Yellow flecks or small spots appear on lower leaves.",
+    "Spots enlarge into diamond-shaped tan or brown lesions.",
+    "Lesions elongate and become rectangular because growth is limited by leaf veins.",
+    "Lesions develop darker margins and may become dark grey or black when sporulation or secondary decay occurs.",
+    "Lesions merge, producing extensive necrosis, premature leaf death, and whole-leaf blighting.",
+    "Severe or race-specific infections may extend to husks, silks, ears, cobs, and kernels."
+  ],
+  "environment": {
+    "humidity": "High humidity; disease development is favoured by relative humidity above approximately 80%, with very prolonged leaf wetness especially favourable.",
+    "temperature": "Warm conditions, approximately 20–30 °C; some disease references report stronger development around 24–35 °C when foliage remains wet.",
+    "leaf_wetness": "Prolonged dew, rain, or irrigation wetness supports infection and sporulation.",
+    "egypt_interpretation": "These conditions can occur in Egyptian maize production, but the reviewed sources did not provide an Egypt-specific temperature or humidity threshold study.",
+    "spread": "Conidia are dispersed mainly by wind and rain splash; infected residue can provide inoculum."
+  },
+  "pathogen_race_note": {
+    "races": [
+      "Race O",
+      "Race T",
+      "Race C",
+      "Race S"
+    ],
+    "egypt_specific_race": "Not established from the Egypt-specific sources reviewed.",
+    "visual_relevance": "Race O generally causes smaller, vein-limited leaf lesions. Race T can cause larger lesions with chlorotic halos and may involve sheaths, husks, ears, and cobs on susceptible T-cytoplasm maize."
+  },
+  "similar_diseases": [
+    {
+      "name": "Northern Leaf Blight",
+      "pathogen": "Exserohilum turcicum",
+      "visual_difference": "Long grey-green to tan cigar-shaped lesions, often several centimetres long, rather than the smaller diamond-to-rectangular lesions of MLB."
+    },
+    {
+      "name": "Gray Leaf Spot",
+      "pathogen": "Cercospora species",
+      "visual_difference": "Usually narrow grey or tan rectangular lesions that are strongly vein-limited and less distinctly brown-margined."
+    },
+    {
+      "name": "Common Rust",
+      "pathogen": "Puccinia sorghi",
+      "visual_difference": "Raised orange-brown pustules are the principal visible sign, not flat diamond-shaped necrotic lesions."
+    }
+  ],
+  "recommended_image_search_terms": [
+    "Maydis leaf blight maize Egypt",
+    "Bipolaris maydis maize Egypt leaf lesions",
+    "southern corn leaf blight Egypt diamond lesions",
+    "maize MLB rectangular brown lesions lower leaves"
+  ],
+  "diagnostic_caution": "Visual identification is suggestive, not definitive. Confirm doubtful cases through microscopy of conidia, fungal isolation, or molecular testing, particularly when Northern Leaf Blight or Gray Leaf Spot is also present.",
+  "sources": [
+    {
+      "title": "Recent advances in the population biology and management of maize foliar fungal pathogens Exserohilum turcicum, Cercospora zeina and Bipolaris maydis in Africa",
+      "relevance_to_egypt": "Reports the African distribution context, including Egypt, and discusses Bipolaris maydis-associated maize foliar disease.",
+      "url": "https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2024.1404483/full"
+    },
+    {
+      "title": "Fungi Associated with Maize and Sorghum Grains and their ...",
+      "relevance_to_egypt": "Egyptian Journal of Botany record reporting Bipolaris maydis among fungi associated with maize and sorghum material in Egypt.",
+      "url": "https://ejbo.journals.ekb.eg/article_1346_a28b7b6be85f45d5575586f22ad5f8cc.pdf"
+    },
+    {
+      "title": "Maydis leaf blight of maize: Update on status, sustainable management and genetic architecture of its resistance",
+      "relevance": "Disease synonymy, visual lesion progression, and environmental conditions.",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0885576522001047"
+    }
+  ],
+  "evidence_level": "expert_verified_for_Egypt_presence; moderate_for_visual_symptoms; limited_for_Egypt_specific_epidemiology",
+  "research_notes": "MLB and Southern Corn Leaf Blight refer to the same maize disease caused by Bipolaris maydis. This record is optimized for visual image annotation and preserves the distinction between Egypt-specific evidence and general disease biology."
+}

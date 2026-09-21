@@ -1,0 +1,72 @@
+{
+  "disease_id": "MAIZE_004",
+  "visual_features": {
+    "earliest_visible_sign": {
+      "description": "Minute pale-yellow or chlorotic flecks on leaves that enlarge into small tan spots that become slightly raised",
+      "colors": [
+        "pale-yellow",
+        "chlorotic",
+        "tan"
+      ],
+      "shape": "minute fleck",
+      "size_mm": null,
+      "location_on_plant": "leaves, susceptible leaf tissue"
+    },
+    "characteristic_sign_or_lesion": {
+      "description": "Circular to oval or slightly elongated powdery pustules that rupture the leaf epidermis and release powdery spores on both upper and lower leaf surfaces",
+      "colors": {
+        "primary": [
+          "cinnamon-brown",
+          "orange-brown",
+          "reddish-brown"
+        ],
+        "secondary": [
+          "dark brown",
+          "black"
+        ],
+        "color_progression": "pale yellow or chlorotic flecks to tan spots to cinnamon-brown/orange-brown/reddish-brown pustules to dark brown/black pustules"
+      },
+      "shape": {
+        "primary_shape": "circular | oval | pustule",
+        "shape_descriptors": [
+          "slightly elongated",
+          "powdery raised blister-like pustule",
+          "irregular on midribs or sheaths"
+        ],
+        "shape_progression": "Minute chlorotic flecks enlarge into tan, raised spots, then pustules break through the epidermis"
+      },
+      "size": {
+        "length_mm": null,
+        "width_mm": null,
+        "diameter_mm": "0.2-2 mm",
+        "size_variation_note": "Size and shape can vary between common rust and southern rust and between plant tissues"
+      },
+      "texture_and_surface": {
+        "surface": "raised, powdery raised blister-like pustule",
+        "sporulation_or_sign": "powdery spores released",
+        "other_surface_details": "pustules rupture the leaf epidermis"
+      },
+      "border_and_margin": {
+        "margin_type": null,
+        "halo": null
+      }
+    },
+    "advanced_or_severe_stage": {
+      "description": "Pustules darken to brown-black as teliospores replace urediniospores, giving a rusty or peppered appearance.",
+      "coalescence": "Pustules multiply and may occur in scattered patches or bands.",
+      "tissue_death_appearance": "severe infections cause yellowing, premature drying, and death of leaves or leaf sheaths",
+      "secondary_signs": [
+        "reduced photosynthetic area"
+      ],
+      "percentage_affected_tissue_note": "leaf-sheath death in severe infections"
+    },
+    "distribution_on_plant": {
+      "vertical_pattern": "Pustules can form in bands when infection occurs while leaves are emerging from the whorl",
+      "horizontal_pattern": "Scattered patches or bands; most conspicuous on leaves and often visible on both leaf surfaces.",
+      "other_parts_if_severe": "may extend to leaf sheaths, husks, tassels, and stalks"
+    },
+    "pathognomonic_features": [
+      "Cinnamon-brown, orange-brown, or reddish-brown circular to oval powdery pustules on both upper and lower leaf surfaces that eventually turn dark brown to black."
+    ]
+  }
+}

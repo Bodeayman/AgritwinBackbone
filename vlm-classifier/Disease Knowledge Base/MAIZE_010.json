@@ -1,0 +1,160 @@
+{
+  "disease_id": "MAIZE_010",
+  "crop": "Maize (Zea mays L.)",
+  "country_scope": "Egypt",
+  "disease_name": "Eyespot of Maize",
+  "pathogen": "Kabatiella zeae Narita & Y. Hirats.",
+  "pathogen_genus": "Kabatiella",
+  "synonyms": [
+    "Aureobasidium zeae",
+    "Maize Eyespot",
+    "Kabatiella Eyespot"
+  ],
+  "pathogen_type": "Fungal foliar pathogen",
+  "egypt_evidence_status": {
+    "confirmed_egypt_specific_record_found": false,
+    "interpretation": "The Egypt-only search did not locate a reliable Egyptian field survey, isolate record, or official distribution entry confirming Kabatiella zeae eyespot on maize in Egypt.",
+    "important_negative_evidence": "A 2022 Egyptian survey of seed-borne and toxigenic fungi examined maize samples from 25 governorates, but the reported frequent fungi did not include K. zeae. This does not prove absence from Egypt because the survey focused on seed/grain-associated fungi rather than a dedicated foliar-disease survey.",
+    "global_context": "Eyespot is associated mainly with cool, moist maize-growing environments and is reported in parts of Asia, Europe, North America, and South America."
+  },
+  "visual_symptoms_for_reference": {
+    "early_stage": [
+      "Small, light-coloured or translucent circular spots",
+      "Spots may look water-soaked when young",
+      "A narrow yellow chlorotic halo surrounds the spot"
+    ],
+    "characteristic_eyespot": [
+      "Round to oval lesions, approximately 1–4 mm in diameter",
+      "Tan, cream, or light-brown centre",
+      "Distinct red-brown, dark-brown, purple, or black ring around the centre",
+      "The centre-and-ring pattern creates a visible eye-like appearance",
+      "Lesions may be most numerous along leaf margins and near veins"
+    ],
+    "advanced_stage": [
+      "Lesions darken and may become necrotic",
+      "The lesion centre can fall out, leaving a shot-hole appearance",
+      "Many lesions may merge into larger dead areas",
+      "Leaves yellow and die at infection sites",
+      "Leaf sheaths and husks covering ears may also develop spots and shrivel"
+    ],
+    "image_annotation_targets": [
+      "translucent circular spot",
+      "tan centre",
+      "red-brown or purple ring",
+      "yellow halo",
+      "eye-like lesion contrast",
+      "lesion diameter and density",
+      "lesion position near veins or leaf margins",
+      "coalesced necrotic areas",
+      "shot-hole centres"
+    ]
+  },
+  "symptoms": [
+    "small translucent spots",
+    "tan or cream centres",
+    "red-brown to purple rings",
+    "yellow chlorotic halos",
+    "circular or oval eye-like lesions",
+    "centre collapse and shot holes",
+    "lesion coalescence",
+    "leaf yellowing",
+    "premature leaf drying",
+    "leaf-sheath or ear-husk shrivelling"
+  ],
+  "lesion_color": [
+    "light green",
+    "translucent",
+    "yellow halo",
+    "tan",
+    "cream",
+    "light brown",
+    "red-brown",
+    "purple",
+    "black"
+  ],
+  "lesion_shape": [
+    "circular",
+    "oval",
+    "ring-shaped",
+    "eye-like",
+    "shot-hole after centre collapse",
+    "irregular after coalescence"
+  ],
+  "lesion_dimensions": {
+    "general_reported_range_mm": "1–4 mm diameter",
+    "egypt_specific_measurement": "Not available because an Egypt-specific field record was not confirmed."
+  },
+  "distribution_on_plant": "In documented disease descriptions, lesions occur mainly on older leaves, often along leaf margins and veins; leaf sheaths and ear-covering leaves can also be affected. Egypt-specific canopy distribution is unconfirmed.",
+  "affected_parts": [
+    "leaf blade",
+    "leaf sheath",
+    "husk leaves covering ears",
+    "ear indirectly through husk shrivelling"
+  ],
+  "progression": [
+    "Small translucent or light-coloured spots appear, often with a yellow halo.",
+    "Spots develop tan centres and dark red-brown, purple, or black rings.",
+    "The characteristic eye-like lesions multiply, especially under cool, wet conditions.",
+    "Lesions darken, coalesce, and form necrotic areas; centres may fall out.",
+    "Leaves yellow, dry, and die at the infection sites, potentially reducing grain filling when infection is early and severe."
+  ],
+  "environment": {
+    "humidity": "High humidity, frequent dew, rain, and extended leaf wetness favour infection and conidial production.",
+    "temperature": "Cool conditions are most favourable; approximately 10–12 °C is reported as highly favourable for maize susceptibility in disease references.",
+    "residue": "Infected maize residue is the main reported source of primary inoculum; continuous maize and reduced/no-tillage systems can increase risk.",
+    "egypt_context": "Cool, wet conditions are less typical of much of Egypt's maize-growing season than the environments where eyespot is normally important. This is a risk interpretation and not evidence that the disease is absent or present in Egypt."
+  },
+  "similar_diseases": [
+    {
+      "name": "Gray Leaf Spot",
+      "pathogen": "Cercospora zeae-maydis or Cercospora zeina",
+      "visual_difference": "Produces longer, rectangular grey-to-tan lesions restricted by leaf veins rather than small ringed eye-like spots."
+    },
+    {
+      "name": "Common Rust",
+      "pathogen": "Puccinia sorghi",
+      "visual_difference": "Produces raised powdery orange-brown pustules, not flat tan-centred lesions with dark rings."
+    },
+    {
+      "name": "Insect feeding or aphid injury",
+      "pathogen": null,
+      "visual_difference": "May create small spots or shot holes but normally lacks the consistent tan-centre, dark-ring, yellow-halo pattern."
+    },
+    {
+      "name": "Nutrient deficiency or herbicide injury",
+      "pathogen": null,
+      "visual_difference": "Can cause chlorosis or spotting but does not normally form discrete eye-like lesions with a defined dark ring."
+    }
+  ],
+  "recommended_image_search_terms": [
+    "suspected maize eyespot Egypt Kabatiella zeae",
+    "Kabatiella zeae maize eye-like lesions",
+    "maize eyespot tan centre purple ring yellow halo",
+    "maize eyespot leaf 1-4 mm lesions"
+  ],
+  "diagnostic_caution": "Because Egypt-specific confirmation was not located, an Egyptian sample with eye-like spots should be treated as suspected eyespot only. Confirm with fungal isolation and microscopic identification of Kabatiella conidia/conidiomata or molecular testing.",
+  "sources": [
+    {
+      "title": "Kabatiella zeae (eyespot) – CABI Compendium",
+      "relevance": "Pathogen identity, global distribution, visual symptoms, disease cycle, and environmental conditions.",
+      "url": "https://www.cabidigitallibrary.org/doi/full/10.1079/cabicompendium.29297"
+    },
+    {
+      "title": "Distribution and Biodiversity of Seed-Borne Pathogenic and Toxigenic Fungi of Maize in Egypt",
+      "relevance_to_egypt": "Egyptian survey of maize grain samples from 25 governorates; used to identify the limits of available Egypt-specific seed-borne evidence.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9506050/"
+    },
+    {
+      "title": "Maize Diseases: A Guide for Field Identification",
+      "relevance": "Visual description of 1–4 mm translucent lesions, tan centres, dark rings, and yellow halos.",
+      "url": "https://ipm.ifas.ufl.edu/pdfs/Man_Maize_diseases_CIMMYT.pdf?option=com_content&view=article&id=416:new-edition-of-popular-field-guide-on-maize-diseases&catid=120:2004&Itemid=521&lang=en"
+    },
+    {
+      "title": "Plant Pest Factsheet: Maize Eyespot",
+      "relevance": "Image-oriented symptom description and disease identification guidance.",
+      "url": "https://planthealthportal.defra.gov.uk/assets/factsheets/Maize-factsheet-2023-update2.pdf"
+    }
+  ],
+  "evidence_level": "unconfirmed_for_Egypt_occurrence; high_for_general_visual_symptoms; limited_for_Egypt_specific_epidemiology",
+  "research_notes": "This is a conservative Egypt-only record. It documents the disease's visual reference profile but does not claim that Kabatiella zeae eyespot is established in Egypt."
+}

@@ -1,0 +1,165 @@
+{
+  "disease_id": "MAIZE_005",
+  "crop": "Maize (Zea mays L.)",
+  "country_scope": "Egypt",
+  "disease_name": "Downy Mildew of Maize",
+  "egyptian_disease_name": "Sorghum Downy Mildew of Maize",
+  "pathogen": "Peronosclerospora sorghi (Weston & Uppal) C.G. Shaw",
+  "pathogen_genus": "Peronosclerospora",
+  "pathogen_type": "Obligate biotrophic oomycete (downy mildew pathogen)",
+  "important_taxonomic_note": "Downy mildew is a disease complex with several possible oomycete pathogens globally. The Egypt-specific maize studies reviewed here identify P. sorghi as the causal pathogen.",
+  "egypt_distribution": {
+    "reported_in_egypt": true,
+    "documented_locations": [
+      "Sakha Experimental Station, Kafr El-Sheikh Governorate",
+      "Nile Delta",
+      "Gemmeiza Agricultural Research Station, Gharbia Governorate",
+      "Abo El-Matameer, Beheira Governorate"
+    ],
+    "field_pattern": "The 2001 Egyptian study reported that the disease was not common nationally at that time but produced a sudden serious outbreak in the Nile Delta in 1989, especially in maize near forage sorghum. It was also detected at Gemmeiza.",
+    "recent_evidence_limit": "The sources reviewed do not establish current nationwide incidence or a current governorate-level prevalence map."
+  },
+  "visual_symptoms": {
+    "early_stage": [
+      "Pale green to yellow chlorotic streaks on young leaves",
+      "Chlorotic mottling or narrow longitudinal stripes",
+      "Symptoms may appear first on leaves of young seedlings"
+    ],
+    "characteristic_leaf_symptoms": [
+      "White, grey-white, or downy growth on the lower leaf surface, especially during humid nights or mornings",
+      "Long chlorotic stripes running parallel to leaf veins",
+      "Yellow stripes may widen, merge, and form blotches",
+      "Leaves become narrow, erect, pale, and sometimes shredded"
+    ],
+    "whole_plant_symptoms": [
+      "Stunting and shortened internodes",
+      "Excessive tillering or bushy plant appearance",
+      "Malformed tassels with leafy proliferation or 'crazy top' symptoms",
+      "Malformed ears, poor ear emergence, or ears with few/no developed kernels",
+      "Premature death when infection occurs at the seedling stage"
+    ],
+    "advanced_symptoms": [
+      "Chlorotic leaves turn yellow-brown, reddish-brown, or necrotic",
+      "Leaves may dry, shred, or die prematurely",
+      "Plants may remain sterile or produce small, poorly filled ears"
+    ],
+    "image_annotation_targets": [
+      "yellow or pale longitudinal stripes",
+      "white downy growth on the lower leaf surface",
+      "leaf width and erectness compared with healthy plants",
+      "leaf shredding and necrotic stripe coalescence",
+      "plant height and excessive tillering",
+      "bushy or leafy tassel/crazy-top structures",
+      "small or sterile ears and poor grain formation"
+    ]
+  },
+  "symptoms": [
+    "chlorotic streaks",
+    "yellow longitudinal stripes",
+    "leaf mottling",
+    "white-grey downy growth on leaf undersides",
+    "narrow erect leaves",
+    "leaf shredding",
+    "plant stunting",
+    "excessive tillering",
+    "bushy or leafy tassel",
+    "malformed ears",
+    "sterility and poor grain filling",
+    "premature plant death"
+  ],
+  "lesion_color": [
+    "pale green",
+    "yellow",
+    "white-grey downy growth",
+    "yellow-brown",
+    "reddish-brown",
+    "brown",
+    "necrotic dark brown"
+  ],
+  "lesion_shape": [
+    "longitudinal stripe",
+    "narrow streak",
+    "linear parallel-to-vein band",
+    "blotch after coalescence",
+    "irregular necrotic area"
+  ],
+  "distribution_on_plant": "Often most visible on young and newly emerging leaves; systemic infection can affect the whole plant, including leaves, tassels, ears, and growing points.",
+  "progression": [
+    "Seedling or young plants develop chlorosis, mottling, or narrow yellow stripes.",
+    "White-grey downy sporulation appears on leaf undersides under humid conditions.",
+    "Stripes widen and coalesce; leaves become narrow, erect, pale, and may shred.",
+    "Systemically infected plants become stunted and may tiller excessively.",
+    "Tassels and ears can become malformed, with poor grain production or complete sterility.",
+    "Early severe infection may kill seedlings or entire plants before flowering."
+  ],
+  "environment": {
+    "humidity": "High humidity and prolonged leaf wetness favour sporulation and infection.",
+    "temperature": "Warm, humid conditions favour disease development; an Egypt-specific temperature threshold was not identified in the reviewed field studies.",
+    "leaf_wetness": "Night dew, rain, irrigation, and humid periods encourage downy growth and airborne sporangial spread.",
+    "inoculum_sources": [
+      "infected maize seed",
+      "seed-borne mycelium or oospores",
+      "infected volunteer maize",
+      "nearby forage sorghum and Sudan grass acting as inoculum sources"
+    ],
+    "egypt_context": "Egyptian studies identified outbreaks near forage sorghum in the Nile Delta and used Sudan grass infector rows at Gemmeiza to produce inoculum."
+  },
+  "seed_transmission_evidence_in_egypt": {
+    "finding": "An Egyptian study tested 31 maize seed samples and detected P. sorghi infection in seed tissues at levels ranging from 0.2% to 24%.",
+    "field_relationship": "Approximately 60% of infected seed inoculum was estimated to be transmitted to developing maize plants in the field trials.",
+    "locations_and_material": [
+      "Kafr El-Sheikh seed-production unit",
+      "Gemmeiza, Gharbia",
+      "Abo El-Matameer, Beheira"
+    ],
+    "source_url": "https://jpp.journals.ekb.eg/article_257992_6e8adc144845d2486df491a12ff61646.pdf"
+  },
+  "similar_diseases": [
+    {
+      "name": "Brown Stripe Downy Mildew",
+      "pathogen": "Sclerophthora rayssiae var. zeae",
+      "visual_difference": "Produces narrow yellow-to-brown stripes but generally lacks the systemic malformation and leafy tassel/ear symptoms typical of sorghum downy mildew."
+    },
+    {
+      "name": "Maize Dwarf Mosaic",
+      "pathogen": "Maize dwarf mosaic virus",
+      "visual_difference": "May cause chlorotic striping and stunting, but does not produce the characteristic white downy growth on leaf undersides."
+    },
+    {
+      "name": "Nutrient deficiency or herbicide injury",
+      "pathogen": null,
+      "visual_difference": "Can cause yellow striping or chlorosis but normally lacks visible downy sporulation and systemic reproductive malformation."
+    }
+  ],
+  "recommended_image_search_terms": [
+    "maize downy mildew Egypt Peronosclerospora sorghi",
+    "sorghum downy mildew maize Nile Delta Egypt",
+    "maize downy mildew white growth underside leaf Egypt",
+    "maize crazy top downy mildew Gemmeiza Egypt"
+  ],
+  "diagnostic_caution": "White downy growth is highly useful visually but may be temporary and absent in dry conditions. Confirm suspected cases by microscopy, molecular testing, or laboratory identification of Peronosclerospora sorghi. Do not confuse downy mildew with viral chlorotic striping or nutrient/herbicide injury.",
+  "sources": [
+    {
+      "title": "Studies on Downy Mildew of Maize in Egypt",
+      "relevance_to_egypt": "Egypt-focused study of the causal organism, symptoms, and distribution.",
+      "url": "https://research.asu.edu.eg/handle/12345678/46176"
+    },
+    {
+      "title": "Inoculum Levels of Peronosclerospora sorghi in Relation to Maize Downy Mildew Disease Outbreak",
+      "relevance_to_egypt": "Plant Pathology Research Institute, ARC, Giza; documents Nile Delta, Sakha, Gemmeiza, Beheira, seed transmission, and Egyptian outbreaks.",
+      "url": "https://jpp.journals.ekb.eg/article_257992_6e8adc144845d2486df491a12ff61646.pdf"
+    },
+    {
+      "title": "Biological Control of Maize Downy Mildew Disease Caused by Peronosclerospora sorghi in Egypt",
+      "relevance_to_egypt": "Gemmeiza field trials during the 1996 and 1997 maize seasons under Egyptian conditions.",
+      "url": "https://journals.ekb.eg/article_260086_ef6eb44e79f9968c4044c39d95349fa6.pdf"
+    },
+    {
+      "title": "Plantwise Knowledge Bank: Maize Downy Mildew",
+      "relevance": "Visual symptom descriptors and disease progression for image annotation.",
+      "url": "https://plantwiseplusknowledgebank.org/doi/10.1079/PWKB.20167801154"
+    }
+  ],
+  "evidence_level": "expert_verified_for_Egypt_pathogen_and_distribution; high_for_visual_symptoms; moderate_for_Egypt_seed_transmission_and_field_outbreaks",
+  "research_notes": "This record prioritizes Egyptian studies and identifies Peronosclerospora sorghi as the maize downy mildew pathogen documented in Egypt. It is optimized for visual image annotation and not intended to replace laboratory diagnosis."
+}

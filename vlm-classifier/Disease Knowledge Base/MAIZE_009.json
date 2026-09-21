@@ -1,0 +1,150 @@
+{
+  "disease_id": "MAIZE_009",
+  "crop": "Maize (Zea mays L.)",
+  "country_scope": "Egypt",
+  "requested_name": "Northern Leaf Spot (NLS)",
+  "canonical_status": {
+    "recognized_as_separate_maize_disease": false,
+    "most_likely_intended_disease": "Northern Leaf Blight (NLB), also called Northern Corn Leaf Blight or Turcicum Leaf Blight",
+    "reason": "The Egypt-specific maize literature and disease databases identify the relevant disease as Northern Leaf Blight, not Northern Leaf Spot. NLS appears to be a non-standard name or a likely abbreviation error for NLB.",
+    "do_not_merge_warning": "Do not label this as a confirmed separate NLS disease without a source defining NLS as a distinct pathogen-disease combination."
+  },
+  "disease_name_for_record": "Northern Leaf Blight (interpreted from requested NLS)",
+  "pathogen": "Exserohilum turcicum (Pass.) K.J. Leonard & Suggs",
+  "pathogen_genus": "Exserohilum",
+  "older_names": [
+    "Helminthosporium turcicum",
+    "Setosphaeria turcica (sexual stage)"
+  ],
+  "pathogen_type": "Fungal foliar pathogen",
+  "egypt_status": {
+    "reported_in_egypt": true,
+    "egypt_distribution": [
+      "Northern Nile Delta",
+      "north-western Delta",
+      "Nubaria",
+      "Sakha/Kafr El-Sheikh"
+    ],
+    "seasonal_pattern": "Most often reported in late-summer or off-season maize in northern and north-western Delta areas.",
+    "egypt_environmental_context": "Sprinkler irrigation in newly reclaimed areas can increase air moisture and disease incidence.",
+    "egypt_research_evidence": "Egyptian breeding and field studies evaluated NLB resistance at Nubaria and Sakha and reported characteristic lesions and yield effects."
+  },
+  "visual_symptoms": {
+    "early_stage": [
+      "Small oval, pale green, yellowish, or water-soaked spots",
+      "Early spots usually begin on lower leaves"
+    ],
+    "characteristic_lesions": [
+      "Long elliptical, spindle-shaped, or cigar-shaped lesions",
+      "Grey-green lesions that mature to grey, tan, or straw-brown",
+      "Lesions taper at the ends and run broadly parallel to leaf veins",
+      "Dark grey or olive fungal sporulation may be visible in humid weather, especially on lesion undersides"
+    ],
+    "advanced_stage": [
+      "Lesions enlarge and merge into irregular necrotic areas",
+      "Large parts of the leaf become brown, dry, and brittle",
+      "Whole leaves may wither and die",
+      "Severe upper-canopy infection can reduce grain filling and contribute to lodging"
+    ],
+    "image_annotation_targets": [
+      "long cigar-shaped outline",
+      "tapered lesion ends",
+      "grey-green-to-tan colour transition",
+      "dark sporulation or speckling",
+      "lower-leaf-first distribution",
+      "lesion coalescence",
+      "percentage of necrotic leaf area"
+    ]
+  },
+  "symptoms": [
+    "pale green or yellow water-soaked spots",
+    "grey-green cigar-shaped lesions",
+    "tan or straw-brown necrotic lesions",
+    "dark grey sporulation",
+    "lesion coalescence",
+    "leaf drying and withering",
+    "premature leaf death"
+  ],
+  "lesion_color": [
+    "pale green",
+    "yellow-green",
+    "grey-green",
+    "grey",
+    "tan",
+    "straw-brown",
+    "olive-grey"
+  ],
+  "lesion_shape": [
+    "oval",
+    "elliptical",
+    "spindle-shaped",
+    "cigar-shaped",
+    "irregular after coalescence"
+  ],
+  "lesion_dimensions": {
+    "typical_length_cm": "Approximately 3–15 cm in Egyptian research; broader disease references report up to approximately 25–150 mm.",
+    "note": "Dimensions vary with cultivar, infection timing, weather, and disease severity."
+  },
+  "distribution_on_plant": "Usually starts on lower leaves and progresses upward; severe infections can affect most of the foliage.",
+  "affected_parts": [
+    "leaf blade",
+    "leaf sheath",
+    "upper canopy indirectly through photosynthetic loss"
+  ],
+  "progression": [
+    "Small pale or water-soaked spots appear on lower leaves.",
+    "Spots elongate into grey-green elliptical or cigar-shaped lesions.",
+    "Lesions mature to tan or straw-brown and may develop dark sporulation.",
+    "Lesions merge and destroy photosynthetic tissue.",
+    "Severe disease causes extensive leaf blighting, premature drying, reduced grain filling, and possible lodging."
+  ],
+  "environment": {
+    "humidity": "High humidity and prolonged leaf wetness favour infection and sporulation.",
+    "temperature": "Approximately 18–27 °C is generally favourable for infection; Egyptian studies also associate disease with humid late-summer conditions.",
+    "leaf_wetness": "Dew, rainfall, and sprinkler irrigation increase infection risk.",
+    "egypt_context": "The northern and north-western Delta and sprinkler-irrigated newly reclaimed lands are important Egyptian risk contexts."
+  },
+  "similar_diseases": [
+    {
+      "name": "Maydis Leaf Blight / Southern Leaf Blight",
+      "pathogen": "Bipolaris maydis",
+      "visual_difference": "Typically produces smaller tan or brown diamond-shaped or rectangular lesions rather than long cigar-shaped lesions."
+    },
+    {
+      "name": "Gray Leaf Spot",
+      "pathogen": "Cercospora zeae-maydis or Cercospora zeina",
+      "visual_difference": "Usually produces narrow, sharply rectangular grey lesions restricted by veins."
+    },
+    {
+      "name": "Common Rust",
+      "pathogen": "Puccinia sorghi",
+      "visual_difference": "Produces many raised orange-brown or black powdery pustules rather than large flat necrotic lesions."
+    }
+  ],
+  "recommended_image_search_terms": [
+    "Northern Leaf Blight maize Egypt cigar lesions",
+    "Exserohilum turcicum Nubaria Sakha maize",
+    "Northern corn leaf blight Egypt lower leaves",
+    "maize NLB grey green tan lesions sporulation"
+  ],
+  "diagnostic_caution": "The requested name NLS is not supported as a separate established Egyptian maize disease in the sources reviewed. This JSON should be treated as an NLB record created to address the likely intended disease. Confirm unusual cases by microscopy, isolation, or molecular testing.",
+  "sources": [
+    {
+      "title": "Inheritance of resistance against northern leaf blight of maize using conventional breeding methods",
+      "relevance_to_egypt": "Egyptian trials at Nubaria and Sakha; cultivar resistance, Delta distribution, late-summer timing, humid conditions, and yield-loss context.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8913385/"
+    },
+    {
+      "title": "Marker Assisted-Selection for Leaf Blight in Maize",
+      "relevance_to_egypt": "Egyptian Northern Delta disease and resistance research; reported maize leaf-blight yield-loss context.",
+      "url": "https://www.curresweb.com/mejar/mejar/2015/417-426.pdf"
+    },
+    {
+      "title": "Northern Corn Leaf Blight fact sheet",
+      "relevance": "Visual symptom description, lesion appearance, lower-leaf progression, and sporulation.",
+      "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/maize_northern_leaf_blight_226.htm"
+    }
+  ],
+  "evidence_level": "expert_verified_for_Egypt_NLB; unverified_as_a_separate_NLS_disease",
+  "research_notes": "The principal data-quality issue is nomenclature: NLS was not found as the accepted name of a distinct maize disease in Egypt. The record preserves the user's requested label while explicitly mapping it to the documented Egyptian disease NLB."
+}
