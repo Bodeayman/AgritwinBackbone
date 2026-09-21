@@ -76,6 +76,34 @@ jobs:
       - name: Build Docker image
         run: docker build -f backbone/Dockerfile -t agritwin-web:ci-${{ github.sha }} backbone
 
+  classical:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -f classical-classifier/Dockerfile -t classical:ci-${{ github.sha }} classical-classifier
+
+      - name: Smoke test /health
+        run: |
+          docker run -d --name classical-ci -p 8001:8000 classical:ci-${{ github.sha }}
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:8001/health > /dev/null 2>&1; then
+              echo "classical-classifier is healthy!"
+              break
+            fi
+            if [ "$i" = "30" ]; then
+              echo "ERROR: classical-classifier failed health check"
+              docker logs classical-ci 2>&1 | tail -n 100
+              exit 1
+            fi
+            sleep 2
+          done
+          docker logs classical-ci 2>&1 | tail -n 20 || true
+          docker rm -f classical-ci
+
   autofix:
     runs-on: ubuntu-latest
     needs: test
