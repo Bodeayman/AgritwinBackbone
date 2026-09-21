@@ -1,6 +1,6 @@
 # Pseudo/placeholder Dockerfile for the vlm-classifier service.
 #
-# The real VLM classifier is not implemented yet (see .gitkeep). This stub
+# The real VLM classifier is not implemented yet. This stub
 # exists so `docker compose build/start vlm-classifier` works and the
 # service answers health checks on port 8000 until the real one lands.
 # It intentionally mirrors the shape of the sibling Dockerfiles
