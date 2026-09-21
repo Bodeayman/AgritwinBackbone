@@ -35,14 +35,14 @@ SYSTEM_PROMPT = (
 
 MODE_CONTEXT = {
     "test": (
-        "The CI test job failed. Repo layout: app/ (api/, services/, schemas/, models/, "
-        "repositories/), tests/ (pytest). Fix the errors in the log."
+        "The CI test job failed. Repo layout: backbone/app/ (api/, services/, schemas/, models/, "
+        "repositories/), backbone/tests/ (pytest). Fix the errors in the log."
     ),
     "deploy": (
         "The production deployment fails its health check (the FastAPI web container on "
         "EC2 does not respond on port 8000, or the container is crashing). Below are the "
-        "container logs from EC2. Repo layout: app/ (api/, services/, schemas/, models/, "
-        "repositories/), tests/ (pytest). Identify the root cause from the logs and "
+        "container logs from EC2. Repo layout: backbone/app/ (api/, services/, schemas/, models/, "
+        "repositories/), backbone/tests/ (pytest). Identify the root cause from the logs and "
         "produce a code/config fix so the app starts and serves / correctly."
     ),
 }
@@ -174,7 +174,7 @@ def main():
 
         run(["git", "apply", "/tmp/autofix.patch"])
         print("[autofix] patch applied; running tests")
-        test_res = run(["pytest", "tests/", "-q"])
+        test_res = run(["pytest", "backbone/tests/", "-q"])
         if test_res.returncode == 0:
             print("[autofix] tests pass — creating PR")
             _create_pr()
