@@ -14,7 +14,10 @@ on:
 
 env:
   DEPLOY_DIR: /opt/agritwin-backend
-  DOCKER_IMAGE_NAME: agritwin-web
+  DOCKER_IMAGE_BACKBONE: agritwin-backbone
+  DOCKER_IMAGE_CLASSICAL: agritwin-classical-classifier
+  DOCKER_IMAGE_VLM: agritwin-vlm-classifier
+  COMPOSE_FILE: docker-compose.prod.yml
 
 jobs:
   test:
@@ -86,22 +89,30 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker image
+      - name: Build Docker images
         run: |
-          docker build -f backbone/Dockerfile -t ${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }} backbone
-          docker tag ${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }} ${{ env.DOCKER_IMAGE_NAME }}:latest
+          docker build -f backbone/Dockerfile -t ${{ env.DOCKER_IMAGE_BACKBONE }}:${{ github.sha }} backbone
+          docker tag ${{ env.DOCKER_IMAGE_BACKBONE }}:${{ github.sha }} ${{ env.DOCKER_IMAGE_BACKBONE }}:latest
+          docker build -f classical-classifier/Dockerfile -t ${{ env.DOCKER_IMAGE_CLASSICAL }}:${{ github.sha }} classical-classifier
+          docker tag ${{ env.DOCKER_IMAGE_CLASSICAL }}:${{ github.sha }} ${{ env.DOCKER_IMAGE_CLASSICAL }}:latest
+          docker build -f vlm-classifier/Dockerfile -t ${{ env.DOCKER_IMAGE_VLM }}:${{ github.sha }} vlm-classifier
+          docker tag ${{ env.DOCKER_IMAGE_VLM }}:${{ github.sha }} ${{ env.DOCKER_IMAGE_VLM }}:latest
 
-      - name: Save Docker image
+      - name: Save Docker images
         run: |
-          docker save ${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }} ${{ env.DOCKER_IMAGE_NAME }}:latest | gzip > agritwin-image.tar.gz
+          docker save \
+            ${{ env.DOCKER_IMAGE_BACKBONE }}:${{ github.sha }} ${{ env.DOCKER_IMAGE_BACKBONE }}:latest \
+            ${{ env.DOCKER_IMAGE_CLASSICAL }}:${{ github.sha }} ${{ env.DOCKER_IMAGE_CLASSICAL }}:latest \
+            ${{ env.DOCKER_IMAGE_VLM }}:${{ github.sha }} ${{ env.DOCKER_IMAGE_VLM }}:latest \
+            | gzip > agritwin-images.tar.gz
 
-      - name: Copy image to EC2
+      - name: Copy images to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "agritwin-image.tar.gz,docker-compose.yml"
+          source: "agritwin-images.tar.gz,${{ env.COMPOSE_FILE }}"
           target: ${{ env.DEPLOY_DIR }}
           strip_components: 0
 
@@ -115,8 +126,11 @@ jobs:
             set -e
 
             DEPLOY_DIR="${{ env.DEPLOY_DIR }}"
-            IMAGE_NAME="${{ env.DOCKER_IMAGE_NAME }}"
             COMMIT_SHA="${{ github.sha }}"
+            COMPOSE_FILE="${{ env.COMPOSE_FILE }}"
+            BB_IMAGE="${{ env.DOCKER_IMAGE_BACKBONE }}"
+            CC_IMAGE="${{ env.DOCKER_IMAGE_CLASSICAL }}"
+            VLM_IMAGE="${{ env.DOCKER_IMAGE_VLM }}"
 
             echo "=== AgriTwin Deployment: $COMMIT_SHA ==="
 
@@ -133,13 +147,13 @@ jobs:
               exit 1
             fi
 
-            # Ensure docker-compose.yml exists (download from repo as fallback)
-            if [ ! -f docker-compose.yml ]; then
-              echo "docker-compose.yml missing; downloading from repository..."
-              curl -sfL -o docker-compose.yml "https://raw.githubusercontent.com/${{ github.repository }}/$COMMIT_SHA/docker-compose.yml"
+            # Ensure compose file exists (download from repo as fallback)
+            if [ ! -f "$COMPOSE_FILE" ]; then
+              echo "$COMPOSE_FILE missing; downloading from repository..."
+              curl -sfL -o "$COMPOSE_FILE" "https://raw.githubusercontent.com/${{ github.repository }}/$COMMIT_SHA/$COMPOSE_FILE"
             fi
-            if [ ! -f docker-compose.yml ]; then
-              echo "ERROR: docker-compose.yml not available at $DEPLOY_DIR/docker-compose.yml"
+            if [ ! -f "$COMPOSE_FILE" ]; then
+              echo "ERROR: $COMPOSE_FILE not available at $DEPLOY_DIR/$COMPOSE_FILE"
               exit 1
             fi
 
@@ -150,57 +164,80 @@ jobs:
               curl -sfL -o "$COMPOSE_BIN" "https://github.com/docker/compose/releases/download/v2.24.6/docker-compose-linux-x86_64"
               chmod +x "$COMPOSE_BIN"
             fi
-            COMPOSE="$COMPOSE_BIN -f $DEPLOY_DIR/docker-compose.yml"
+            COMPOSE="$COMPOSE_BIN -f $DEPLOY_DIR/$COMPOSE_FILE"
 
-            # Preserve the current deployed image for rollback (if any)
-            if docker image inspect "$IMAGE_NAME:latest" >/dev/null 2>&1; then
-              docker tag "$IMAGE_NAME:latest" "$IMAGE_NAME:previous"
-              echo "Saved current image as $IMAGE_NAME:previous"
-            fi
+            # Preserve the current deployed images for rollback (if any)
+            for IMG in "$BB_IMAGE" "$CC_IMAGE" "$VLM_IMAGE"; do
+              if docker image inspect "$IMG:latest" >/dev/null 2>&1; then
+                docker tag "$IMG:latest" "$IMG:previous"
+                echo "Saved current image $IMG as $IMG:previous"
+              fi
+            done
 
-            # Load the new Docker image
-            echo "Loading Docker image..."
-            docker load < agritwin-image.tar.gz
-            rm -f agritwin-image.tar.gz
+            # Load the new Docker images
+            echo "Loading Docker images..."
+            docker load < agritwin-images.tar.gz
+            rm -f agritwin-images.tar.gz
 
-            # Tag the image
-            docker tag "$IMAGE_NAME:$COMMIT_SHA" "$IMAGE_NAME:latest"
+            # Tag the images
+            docker tag "$BB_IMAGE:$COMMIT_SHA" "$BB_IMAGE:latest"
+            docker tag "$CC_IMAGE:$COMMIT_SHA" "$CC_IMAGE:latest"
+            docker tag "$VLM_IMAGE:$COMMIT_SHA" "$VLM_IMAGE:latest"
 
-            # Record the previous commit for reference
-            PREVIOUS_IMAGE=$(docker inspect --format='{{.Config.Image}}' agritwin_web 2>/dev/null || echo "none")
-            echo "Previous image: $PREVIOUS_IMAGE"
-            echo "$PREVIOUS_IMAGE" > "$DEPLOY_DIR/.previous_image"
-
-            # Bring up full stack on first deploy (db/minio/rabbitmq), otherwise just recreate web
+            # Bring up full stack on first deploy, otherwise just recreate app services
             echo "Recreating services..."
             if [ -z "$(docker ps -aq -f name=agritwin_db)" ]; then
-              echo "First deploy detected; starting full stack (db, minio, rabbitmq, web)..."
+              echo "First deploy detected; starting full stack (db, minio, rabbitmq, app)..."
               $COMPOSE up -d
             else
-              $COMPOSE up -d --force-recreate --no-deps web
+              $COMPOSE up -d --force-recreate --no-deps backbone classical-classifier vlm-classifier
             fi
 
-            # Give the container time to boot, then do a single health check
-            echo "Waiting 20s for the app to start..."
-            sleep 20
+            # Give the containers time to boot, then do a single health check per service
+            echo "Waiting 25s for the app to start..."
+            sleep 25
             echo "Checking application health..."
-            if curl -sf http://localhost:${API_PORT:-8000}/ > /dev/null 2>&1; then
-              echo "Application is healthy!"
+            HEALTH_OK=1
+            if curl -sf http://localhost:8000/ > /dev/null 2>&1; then
+              echo "backbone is healthy!"
             else
-              echo "ERROR: Application failed health check"
-              echo "----- agritwin_web logs -----"
-              docker logs agritwin_web --tail 60 2>&1 || echo "(no logs available)"
+              echo "ERROR: backbone failed health check"
+              HEALTH_OK=0
+            fi
+            if curl -sf http://localhost:8001/health > /dev/null 2>&1; then
+              echo "classical-classifier is healthy!"
+            else
+              echo "ERROR: classical-classifier failed health check"
+              HEALTH_OK=0
+            fi
+            if curl -sf http://localhost:8002/health > /dev/null 2>&1; then
+              echo "vlm-classifier is healthy!"
+            else
+              echo "ERROR: vlm-classifier failed health check"
+              HEALTH_OK=0
+            fi
+
+            if [ "$HEALTH_OK" != "1" ]; then
+              echo "----- agritwin_backbone logs -----"
+              docker logs agritwin_backbone --tail 60 2>&1 || echo "(no logs available)"
+              echo "----- agritwin_classical_classifier logs -----"
+              docker logs agritwin_classical_classifier --tail 60 2>&1 || echo "(no logs available)"
+              echo "----- agritwin_vlm_classifier logs -----"
+              docker logs agritwin_vlm_classifier --tail 60 2>&1 || echo "(no logs available)"
               echo "-----------------------------"
-              echo "Rolling back to previous image..."
-              if docker image inspect "$IMAGE_NAME:previous" >/dev/null 2>&1; then
-                docker tag "$IMAGE_NAME:previous" "$IMAGE_NAME:latest"
-                "$DEPLOY_DIR/docker-compose" -f "$DEPLOY_DIR/docker-compose.yml" up -d --force-recreate --no-deps web
-                echo "Rollback to previous image completed."
-              else
-                echo "No previous image found; leaving current state for manual inspection."
-              fi
+              echo "Rolling back to previous images..."
+              for IMG in "$BB_IMAGE" "$CC_IMAGE" "$VLM_IMAGE"; do
+                if docker image inspect "$IMG:previous" >/dev/null 2>&1; then
+                  docker tag "$IMG:previous" "$IMG:latest"
+                  echo "Rolled back $IMG to previous image."
+                fi
+              done
+              "$DEPLOY_DIR/docker-compose" -f "$DEPLOY_DIR/$COMPOSE_FILE" up -d --force-recreate --no-deps backbone classical-classifier vlm-classifier
+              echo "Rollback to previous images completed."
               exit 1
             fi
+
+            echo "$COMMIT_SHA" > "$DEPLOY_DIR/.previous_commit"
 
             # Clean up old images
             docker image prune -f
@@ -216,12 +253,14 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             echo "=== Verifying deployment ==="
-            "${{ env.DEPLOY_DIR }}/docker-compose" -f ${{ env.DEPLOY_DIR }}/docker-compose.yml ps
-            curl -sf http://localhost:${API_PORT:-8000}/ || echo "WARNING: Health check failed"
+            "${{ env.DEPLOY_DIR }}/docker-compose" -f ${{ env.DEPLOY_DIR }}/${{ env.COMPOSE_FILE }} ps
+            curl -sf http://localhost:8000/ && echo " backbone OK"
+            curl -sf http://localhost:8001/health && echo " classical OK"
+            curl -sf http://localhost:8002/health && echo " vlm OK"
 
       - name: Cleanup local artifacts
         if: always()
-        run: rm -f agritwin-image.tar.gz
+        run: rm -f agritwin-images.tar.gz
 
   autofix:
     runs-on: ubuntu-latest
@@ -273,7 +312,7 @@ jobs:
           chmod 600 /tmp/ec2_key
           ssh -i /tmp/ec2_key -o StrictHostKeyChecking=no \
             "$EC2_USERNAME@$EC2_HOST" \
-            "docker logs agritwin_web --tail 200 2>&1 || echo '(no logs available)'" \
+            "docker logs agritwin_backbone --tail 200 2>&1 || echo '(no logs available)'" \
             > /tmp/deploy_web_logs.txt || true
           echo "---- captured web logs ----"
           tail -c 4000 /tmp/deploy_web_logs.txt
