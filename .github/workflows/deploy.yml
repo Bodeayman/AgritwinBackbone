@@ -188,9 +188,9 @@ jobs:
             echo "Recreating services..."
             if [ -z "$(docker ps -aq -f name=agritwin_db)" ]; then
               echo "First deploy detected; starting full stack (db, minio, rabbitmq, app)..."
-              $COMPOSE up -d
+              $COMPOSE up -d --remove-orphans
             else
-              $COMPOSE up -d --force-recreate --no-deps backbone classical-classifier vlm-classifier
+              $COMPOSE up -d --force-recreate --no-deps backbone classical-classifier vlm-classifier --remove-orphans
             fi
 
             # Give the containers time to boot, then do a single health check per service
@@ -232,7 +232,7 @@ jobs:
                   echo "Rolled back $IMG to previous image."
                 fi
               done
-              "$DEPLOY_DIR/docker-compose" -f "$DEPLOY_DIR/$COMPOSE_FILE" up -d --force-recreate --no-deps backbone classical-classifier vlm-classifier
+              "$DEPLOY_DIR/docker-compose" -f "$DEPLOY_DIR/$COMPOSE_FILE" up -d --force-recreate --no-deps backbone classical-classifier vlm-classifier --remove-orphans
               echo "Rollback to previous images completed."
               exit 1
             fi
