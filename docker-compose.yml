@@ -95,6 +95,11 @@ services:
       - "8001:8000"
     environment:
       BACKEND_URL: http://backbone:8000
+      SEGMENTER_PATH: /weights/segmenter.pth
+      CLASSIFIER_PATH: /weights/classifier.pt
+      DEVICE: cpu
+    volumes:
+      - ./classical-classifier/weights:/weights:ro
     depends_on:
       - backbone
     restart: unless-stopped

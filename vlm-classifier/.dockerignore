@@ -14,8 +14,6 @@ env/
 .coverage
 htmlcov/
 tests/
-Dockerfile
-docker-compose.yml
 storage/
 weights/
 *.pth

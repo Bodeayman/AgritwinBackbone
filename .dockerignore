@@ -1,0 +1,22 @@
+**/*
+!backbone/
+!classical-classifier/
+!vlm-classifier/
+!docker-compose.yml
+!docker-compose.prod.yml
+
+# root context should never ship source-tree junk
+.git/
+.opencode/
+.github/
+docs/
+*.md
+.env
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+weights/
+storage/
+pgdata/
+miniodata/
