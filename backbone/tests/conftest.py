@@ -25,7 +25,18 @@ from app import models as app_models  # noqa: F401 — ensure all models are reg
 
 
 # ── Test-only engine pointing at agritwin_test ────────────────────────────────
-test_engine = create_engine(TEST_DATABASE_URL)
+# Pin the driver to psycopg2 (installed via psycopg2-binary). Newer SQLAlchemy
+# defaults postgresql:// to the psycopg (v3) driver, which is not installed.
+def _test_url() -> str:
+    url = TEST_DATABASE_URL.replace("%%", "%")
+    if url.startswith("postgres://"):
+        url = url.replace("postgres://", "postgresql+psycopg2://", 1)
+    elif url.startswith("postgresql://"):
+        url = url.replace("postgresql://", "postgresql+psycopg2://", 1)
+    return url
+
+
+test_engine = create_engine(_test_url())
 TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
 
 
