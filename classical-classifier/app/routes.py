@@ -7,6 +7,7 @@ from PIL import Image
 
 from app import backbone as backbone_client
 from app import pipeline
+from app import vlm as vlm_client
 from app.config import settings
 from app.models import get_classifier, get_device, get_segmenter, readiness
 from app.schemas import ClassifyRequest, ResegmentRequest
@@ -156,6 +157,11 @@ async def api_diagnose(
         "model_view": pipeline.encode_jpg(out["model_view"]),
         "gradcam": pipeline.encode_jpg(out["gradcam"]),
     }
+    if settings.VLM_URL:
+        vlm = await vlm_client.confirm_with_vlm(out["model_view"])
+        resp["vlm_confirmation"] = vlm
+    else:
+        resp["vlm_confirmation"] = {"ok": False, "info": "VLM_URL not set"}
     if report and field_id is not None:
         payload = backbone_client.build_diagnosis_payload(
             field_id, out["disease"], out["confidence"], out["probs"],

@@ -46,6 +46,11 @@ class Settings(BaseSettings):
     INTERN_API_KEY: str = ""
     MODEL_NAME: str = "classical-resnet50"
     MODEL_VERSION: str = "v1"
+    # Base URL of the VLM sub-service, e.g. http://vlm-classifier:8000 (compose).
+    # When set, /api/diagnose asks the VLM to confirm the diagnosis on the
+    # cropped leaf after local ResNet-50 classification (never blocks).
+    VLM_URL: str = ""
+    VLM_TIMEOUT: int = 30
 
 
 settings = Settings()
