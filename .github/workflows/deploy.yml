@@ -77,6 +77,9 @@ jobs:
           MINIO_BUCKET_NAME: agritwin-test-bucket
         run: pytest backbone/tests/ -v
 
+      - name: Run VLM classifier tests
+        run: pytest vlm-classifier/tests/ -q
+
   deploy:
     runs-on: ubuntu-latest
     needs: test
@@ -118,10 +121,14 @@ jobs:
 
       - name: Deploy on EC2
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          envs: GEMINI_API_KEY,GEMINI_MODEL
           script: |
             set -e
 
