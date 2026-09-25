@@ -1,0 +1,61 @@
+﻿{
+  "disease_id": "MAIZE_XXX",
+  "visual_features": {
+
+    "earliest_visible_sign": {
+      "description": "The very first visible change, before typical lesions/signs develop",
+      "colors": ["e.g. pale green", "yellow-green", "water-soaked translucent"],
+      "shape": "e.g. minute fleck, circular spot, longitudinal stripe",
+      "size_mm": "e.g. 0.5-2 mm or null",
+      "location_on_plant": "e.g. lower leaves, newly emerging whorl leaves, youngest leaves"
+    },
+
+    "characteristic_sign_or_lesion": {
+      "description": "The key diagnostic visual feature unique to this disease or pest. Be as specific as possible.",
+      "colors": {
+        "primary": ["e.g. grey-green", "tan", "cinnamon-brown"],
+        "secondary": ["e.g. dark brown margin", "olive sporulation"],
+        "color_progression": "How color changes from early to mature stage, e.g. pale green to grey-green to tan/straw"
+      },
+      "shape": {
+        "primary_shape": "SELECT ONE OR MORE: circular | oval | elliptical | spindle | cigar_shaped | rectangular | diamond | irregular | pustule | gall | streak | stripe | blotch | window_pane | shot_hole",
+        "shape_descriptors": ["Additional shape keywords e.g. tapered at both ends, vein-limited, powdery raised blister"],
+        "shape_progression": "How shape evolves, e.g. oval early to cigar-shaped mature to irregular after coalescence"
+      },
+      "size": {
+        "length_mm": "Range e.g. 30-150 mm or null",
+        "width_mm": "Range e.g. 2-6 mm or null",
+        "diameter_mm": "For circular/oval lesions — e.g. 1-4 mm or null",
+        "size_variation_note": "Key factors affecting size, e.g. varies with cultivar, infection timing, and humidity"
+      },
+      "texture_and_surface": {
+        "surface": "e.g. flat, raised, powdery, dusty, smooth membrane-covered, rough/wrinkled",
+        "sporulation_or_sign": "e.g. dark grey sooty sporulation on lesion underside in humid conditions or null",
+        "other_surface_details": "e.g. ruptured membrane releases black powder, epidermis ruptures to release spores"
+      },
+      "border_and_margin": {
+        "margin_type": "e.g. diffuse, sharply defined, vein-limited, dark margin",
+        "halo": "e.g. narrow yellow chlorotic halo or null"
+      }
+    },
+
+    "advanced_or_severe_stage": {
+      "description": "Appearance when infection is heavy or late-stage",
+      "coalescence": "How lesions merge, e.g. individual lesions merge into large brown necrotic areas",
+      "tissue_death_appearance": "e.g. leaves dry, brittle, tan-brown; severe blighting resembles frost damage",
+      "secondary_signs": ["e.g. black mould on husks", "lodging", "dead heart", "stalk weakening"],
+      "percentage_affected_tissue_note": "Qualitative description of tissue loss in severe cases"
+    },
+
+    "distribution_on_plant": {
+      "vertical_pattern": "e.g. starts on lower leaves and progresses upward or whorl-first",
+      "horizontal_pattern": "e.g. scattered over entire leaf surface, concentrated near leaf margins and veins",
+      "other_parts_if_severe": "e.g. may extend to husks, tassels, stalks in severe infections"
+    },
+
+    "pathognomonic_features": [
+      "The one or two visual features most uniquely diagnostic for this disease.",
+      "e.g. long cigar-shaped lesion 3-15 cm tapered at both ends with olive-grey sporulation on underside"
+    ]
+  }
+}

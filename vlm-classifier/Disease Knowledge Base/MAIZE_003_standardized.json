@@ -1,0 +1,72 @@
+{
+  "disease_id": "MAIZE_003",
+  "visual_features": {
+    "earliest_visible_sign": {
+      "description": "Tiny yellow or pale chlorotic flecks or small oval water-soaked spots.",
+      "colors": [
+        "yellow",
+        "pale chlorotic",
+        "water-soaked"
+      ],
+      "shape": "fleck, oval",
+      "size_mm": "null",
+      "location_on_plant": "lower leaves"
+    },
+    "characteristic_sign_or_lesion": {
+      "description": "Small diamond-shaped lesions that elongate with age, eventually becoming elongated rectangular lesions constrained by adjacent leaf veins.",
+      "colors": {
+        "primary": [
+          "tan",
+          "straw-coloured",
+          "light brown"
+        ],
+        "secondary": [
+          "reddish-brown margin",
+          "dark brown margin"
+        ],
+        "color_progression": "yellow/pale tan to light brown centre with reddish-brown to dark brown margin"
+      },
+      "shape": {
+        "primary_shape": "diamond | rectangular",
+        "shape_descriptors": [
+          "elongated",
+          "vein-limited"
+        ],
+        "shape_progression": "small diamond-shaped lesions that elongate with age to become elongated rectangular lesions constrained by adjacent leaf veins"
+      },
+      "size": {
+        "length_mm": "3-22 mm",
+        "width_mm": "2-6 mm",
+        "diameter_mm": "null",
+        "size_variation_note": "Lesion size and shape vary with the pathogen race, maize genotype, and disease severity."
+      },
+      "texture_and_surface": {
+        "surface": "flat",
+        "sporulation_or_sign": "dark grey or black when sporulating/rotting",
+        "other_surface_details": "null"
+      },
+      "border_and_margin": {
+        "margin_type": "vein-limited, dark margin",
+        "halo": "chlorotic halos may be present in certain races (e.g. Race T)"
+      }
+    },
+    "advanced_or_severe_stage": {
+      "description": "Coalescing lesions form large brown necrotic areas resulting in premature drying and complete foliage blight.",
+      "coalescence": "Lesions merge, producing extensive necrosis, premature leaf death, and whole-leaf blighting.",
+      "tissue_death_appearance": "large brown necrotic areas, premature drying and death of leaves",
+      "secondary_signs": [
+        "black or dark mould on affected silks, husks, cobs, or kernels"
+      ],
+      "percentage_affected_tissue_note": "complete foliage blight in severe infections"
+    },
+    "distribution_on_plant": {
+      "vertical_pattern": "usually begins on lower leaves and increases upward through the canopy",
+      "horizontal_pattern": "lesions initially remain between veins and later merge",
+      "other_parts_if_severe": "husks, silks, ears, cobs, and kernels"
+    },
+    "pathognomonic_features": [
+      "Elongated rectangular lesions with tan/light-brown centres and reddish-brown/dark-brown margins, strongly constrained by adjacent leaf veins.",
+      "Early stage features distinctive small diamond-shaped lesions."
+    ]
+  }
+}

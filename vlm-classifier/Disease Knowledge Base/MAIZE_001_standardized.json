@@ -1,0 +1,75 @@
+{
+  "disease_id": "MAIZE_001",
+  "visual_features": {
+    "earliest_visible_sign": {
+      "description": "Small oval to elongated pale green, grey-green, or water-soaked spots",
+      "colors": [
+        "pale green",
+        "grey-green",
+        "water-soaked"
+      ],
+      "shape": "oval to elongated spots",
+      "size_mm": null,
+      "location_on_plant": "lower leaves"
+    },
+    "characteristic_sign_or_lesion": {
+      "description": "Long elliptical, spindle-shaped, or cigar-shaped lesions that are slender, oblong, and tapered at both ends",
+      "colors": {
+        "primary": [
+          "grey-green",
+          "tan",
+          "straw"
+        ],
+        "secondary": [
+          "dark grey sporulation",
+          "olive-grey sporulation"
+        ],
+        "color_progression": "Initial water-soaked or pale spots elongate into grey-green lesions, which become tan/straw-coloured"
+      },
+      "shape": {
+        "primary_shape": "cigar_shaped",
+        "shape_descriptors": [
+          "tapered at both ends",
+          "slender",
+          "oblong",
+          "runs broadly parallel to leaf veins or leaf margins"
+        ],
+        "shape_progression": "oval early to cigar-shaped mature to irregular after coalescence"
+      },
+      "size": {
+        "length_mm": "30-150",
+        "width_mm": null,
+        "diameter_mm": null,
+        "size_variation_note": "Size varies with cultivar, infection timing, and environment."
+      },
+      "texture_and_surface": {
+        "surface": "dusty or sooty",
+        "sporulation_or_sign": "Dark grey to olive-grey dusty or sooty fungal sporulation in mature lesions, especially visible on underside of infected leaves under humid conditions",
+        "other_surface_details": null
+      },
+      "border_and_margin": {
+        "margin_type": "runs broadly parallel to leaf veins or leaf margins",
+        "halo": null
+      }
+    },
+    "advanced_or_severe_stage": {
+      "description": "Extensive leaf blighting and premature leaf death",
+      "coalescence": "Individual lesions enlarge and merge into irregular areas of dead tissue",
+      "tissue_death_appearance": "Extensive leaf blighting, drying, brittleness; severe foliage damage can resemble frost injury",
+      "secondary_signs": [
+        "premature leaf death",
+        "whole-leaf or extensive canopy blighting"
+      ],
+      "percentage_affected_tissue_note": "Extensive leaf area destroyed causing whole-leaf or extensive canopy blighting"
+    },
+    "distribution_on_plant": {
+      "vertical_pattern": "Usually starts on lower leaves and progresses upward; late infections may be distributed throughout the canopy.",
+      "horizontal_pattern": "lesions run broadly parallel to leaf veins or leaf margins",
+      "other_parts_if_severe": "may extend to husk/ear covering in susceptible plants"
+    },
+    "pathognomonic_features": [
+      "Long cigar-shaped lesions (3–15 cm) tapered at both ends",
+      "Dark grey to olive-grey dusty/sooty sporulation on the underside of mature lesions"
+    ]
+  }
+}

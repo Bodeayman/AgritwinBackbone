@@ -1,0 +1,76 @@
+{
+  "disease_id": "MAIZE_007",
+  "visual_features": {
+    "earliest_visible_sign": {
+      "description": "Transparent elongated scraped patches or window-pane areas where young larvae feed on the leaf surface.",
+      "colors": [
+        "translucent",
+        "pale green",
+        "yellow-green"
+      ],
+      "shape": "elongated scratch, window-like patch, fine linear scratches",
+      "size_mm": null,
+      "location_on_plant": "newly expanding leaves, central whorl"
+    },
+    "characteristic_sign_or_lesion": {
+      "description": "Irregular elongated holes, ragged shredded whorl leaves, and sawdust-like frass inside the whorl.",
+      "colors": {
+        "primary": [
+          "translucent",
+          "pale green"
+        ],
+        "secondary": [
+          "black-brown frass",
+          "green/brown/black larval body"
+        ],
+        "color_progression": "Translucent window-pane to brown necrotic at dead tissue edges"
+      },
+      "shape": {
+        "primary_shape": "window_pane | shot_hole | irregular | stripe",
+        "shape_descriptors": [
+          "ragged tear",
+          "elongated scratch",
+          "ragged leaf margins"
+        ],
+        "shape_progression": "Fine linear scratches early to window-pane patches to irregular holes and ragged tears"
+      },
+      "size": {
+        "length_mm": null,
+        "width_mm": null,
+        "diameter_mm": null,
+        "size_variation_note": "Size of feeding damage increases as larvae grow and leaves expand."
+      },
+      "texture_and_surface": {
+        "surface": "wet or dry sawdust-like frass, missing tissue (holes/windowing)",
+        "sporulation_or_sign": "presence of larvae with pale inverted Y on head; sawdust-like frass",
+        "other_surface_details": "transparent window-pane patches from scraped epidermis"
+      },
+      "border_and_margin": {
+        "margin_type": "ragged leaf margins, irregular torn edges",
+        "halo": null
+      }
+    },
+    "advanced_or_severe_stage": {
+      "description": "Extensive loss of green photosynthetic tissue or leaf skeletonisation; stem, tassel, silk, and ear damage.",
+      "coalescence": "Large irregular holes and torn leaf margins coalesce into extensive missing tissue.",
+      "tissue_death_appearance": "Dead or torn central leaves (dead heart), heavily shredded plants.",
+      "secondary_signs": [
+        "dead heart",
+        "stem holes",
+        "silk, tassel, or ear injury",
+        "heavy frass accumulation"
+      ],
+      "percentage_affected_tissue_note": "Extensive loss of green photosynthetic tissue or leaf skeletonisation."
+    },
+    "distribution_on_plant": {
+      "vertical_pattern": "Concentrated in the central whorl and newly expanding leaves.",
+      "horizontal_pattern": "Deep in the whorl, spreading to outer leaves as larvae mature.",
+      "other_parts_if_severe": "May extend to stems, tassels, silks, ears, and kernels in later infestations."
+    },
+    "pathognomonic_features": [
+      "Window-pane feeding patches and irregular ragged holes deep in the whorl.",
+      "Presence of sawdust-like frass in the whorl and axils.",
+      "Larvae with a pale inverted Y-shaped marking on the head and four dark spots arranged in a square on the rear."
+    ]
+  }
+}

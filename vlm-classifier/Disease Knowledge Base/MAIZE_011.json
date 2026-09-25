@@ -1,0 +1,156 @@
+{
+  "disease_id": "MAIZE_011",
+  "crop": "Maize (Zea mays L.)",
+  "country_scope": "Egypt",
+  "disease_name": "Maize Streak Virus Disease (MSV)",
+  "abbreviation": "MSV",
+  "pathogen": "Maize streak virus",
+  "pathogen_genus": "Mastrevirus",
+  "virus_family": "Geminiviridae",
+  "genome_type": "Circular single-stranded DNA virus",
+  "egypt_status": {
+    "historical_report": "A 1983 USAID-supported maize-virus proceedings volume states that maize streak virus disease was found on maize in Egypt and reports serological, electron-microscopy, and leafhopper-transmission identification involving Cicadulina bipunctella zeae.",
+    "modern_evidence_caution": "The located Egyptian field-survey literature from 2004–2005 primarily documents Maize Yellow Stripe Virus (MYSV), a different leafhopper-borne virus in the genus Tenuivirus, not MSV. No recent Egypt-specific molecular survey confirming MSV was located.",
+    "confidence": "Historical Egypt occurrence is documented, but current national prevalence and the identity of contemporary Egyptian streak-like symptoms remain uncertain."
+  },
+  "visual_symptoms": {
+    "early_stage": [
+      "Minute pale green, white, or yellow circular flecks on the youngest newly expanding leaves",
+      "Flecks may initially be 0.5–2 mm and difficult to see without close inspection"
+    ],
+    "characteristic_leaf_symptoms": [
+      "Narrow broken or continuous chlorotic streaks running parallel to leaf veins",
+      "Streaks are commonly more visible along secondary and tertiary veins than the midrib",
+      "Streaks may fuse laterally into longer yellow or white stripes",
+      "Some isolates or host responses can produce red or reddish pigmentation"
+    ],
+    "whole_plant_symptoms": [
+      "Shortened leaves and reduced plant height",
+      "Severe stunting when infection occurs before the 4–5 leaf stage",
+      "Shortened internodes and weak or abnormal growth",
+      "Small, misshapen, poorly filled, or absent ears",
+      "Possible abnormal bunching of shoots or flowers in some grass hosts"
+    ],
+    "image_annotation_targets": [
+      "pale flecks on newly emerged leaves",
+      "broken versus continuous streaks",
+      "streak orientation parallel to secondary and tertiary veins",
+      "yellow/white streak colour and width",
+      "whole-plant height compared with healthy plants",
+      "small or barren ears",
+      "curved or abnormal apical growth"
+    ]
+  },
+  "symptoms": [
+    "pale circular flecks",
+    "fine chlorotic streaks",
+    "coarse chlorotic streaks",
+    "broken yellow or white stripes",
+    "continuous parallel streaks",
+    "leaf yellowing",
+    "shortened leaves",
+    "severe stunting",
+    "small or misshapen cobs",
+    "poorly filled or barren ears",
+    "possible reddish leaf pigmentation"
+  ],
+  "symptom_colors": [
+    "pale green",
+    "white",
+    "yellow",
+    "yellow-green",
+    "red or reddish in some isolates"
+  ],
+  "streak_shape": [
+    "fine linear",
+    "broken parallel stripe",
+    "continuous parallel stripe",
+    "fused band along leaf veins"
+  ],
+  "distribution_on_plant": "Symptoms occur primarily on leaves that emerge after infection; older leaves formed before infection may remain healthy. Streaks extend along secondary and tertiary veins and can cover most of newly formed leaves in severe cases.",
+  "affected_parts": [
+    "newly emerging leaves",
+    "leaf veins and lamina",
+    "growing point",
+    "ears/cobs indirectly through stunting and reproductive failure"
+  ],
+  "progression": [
+    "The leafhopper introduces the virus during feeding.",
+    "Tiny pale flecks appear on the youngest leaves formed after infection.",
+    "Flecks elongate along secondary and tertiary veins into broken yellow or white streaks.",
+    "Streaks merge and may extend over much of each new leaf.",
+    "Early infection causes severe stunting, shortened leaves, and possible plant death.",
+    "Surviving plants may produce small, misshapen, poorly filled, or barren ears."
+  ],
+  "vector_and_transmission": {
+    "vector_genus": "Cicadulina",
+    "egypt_historical_vector_report": "Cicadulina bipunctella zeae was reported in the historical Egypt MSV account.",
+    "transmission": "Persistent leafhopper transmission; the virus can also be maintained in infected grass hosts and maize volunteers.",
+    "important_differential_vector": "Egyptian MYSV field studies identify Cicadulina chinai as the vector of MYSV, not proof of MSV transmission."
+  },
+  "egypt_field_context": {
+    "historical_record": "The Egypt MSV report is associated with virus-disease work presented in 1982/1983 proceedings.",
+    "current_surveillance_gap": "No recent Egypt-wide MSV incidence map, sequence dataset, or confirmed Egyptian MSV strain record was located in the search.",
+    "related_egyptian_virus": "Maize Yellow Stripe Virus has been surveyed in Lower and Middle Egypt and causes yellow stripes, smaller leaves, stunting, and curved apical leaves; it must be separated from MSV by serology or molecular diagnosis."
+  },
+  "environment": {
+    "temperature": "MSV epidemiology is influenced by temperature, rainfall, drought, and leafhopper population dynamics; no Egypt-specific MSV temperature threshold was located.",
+    "rainfall": "Drought followed by irregular rain can favour leafhopper movement and epidemic development in African MSV systems; this is general epidemiological evidence, not an Egypt-specific threshold.",
+    "crop_calendar": "Overlapping or staggered maize and grass production can maintain virus and vectors between crops.",
+    "grass_hosts": "Wild and cultivated grasses can act as virus or vector reservoirs."
+  },
+  "similar_diseases": [
+    {
+      "name": "Maize Yellow Stripe Virus",
+      "pathogen": "Maize yellow stripe virus, genus Tenuivirus",
+      "egypt_relevance": "Confirmed in Egyptian surveys of Middle and Lower Egypt.",
+      "visual_difference": "Can cause yellow stripes, smaller leaves, stunting, and curved apical leaves; visual separation from MSV is unreliable, so ELISA, RT-PCR, or hybridization is needed."
+    },
+    {
+      "name": "Maize Mosaic Virus",
+      "pathogen": "Maize mosaic virus, genus Nucleorhabdovirus",
+      "visual_difference": "Often produces mosaic or mottled patterns and stunting rather than the fine, vein-parallel streaks characteristic of MSV."
+    },
+    {
+      "name": "Maize Chlorotic Stunt or Dwarf Diseases",
+      "pathogen": "Virus or mollicute complexes depending on disease designation",
+      "visual_difference": "Stunting and chlorosis can be prominent, but confirmation requires laboratory testing because symptoms overlap with MSV and MYSV."
+    },
+    {
+      "name": "Nutrient deficiency or herbicide injury",
+      "pathogen": null,
+      "visual_difference": "May cause generalized chlorosis or striping but lacks confirmed leafhopper transmission and virus-specific laboratory signals."
+    }
+  ],
+  "recommended_image_search_terms": [
+    "Maize streak virus Egypt chlorotic streaks",
+    "MSV maize Egypt Cicadulina bipunctella zeae",
+    "maize streak disease fine yellow stripes young leaves",
+    "Egypt maize yellow stripe virus versus maize streak virus"
+  ],
+  "diagnostic_caution": "MSV cannot be confirmed reliably from symptoms alone in Egypt because MYSV and other maize virus-like diseases produce overlapping yellow stripes and stunting. Use ELISA, PCR/RT-PCR, hybridization, electron microscopy, and vector transmission tests as appropriate.",
+  "sources": [
+    {
+      "title": "Virus Diseases of Sugarcane and Maize in Egypt, in International Maize Virus Disease Colloquium Proceedings",
+      "relevance_to_egypt": "Historical report stating that MSV disease was found on maize in Egypt and describing serological, electron-microscopy, and leafhopper-transmission identification.",
+      "url": "https://pdf.usaid.gov/pdf_docs/PNAAQ487.pdf"
+    },
+    {
+      "title": "Sero- and Molecular Diagnosis for Incidence of Maize Yellow Stripe Virus in Lower and Middle Egypt",
+      "relevance_to_egypt": "Important differential: documents the distinct MYSV disease, symptoms, vector Cicadulina chinai, Egyptian governorates, and molecular/serological diagnosis.",
+      "url": "https://journals.ekb.eg/article_220700_1e415390f304602fe5ae90ec11d888eb.pdf"
+    },
+    {
+      "title": "Maize streak virus: an old and complex emerging pathogen",
+      "relevance": "MSV taxonomy, visual symptoms, disease progression, vector biology, and general epidemiology.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6640477/"
+    },
+    {
+      "title": "Plantwise Knowledge Bank: Maize streak virus in maize",
+      "relevance": "Image-oriented symptom descriptions and growth-stage effects.",
+      "url": "https://plantwiseplusknowledgebank.org/doi/pdf/10.1079/pwkb.20177800753"
+    }
+  ],
+  "evidence_level": "historically_expert_verified_for_Egypt; limited_for_current_Egypt_status; high_for_general_visual_symptoms",
+  "research_notes": "This record distinguishes historical MSV evidence from modern Egyptian evidence for MYSV. A current Egyptian sample with streaking should not be labelled MSV without laboratory confirmation."
+}

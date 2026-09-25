@@ -1,0 +1,207 @@
+{
+  "disease_id": "MAIZE_006",
+  "crop": "Maize (Zea mays L.)",
+  "country_scope": "Egypt",
+  "disease_name": "Common Smut of Maize",
+  "synonyms": [
+    "Corn Smut",
+    "Boil Smut",
+    "Blister Smut"
+  ],
+  "pathogen": "Ustilago maydis (DC.) Corda",
+  "pathogen_genus": "Ustilago",
+  "older_name": "Ustilago zeae",
+  "pathogen_type": "Biotrophic basidiomycete fungus",
+  "egypt_status": {
+    "reported_in_egypt": true,
+    "national_evidence": "A 2022 survey tested maize grain samples from 25 maize-growing governorates in Egypt and detected U. maydis with very high frequency; it was among the fungi detected in 100% of the samples and had high teliospore abundance.",
+    "highest_teliospore_density_regions": [
+      "Aswan",
+      "Qena",
+      "southern Nile Valley",
+      "Port Said",
+      "Sinai"
+    ],
+    "field_survey_evidence": "A Minia Governorate survey covering more than 90 villages found symptoms from about 45-day-old plants, with infection increasing to a maximum around 80–90 days.",
+    "egypt_research_locations": [
+      "Minia Governorate",
+      "Sakha Agricultural Research Station",
+      "Gemmeiza Agricultural Research Station",
+      "Giza",
+      "Beni-Suef",
+      "Fayoum",
+      "Qalubiya",
+      "Gharbiya",
+      "Kafr El-Sheikh"
+    ]
+  },
+  "visual_symptoms": {
+    "early_stage": [
+      "Small pale green or yellowish swellings on young tissues",
+      "Localised swelling or distortion at infection sites, especially after wounds or insect damage"
+    ],
+    "characteristic_galls": [
+      "Round, oval, elongated, or irregular tumour-like galls",
+      "Galls may occur on leaves, stalks, nodes, tassels, axillary buds, or ears",
+      "Young galls are pale green to silvery-white and covered by a smooth membrane",
+      "Galls enlarge rapidly and become greyish-white, silver-grey, or pale brown",
+      "Mature galls rupture to expose a dark brown to black mass of powdery teliospores"
+    ],
+    "ear_symptoms": [
+      "Individual kernels or groups of kernels become greatly swollen galls",
+      "Infected ears may be distorted, partially replaced by galls, or poorly filled",
+      "Galls on ears are visually prominent and can be much larger than leaf or tassel galls"
+    ],
+    "leaf_and_stalk_symptoms": [
+      "Small galls may appear on leaf blades or leaf sheaths",
+      "Stalk galls can cause local swelling, bending, or weakening",
+      "Tassel infection may produce swollen floral tissues and reduced fertility"
+    ],
+    "image_annotation_targets": [
+      "number and location of galls",
+      "gall diameter and surface texture",
+      "pale membrane-covered immature gall",
+      "ruptured gall with black powdery teliospores",
+      "ear versus stalk versus tassel infection",
+      "distortion and swelling of individual kernels",
+      "visible stalk bending or weakening"
+    ]
+  },
+  "symptoms": [
+    "pale green or yellow swollen tissues",
+    "silver-grey or grey-white galls",
+    "smooth membrane-covered immature tumours",
+    "large irregular ear galls",
+    "black powdery teliospore masses",
+    "swollen kernels",
+    "distorted ears",
+    "stalk swelling and weakening",
+    "tassel deformation",
+    "reduced fertility or grain filling"
+  ],
+  "gall_color": [
+    "pale green",
+    "yellow-green",
+    "silvery white",
+    "grey-white",
+    "pale brown",
+    "dark brown",
+    "black at maturity"
+  ],
+  "gall_shape": [
+    "round",
+    "oval",
+    "elongated",
+    "irregular",
+    "lobed",
+    "kernel-shaped swelling",
+    "large ear-replacing mass"
+  ],
+  "gall_surface": [
+    "smooth membrane when young",
+    "wrinkled or ruptured when mature",
+    "black powdery interior after membrane rupture"
+  ],
+  "affected_parts": [
+    "ear and kernels",
+    "leaf blade",
+    "leaf sheath",
+    "stalk",
+    "nodes",
+    "tassel",
+    "axillary buds",
+    "roots occasionally"
+  ],
+  "distribution_on_plant": "All above-ground organs can be infected. Ear, stalk, tassel, and apical-meristem galls are the most visually important; young plants may develop galls near growing points.",
+  "progression": [
+    "The pathogen enters susceptible tissues, particularly through wounds or actively growing tissues.",
+    "A small swelling develops at the infection site.",
+    "The swelling enlarges into a pale, membrane-covered gall.",
+    "The gall becomes grey-white or silver-grey and may distort the infected organ.",
+    "The membrane ruptures, releasing a dense dark brown or black powder of teliospores.",
+    "After spore release, the gall collapses, dries, and leaves a dark, shrivelled mass or scar."
+  ],
+  "egypt_field_timing": {
+    "first_observation": "Symptoms may be visible from approximately 45 days after planting in Minia field surveys.",
+    "maximum_infection_period": "The Minia survey reported maximum infection around 80–90 days after planting.",
+    "note": "Timing varies with cultivar, planting date, tissue susceptibility, injury, and weather."
+  },
+  "environment": {
+    "humidity": "Moist conditions and high humidity around infection sites favour spore germination and infection; Egyptian greenhouse inoculation maintained high humidity for 24 hours after inoculation.",
+    "temperature": "Egyptian pathogenicity work used approximately 30 °C for teliospore germination and 30–35 °C in greenhouse experiments; these are experimental conditions, not a national field optimum.",
+    "rain_and_irrigation": "Rain, irrigation, and wet plant surfaces support infection, especially when tissues are wounded.",
+    "major_risk_factors": [
+      "hail, wind, insects, or cultivation injuries",
+      "mechanical damage to roots, stalks, leaves, or ears",
+      "susceptible hybrids",
+      "continuous maize and infected crop debris",
+      "high local inoculum of teliospores"
+    ],
+    "egypt_weather_context": "A 2019 Egyptian maize survey recorded April–August mean temperatures of 25.5–32.9 °C and relative humidity of 18.8–75.2%; U. maydis occurrence and teliospore density varied among governorates."
+  },
+  "egypt_isolate_evidence": {
+    "isolates": [
+      "Beni-Suef",
+      "Qalubiya",
+      "Fayoum",
+      "Gharbiya",
+      "Giza",
+      "Kafr El-Sheikh"
+    ],
+    "pathogenicity": "Egyptian isolates varied substantially in pathogenicity. The Beni-Suef isolate was most pathogenic in the cited study, while the Kafr El-Sheikh isolate was least pathogenic.",
+    "host_response": "TWC-Baraka, TWC-322, and SC-129 were among the more resistant tested accessions; Giza-2, Boushi, TWC-320, TWC-324, TWC-321, and DC Dahab were among the more susceptible materials in the cited Egyptian experiments."
+  },
+  "yield_impact_evidence_egypt": {
+    "highest_risk_site": "Ear galls caused the greatest yield reductions in Sakha and Gemmeiza experiments.",
+    "reported_effect": "Artificial ear infection was associated with approximately 87–92% grain-yield reduction in the cited field experiments; natural infection was much lower in those trials.",
+    "caution": "These figures are experiment-specific and should not be interpreted as a national average."
+  },
+  "similar_diseases": [
+    {
+      "name": "Head smut",
+      "pathogen": "Sporisorium reilianum",
+      "visual_difference": "Usually replaces or transforms the tassel or ear into a mass of dark spores, often without the large individual membrane-covered galls typical of common smut."
+    },
+    {
+      "name": "Fusarium ear rot",
+      "pathogen": "Fusarium species",
+      "visual_difference": "Produces pink, white, or reddish mould and kernel rot rather than discrete swollen tumours filled with black teliospores."
+    },
+    {
+      "name": "Insect or hail injury",
+      "pathogen": null,
+      "visual_difference": "May produce wounds or scars but does not form expanding membrane-covered galls with black powdery spores."
+    }
+  ],
+  "recommended_image_search_terms": [
+    "common smut maize Egypt Ustilago maydis",
+    "corn smut galls Sakha Gemmeiza Egypt",
+    "Ustilago maydis maize ear gall black spores Egypt",
+    "maize common smut stalk tassel leaf galls Egypt"
+  ],
+  "diagnostic_caution": "Large swollen galls with a dark powdery teliospore interior are strongly suggestive of common smut. Confirm doubtful samples microscopically or molecularly, especially when ear rot, head smut, insect injury, or other tumour-like symptoms are present.",
+  "sources": [
+    {
+      "title": "Distribution and Biodiversity of Seed-Borne Pathogenic and Toxigenic Fungi of Maize in Egypt",
+      "relevance_to_egypt": "Survey of 25 maize-growing governorates; national occurrence, teliospore density, weather variables, and geographic distribution.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9506050/"
+    },
+    {
+      "title": "Recent Studies on Corn Common Smut Disease [Ustilago maydis]",
+      "relevance_to_egypt": "Egyptian isolates, pathogenicity, Sakha and Gemmeiza field experiments, resistant and susceptible maize accessions, and yield effects.",
+      "url": "https://bu.edu.eg/portal/uploads/Agriculture/Plant%20Pathology/2705/publications/Abdel%20moniem%20elfeqy_PAPER_06.pdf"
+    },
+    {
+      "title": "Survey of Common Smut Disease of Maize in Minia Governorate",
+      "relevance_to_egypt": "Minia field survey covering more than 90 villages and reporting disease timing from 45 to 80–90 days after planting.",
+      "url": "https://agris.fao.org/search/en/records/6471cb2e77fd37171a6f7c78"
+    },
+    {
+      "title": "PlantwisePlus Knowledge Bank: Common Smut of Maize",
+      "relevance": "General visual gall development, spore release, affected plant organs, and infection biology.",
+      "url": "https://plantwiseplusknowledgebank.org/doi/pdf/10.1079/pwkb.20157800260"
+    }
+  ],
+  "evidence_level": "expert_verified_for_Egypt_distribution_and_pathogen; high_for_visual_symptoms; moderate_to_high_for_Egypt_field_and_isolate_evidence",
+  "research_notes": "This record is restricted to Egypt-based distribution, survey, isolate, and field evidence where available. It is optimized for image annotation and should not be used as a stand-alone diagnostic or yield-loss estimate."
+}

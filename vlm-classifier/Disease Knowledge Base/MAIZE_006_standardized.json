@@ -1,0 +1,80 @@
+{
+  "disease_id": "MAIZE_006",
+  "visual_features": {
+    "earliest_visible_sign": {
+      "description": "Small pale green or yellowish swellings or localised distortion on young tissues, especially after wounds or insect damage.",
+      "colors": [
+        "pale green",
+        "yellow-green",
+        "yellowish"
+      ],
+      "shape": "small swelling",
+      "size_mm": null,
+      "location_on_plant": "young tissues, growing points"
+    },
+    "characteristic_sign_or_lesion": {
+      "description": "Round, oval, elongated, or irregular tumour-like galls covered by a smooth membrane.",
+      "colors": {
+        "primary": [
+          "silvery white",
+          "grey-white",
+          "pale brown"
+        ],
+        "secondary": [
+          "dark brown",
+          "black at maturity"
+        ],
+        "color_progression": "Pale green/yellow-green to silvery-white/grey-white, becoming pale brown, with a black interior upon rupturing."
+      },
+      "shape": {
+        "primary_shape": "gall",
+        "shape_descriptors": [
+          "tumour-like",
+          "round",
+          "oval",
+          "elongated",
+          "irregular",
+          "lobed",
+          "kernel-shaped swelling"
+        ],
+        "shape_progression": "Small swelling enlarges into a membrane-covered gall, which later ruptures and collapses into a dark, shrivelled mass or scar."
+      },
+      "size": {
+        "length_mm": null,
+        "width_mm": null,
+        "diameter_mm": null,
+        "size_variation_note": "Galls on ears can be much larger than leaf or tassel galls."
+      },
+      "texture_and_surface": {
+        "surface": "smooth membrane when young, wrinkled or ruptured when mature",
+        "sporulation_or_sign": "black powdery interior after membrane rupture",
+        "other_surface_details": "Ruptures to expose a dark brown to black mass of powdery teliospores."
+      },
+      "border_and_margin": {
+        "margin_type": "distinct membrane boundary",
+        "halo": null
+      }
+    },
+    "advanced_or_severe_stage": {
+      "description": "Mature galls rupture to release black spores, followed by gall collapse.",
+      "coalescence": "Groups of kernels become greatly swollen galls; ears may be partially replaced by galls.",
+      "tissue_death_appearance": "After spore release, the gall collapses, dries, and leaves a dark, shrivelled mass or scar.",
+      "secondary_signs": [
+        "stalk bending or weakening",
+        "tassel deformation",
+        "reduced fertility",
+        "poorly filled ears"
+      ],
+      "percentage_affected_tissue_note": "Infected ears may be severely distorted or largely replaced by galls, leading to major yield reductions."
+    },
+    "distribution_on_plant": {
+      "vertical_pattern": "All above-ground organs can be infected. Young plants may develop galls near growing points.",
+      "horizontal_pattern": "Often localized at infection sites, particularly through wounds or actively growing tissues.",
+      "other_parts_if_severe": "Ear, kernels, leaf blade, leaf sheath, stalks, nodes, tassel, axillary buds, and occasionally roots."
+    },
+    "pathognomonic_features": [
+      "Large, silvery-white or grey-white tumour-like galls covered by a smooth membrane.",
+      "Galls rupture to expose a dark brown or black mass of powdery teliospores."
+    ]
+  }
+}

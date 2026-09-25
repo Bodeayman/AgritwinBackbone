@@ -1,0 +1,150 @@
+{
+  "disease_id": "MAIZE_004",
+  "crop": "Maize (Zea mays L.)",
+  "country_scope": "Egypt",
+  "disease_name": "Common Rust of Maize",
+  "local_names": [
+    "Common Rust",
+    "Common Leaf Rust",
+    "Maize Rust"
+  ],
+  "pathogen": "Puccinia sorghi Schwein.",
+  "pathogen_genus": "Puccinia",
+  "alternate_pathogen_name": "Puccinia maydis",
+  "pathogen_type": "Obligate biotrophic rust fungus",
+  "egypt_status": {
+    "reported_in_egypt": true,
+    "status": "Present, no details",
+    "evidence_source": "EPPO lists Puccinia sorghi as present in Egypt; the available distribution record does not provide a current Egyptian governorate-level survey or severity estimate.",
+    "evidence_date_note": "EPPO's distribution entry is based on available historical and disease-map records; current local prevalence should be verified through Egyptian field surveillance."
+  },
+  "host_and_life_cycle": {
+    "primary_host": "Maize, including sweet corn",
+    "alternate_host": "Oxalis species, including wood sorrel",
+    "infection_source": "Wind-dispersed urediniospores can repeatedly infect maize; the pathogen has a two-host life cycle involving maize and Oxalis."
+  },
+  "visual_symptoms": {
+    "early_stage": [
+      "Minute pale-yellow or chlorotic flecks on leaves",
+      "Small tan spots that become slightly raised"
+    ],
+    "characteristic_sign": [
+      "Circular to oval or slightly elongated powdery pustules",
+      "Cinnamon-brown, orange-brown, or reddish-brown pustules",
+      "Pustules rupture the leaf epidermis and release powdery spores",
+      "Pustules may occur on both upper and lower leaf surfaces"
+    ],
+    "late_stage": [
+      "Pustules darken to brown-black as teliospores replace urediniospores",
+      "Numerous pustules give the leaf a rusty or peppered appearance",
+      "Severe infections cause yellowing, premature drying, and death of leaves or leaf sheaths"
+    ],
+    "other_visible_locations": [
+      "Husks, tassels, and stalks may show pustules, although leaves are the main diagnostic surface",
+      "Pustules can form in bands when infection occurs while leaves are emerging from the whorl"
+    ],
+    "image_annotation_targets": [
+      "number of pustules per leaf area",
+      "pustule colour: orange-brown versus dark brown-black",
+      "circular, oval, or elongated pustule shape",
+      "powdery spore release",
+      "upper-versus-lower leaf distribution",
+      "pustule bands associated with whorl infection",
+      "chlorosis and percentage of prematurely dead leaf tissue"
+    ]
+  },
+  "symptoms": [
+    "chlorotic flecks",
+    "small tan spots",
+    "cinnamon-brown powdery pustules",
+    "orange-brown or reddish-brown uredinial pustules",
+    "dark brown to black telial pustules",
+    "leaf yellowing",
+    "premature leaf drying",
+    "leaf-sheath death in severe infections"
+  ],
+  "lesion_or_pustule_color": [
+    "pale yellow",
+    "tan",
+    "orange-brown",
+    "cinnamon-brown",
+    "reddish-brown",
+    "dark brown",
+    "black"
+  ],
+  "lesion_or_pustule_shape": [
+    "circular",
+    "oval",
+    "slightly elongated",
+    "powdery raised blister-like pustule",
+    "irregular on midribs or sheaths"
+  ],
+  "pustule_size": {
+    "typical_range_mm": "Approximately 0.2–2 mm",
+    "note": "Size and shape can vary between common rust and southern rust and between plant tissues."
+  },
+  "distribution_on_plant": "Most conspicuous on leaves and often visible on both leaf surfaces. Severe infections may extend to leaf sheaths, husks, tassels, and stalks.",
+  "progression": [
+    "Minute chlorotic flecks appear on susceptible leaf tissue.",
+    "Flecks enlarge into tan, raised spots.",
+    "Cinnamon-brown powdery uredinial pustules break through the epidermis and release spores.",
+    "Pustules multiply and may occur in scattered patches or bands.",
+    "As the plant matures, pustules turn dark brown or black as teliospores develop.",
+    "Severe disease causes chlorosis, premature leaf drying, reduced photosynthetic area, and early leaf or sheath death."
+  ],
+  "environment": {
+    "humidity": "High humidity and prolonged leaf wetness favour rust development; humidity above 95% is reported as highly favourable in disease-management guidance.",
+    "temperature": "Mild temperatures around 16–25 °C favour Puccinia sorghi; the optimum range is commonly reported near 16–23 °C.",
+    "leaf_wetness": "Dew, rain, and persistent surface moisture support infection and sporulation.",
+    "egypt_context": "These mild, humid conditions may occur during suitable Egyptian maize growing periods, but the reviewed Egypt record did not provide an Egypt-specific weather threshold or seasonal prevalence study.",
+    "crop_stage": "Monitoring is especially important from approximately the six-leaf stage through tasseling."
+  },
+  "egypt_specific_distribution": {
+    "known_country_status": "Present in Egypt, no details",
+    "governorates": "No reliable governorate-level distribution was identified in the reviewed sources.",
+    "field_surveillance_note": "Do not infer national incidence or severity from the presence-only record. Local confirmation requires field sampling and pathogen identification."
+  },
+  "similar_diseases": [
+    {
+      "name": "Southern Rust of Maize",
+      "pathogen": "Puccinia polysora",
+      "visual_difference": "Often has smaller, more orange to reddish pustules concentrated mainly on the upper leaf surface; microscopic or molecular confirmation may be needed."
+    },
+    {
+      "name": "Maydis Leaf Blight / Southern Leaf Blight",
+      "pathogen": "Bipolaris maydis",
+      "visual_difference": "Produces flat tan or brown diamond-shaped and rectangular necrotic lesions, not discrete powdery pustules."
+    },
+    {
+      "name": "Northern Leaf Blight",
+      "pathogen": "Exserohilum turcicum",
+      "visual_difference": "Produces long grey-green to tan cigar-shaped lesions rather than numerous raised rust pustules."
+    }
+  ],
+  "recommended_image_search_terms": [
+    "common rust maize Egypt Puccinia sorghi",
+    "maize common rust cinnamon brown pustules Egypt",
+    "Puccinia sorghi maize leaf upper lower surface",
+    "common rust maize black teliospores leaf"
+  ],
+  "diagnostic_caution": "Pustule colour and distribution can overlap with southern rust caused by Puccinia polysora. Confirm species by microscopy of urediniospores and teliospores or by molecular testing when an Egypt-specific diagnosis is required.",
+  "sources": [
+    {
+      "title": "EPPO Global Database: Puccinia sorghi",
+      "relevance_to_egypt": "Taxonomic identity and Egypt presence status.",
+      "url": "https://gd.eppo.int/taxon/PUCCSO"
+    },
+    {
+      "title": "PlantwisePlus Knowledge Bank: Common Rust",
+      "relevance_to_egypt": "Visual symptoms, favourable mild and humid conditions, host range, and monitoring stage; Egypt is included among applicable geographic locations.",
+      "url": "https://plantwiseplusknowledgebank.org/doi/full/10.1079/pwkb.20157800281"
+    },
+    {
+      "title": "Maize common rust fact sheet",
+      "relevance": "Pustule appearance, life cycle, temperature ranges, and differentiation from southern rust.",
+      "url": "https://apps.lucidcentral.org/pppw_v10/pdf/web_full/maize_common_rust_225.pdf"
+    }
+  ],
+  "evidence_level": "expert_verified_for_Egypt_presence; high_for_visual_symptoms; limited_for_current_Egypt_epidemiology",
+  "research_notes": "This record is restricted to the Egypt presence evidence available and does not claim a current governorate-level distribution. It is optimized for visual image annotation and should not replace laboratory confirmation."
+}

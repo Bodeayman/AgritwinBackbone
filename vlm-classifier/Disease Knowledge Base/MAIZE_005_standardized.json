@@ -1,0 +1,75 @@
+{
+  "disease_id": "MAIZE_005",
+  "visual_features": {
+    "earliest_visible_sign": {
+      "description": "Pale green to yellow chlorotic streaks on young leaves, chlorotic mottling or narrow longitudinal stripes",
+      "colors": [
+        "pale green",
+        "yellow"
+      ],
+      "shape": "narrow longitudinal stripes or streaks",
+      "size_mm": "null",
+      "location_on_plant": "young leaves, leaves of young seedlings"
+    },
+    "characteristic_sign_or_lesion": {
+      "description": "Long chlorotic stripes running parallel to leaf veins with white-grey downy growth on the lower leaf surface",
+      "colors": {
+        "primary": [
+          "yellow",
+          "pale green"
+        ],
+        "secondary": [
+          "white-grey downy growth"
+        ],
+        "color_progression": "Pale green to yellow stripes, turning yellow-brown, reddish-brown, or necrotic dark brown"
+      },
+      "shape": {
+        "primary_shape": "stripe",
+        "shape_descriptors": [
+          "narrow longitudinal stripe",
+          "linear parallel-to-vein band",
+          "blotch after coalescence"
+        ],
+        "shape_progression": "Narrow streaks widen, merge, and form blotches"
+      },
+      "size": {
+        "length_mm": "null",
+        "width_mm": "null",
+        "diameter_mm": "null",
+        "size_variation_note": "Stripe size varies; systemic infection can lead to narrow, erect leaves"
+      },
+      "texture_and_surface": {
+        "surface": "smooth initially, leaves become shredding",
+        "sporulation_or_sign": "White, grey-white, or downy growth on the lower leaf surface, especially during humid nights or mornings",
+        "other_surface_details": "Leaves become narrow, erect, pale, and sometimes shredded"
+      },
+      "border_and_margin": {
+        "margin_type": "vein-limited parallel to veins",
+        "halo": "null"
+      }
+    },
+    "advanced_or_severe_stage": {
+      "description": "Chlorotic leaves turn yellow-brown, reddish-brown, or necrotic; plants become stunted with malformed reproductive parts",
+      "coalescence": "Yellow stripes widen, merge, and form blotches, leading to leaf shredding",
+      "tissue_death_appearance": "Leaves may dry, shred, or die prematurely",
+      "secondary_signs": [
+        "excessive tillering",
+        "bushy plant appearance",
+        "malformed tassels with leafy proliferation (crazy top)",
+        "malformed ears",
+        "sterility and poor grain filling",
+        "plant stunting"
+      ],
+      "percentage_affected_tissue_note": "Systemic infection can affect the whole plant, potentially killing seedlings or entire plants before flowering"
+    },
+    "distribution_on_plant": {
+      "vertical_pattern": "Systemic infection affecting leaves, tassels, ears, and growing points",
+      "horizontal_pattern": "Long chlorotic stripes running parallel to leaf veins",
+      "other_parts_if_severe": "Tassels (crazy top) and ears (malformed/sterile), whole plant stunting"
+    },
+    "pathognomonic_features": [
+      "White, grey-white, or downy growth on the lower leaf surface of chlorotic stripes",
+      "Malformed tassels with leafy proliferation ('crazy top') and stunting with excessive tillering"
+    ]
+  }
+}

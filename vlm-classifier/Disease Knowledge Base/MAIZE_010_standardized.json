@@ -1,0 +1,77 @@
+{
+  "disease_id": "MAIZE_010",
+  "visual_features": {
+    "earliest_visible_sign": {
+      "description": "Small, light-coloured or translucent circular spots, may look water-soaked when young.",
+      "colors": [
+        "light green",
+        "translucent",
+        "water-soaked"
+      ],
+      "shape": "circular spot",
+      "size_mm": null,
+      "location_on_plant": "older leaves, often along leaf margins and veins"
+    },
+    "characteristic_sign_or_lesion": {
+      "description": "Round to oval lesions with a tan or cream centre and a distinct dark ring around the centre, creating an eye-like appearance.",
+      "colors": {
+        "primary": [
+          "tan",
+          "cream",
+          "light brown"
+        ],
+        "secondary": [
+          "red-brown margin",
+          "dark brown margin",
+          "purple margin",
+          "black margin",
+          "yellow halo"
+        ],
+        "color_progression": "translucent or light-coloured spots to tan/cream centres with a distinct red-brown to black ring"
+      },
+      "shape": {
+        "primary_shape": "circular | oval | shot_hole",
+        "shape_descriptors": [
+          "eye-like",
+          "ring-shaped"
+        ],
+        "shape_progression": "circular or oval early, becoming shot-hole after centre collapse, or irregular after coalescence"
+      },
+      "size": {
+        "length_mm": null,
+        "width_mm": null,
+        "diameter_mm": "1-4 mm",
+        "size_variation_note": "Lesions may be most numerous along leaf margins and near veins"
+      },
+      "texture_and_surface": {
+        "surface": "flat",
+        "sporulation_or_sign": null,
+        "other_surface_details": "The centre can fall out, leaving a shot-hole appearance"
+      },
+      "border_and_margin": {
+        "margin_type": "distinct red-brown, dark-brown, purple, or black ring around the centre",
+        "halo": "narrow yellow chlorotic halo"
+      }
+    },
+    "advanced_or_severe_stage": {
+      "description": "Lesions darken and become necrotic, centres fall out leaving shot-holes, leaves yellow and die.",
+      "coalescence": "Many lesions may merge into larger dead areas.",
+      "tissue_death_appearance": "Leaves yellow, dry, and die at infection sites, premature leaf drying.",
+      "secondary_signs": [
+        "centre collapse and shot holes",
+        "leaf-sheath shrivelling",
+        "ear-husk shrivelling"
+      ],
+      "percentage_affected_tissue_note": "Can reduce grain filling when infection is early and severe."
+    },
+    "distribution_on_plant": {
+      "vertical_pattern": "mainly on older leaves",
+      "horizontal_pattern": "often along leaf margins and veins",
+      "other_parts_if_severe": "leaf sheaths, husk leaves covering ears, and ear indirectly through husk shrivelling"
+    },
+    "pathognomonic_features": [
+      "Round to oval eye-like lesions (1-4 mm) with a tan centre, surrounded by a distinct dark ring (red-brown/purple/black) and a narrow yellow halo.",
+      "Centre of the lesion falling out to leave a shot-hole appearance."
+    ]
+  }
+}

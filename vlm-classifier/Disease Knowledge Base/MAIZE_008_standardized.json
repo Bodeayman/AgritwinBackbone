@@ -1,0 +1,77 @@
+{
+  "disease_id": "MAIZE_008",
+  "visual_features": {
+    "earliest_visible_sign": {
+      "description": "Tiny pinpoint brown, tan, or dark moist-looking spots. Early lesions can be translucent when the leaf is held against light.",
+      "colors": [
+        "brown",
+        "tan",
+        "dark",
+        "translucent"
+      ],
+      "shape": "pinpoint",
+      "size_mm": null,
+      "location_on_plant": "Typically begins on lower leaves"
+    },
+    "characteristic_sign_or_lesion": {
+      "description": "Long, narrow, sharply rectangular lesions running parallel to the leaf veins.",
+      "colors": {
+        "primary": [
+          "grey",
+          "tan",
+          "brown"
+        ],
+        "secondary": [
+          "yellow chlorotic halo",
+          "black specks"
+        ],
+        "color_progression": "translucent to grey, tan, or brown"
+      },
+      "shape": {
+        "primary_shape": "rectangular",
+        "shape_descriptors": [
+          "long narrow rectangle",
+          "vein-limited band",
+          "sharply rectangular",
+          "parallel to leaf veins"
+        ],
+        "shape_progression": "pinpoint to long narrow rectangle to irregular after coalescence"
+      },
+      "size": {
+        "length_mm": "5-70",
+        "width_mm": "2-4",
+        "diameter_mm": null,
+        "size_variation_note": "Substantial variation among host genotypes and pathogen populations."
+      },
+      "texture_and_surface": {
+        "surface": "moist-looking early, opaque mature",
+        "sporulation_or_sign": "small dark fungal sporulation points",
+        "other_surface_details": "translucent early lesions against light"
+      },
+      "border_and_margin": {
+        "margin_type": "vein-limited",
+        "halo": "thin yellow chlorotic halo"
+      }
+    },
+    "advanced_or_severe_stage": {
+      "description": "Lesions merge into large grey-brown blotches and whole leaves blight.",
+      "coalescence": "Lesions merge into large grey-brown blotches, becoming irregular.",
+      "tissue_death_appearance": "Large areas of leaf tissue become necrotic; whole leaves may blight, dry, and die prematurely.",
+      "secondary_signs": [
+        "premature leaf death",
+        "stalk weakening",
+        "lodging risk"
+      ],
+      "percentage_affected_tissue_note": "Destroys increasing areas of leaf tissue, leading to reduced photosynthesis."
+    },
+    "distribution_on_plant": {
+      "vertical_pattern": "Typically begins on lower leaves before or around flowering and progresses upward",
+      "horizontal_pattern": "Running parallel to the leaf veins, limited by adjacent secondary and tertiary veins",
+      "other_parts_if_severe": "Leaf sheath in severe infection; stalk indirectly through weakening and lodging"
+    },
+    "pathognomonic_features": [
+      "Long, narrow, sharply rectangular grey-to-tan lesions running parallel to leaf veins, limited by secondary and tertiary veins.",
+      "Dark fungal sporulation points on mature opaque lesions."
+    ]
+  }
+}
