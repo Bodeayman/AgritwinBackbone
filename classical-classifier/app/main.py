@@ -35,9 +35,9 @@ def create_app() -> FastAPI:
         title="AgriTwin Classical Classifier",
         description=(
             "Leaf segmentation (Mask R-CNN) + disease classification "
-            "(ResNet-50) + Grad-CAM. Sub-service of AgriTwin; optionally "
+            "(ResNet-50) + Grad-CAM. Sub-service of AgriTwin; automatically "
             "reports results to the backbone via POST /api/diagnose "
-            "with field_id + report=true."
+            "when field_id is provided."
         ),
         lifespan=lifespan,
     )

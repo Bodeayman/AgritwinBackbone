@@ -28,6 +28,6 @@ class DiagnoseQuery(BaseModel):
     )
     crop_type: str | None = None
     report: bool = Field(
-        default=False,
+        default=True,
         description="If true (and field_id given), POST result to backbone",
     )

@@ -131,12 +131,12 @@ async def api_diagnose(
     mask_thresh: float = settings.MASK_THRESH,
     field_id: int | None = None,
     crop_type: str | None = None,
-    report: bool = False,
+    report: bool = True,
 ):
     """One-shot: photo in -> leaves + disease + Grad-CAM out.
 
-    Pass `field_id` + `report=true` to also POST the result to the
-    backbone internal API (`BACKEND_URL` + `INTERN_API_KEY` env).
+    If `field_id` is given, the result is POSTed to the backbone
+    internal API (`BACKEND_URL` + `INTERN_API_KEY` env) automatically.
     """
     img = await _read_image(file)
     segmenter, classifier, device = _loaded_models()
