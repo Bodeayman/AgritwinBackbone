@@ -93,7 +93,7 @@ services:
       CLASSIFIER_PATH: /weights/classifier.pt
       DEVICE: cpu
     volumes:
-      - /opt/agritwin-backend/weights:/weights:ro
+      - classical_weights:/weights:ro
     depends_on:
       - backbone
     restart: unless-stopped
@@ -113,6 +113,8 @@ services:
 volumes:
   postgres_data:
   minio_data:
+  classical_weights:
+    name: agritwin_classical_weights
 
 networks:
   default:
