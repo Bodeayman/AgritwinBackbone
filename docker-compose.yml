@@ -96,7 +96,7 @@ services:
     environment:
       BACKEND_URL: http://backbone:8000
       INTERN_API_KEY: REDACTED_INTERN_KEY
-      VLM_URL: http://vlm-classifier:8000
+      VLM_URL: ${VLM_URL:-http://vlm-classifier:8000}
       SEGMENTER_PATH: /weights/segmenter.pth
       CLASSIFIER_PATH: /weights/classifier.pt
       DEVICE: cpu
