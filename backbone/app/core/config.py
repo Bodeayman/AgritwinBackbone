@@ -69,5 +69,7 @@ def get_database_url() -> str:
     raw_url = settings.DATABASE_URL
     url = raw_url.replace("%%", "%")
     if url.startswith("postgres://"):
-        url = url.replace("postgres://", "postgresql://", 1)
+        url = url.replace("postgres://", "postgresql+psycopg2://", 1)
+    elif url.startswith("postgresql://"):
+        url = url.replace("postgresql://", "postgresql+psycopg2://", 1)
     return url
