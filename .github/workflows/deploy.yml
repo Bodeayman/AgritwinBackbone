@@ -186,24 +186,17 @@ jobs:
 
             # Seed the classical-classifier weights volume.
             # The snap docker daemon AND CLI cannot access host paths under
-            # /opt (snap confinement), so weights live in a named volume
-            # populated via `docker cp`. Stage them into $HOME first (plain
-            # cp runs in the SSH session with full /opt access).
+            # /opt, nor /home/<user> (snap confinement) — so both bind mounts
+            # and `docker cp` fail. Weights are streamed over stdin into a
+            # named volume (mounted by name only, no host path involved).
             WEIGHTS_VOLUME="agritwin_classical_weights"
-            WEIGHTS_STAGE="$HOME/.agritwin_weights"
             if [ -d "$DEPLOY_DIR/weights" ] && [ -n "$(ls -A "$DEPLOY_DIR/weights" 2>/dev/null)" ]; then
-              echo "Staging weights from $DEPLOY_DIR/weights..."
-              rm -rf "$WEIGHTS_STAGE"
-              mkdir -p "$WEIGHTS_STAGE"
-              cp -a "$DEPLOY_DIR/weights/." "$WEIGHTS_STAGE/"
-              echo "Seeding weights volume ($WEIGHTS_VOLUME)..."
+              echo "Creating weights volume ($WEIGHTS_VOLUME)..."
               docker volume create "$WEIGHTS_VOLUME" >/dev/null 2>&1 || true
-              docker rm -f agritwin_weights_seed >/dev/null 2>&1 || true
-              docker create --name agritwin_weights_seed -v "$WEIGHTS_VOLUME":/weights alpine:3.20 true >/dev/null 2>&1
-              docker cp "$WEIGHTS_STAGE/." agritwin_weights_seed:/weights/
-              docker rm -f agritwin_weights_seed >/dev/null 2>&1
+              echo "Seeding weights volume from $DEPLOY_DIR/weights..."
+              tar -C "$DEPLOY_DIR/weights" -czf - . | docker run --rm -i -v "$WEIGHTS_VOLUME":/weights alpine:3.20 sh -c 'tar -xzf - -C /weights'
+              echo "Volume contents:"
               docker run --rm -v "$WEIGHTS_VOLUME":/weights alpine:3.20 ls -lh /weights/
-              rm -rf "$WEIGHTS_STAGE"
             else
               echo "WARNING: no weights found at $DEPLOY_DIR/weights — classifier model load will fail."
             fi

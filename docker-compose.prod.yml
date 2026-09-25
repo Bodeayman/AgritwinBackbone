@@ -115,6 +115,7 @@ volumes:
   minio_data:
   classical_weights:
     name: agritwin_classical_weights
+    external: true
 
 networks:
   default:
