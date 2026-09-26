@@ -124,11 +124,14 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
+          INTERN_API_KEY: ${{ secrets.INTERN_API_KEY }}
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          envs: GEMINI_API_KEY,GEMINI_MODEL
+          envs: GEMINI_API_KEY,GEMINI_MODEL,POSTGRES_PASSWORD,MINIO_ROOT_PASSWORD,INTERN_API_KEY
           script: |
             set -e
 
@@ -153,6 +156,14 @@ jobs:
               echo "Please create it from .env.example with production values."
               exit 1
             fi
+
+            # Ensure POSTGRES_PASSWORD, MINIO_ROOT_PASSWORD, INTERN_API_KEY are in .env
+            for SECRET_VAR in POSTGRES_PASSWORD MINIO_ROOT_PASSWORD INTERN_API_KEY; do
+              if ! grep -q "^${SECRET_VAR}=" .env; then
+                eval "SECRET_VALUE=\$${SECRET_VAR}"
+                echo "${SECRET_VAR}=${SECRET_VALUE}" >> .env
+              fi
+            done
 
             # Ensure compose file exists (download from repo as fallback)
             if [ ! -f "$COMPOSE_FILE" ]; then

@@ -417,7 +417,7 @@ def test_create_satellite_via_api(client):
     response = client.post(
         "/api/satellites",
         json={"name": "Sentinel-2", "provider": "ESA"},
-        headers={"X-API-Key": "REDACTED_INTERN_KEY"}
+        headers={"X-API-Key": "YOUR_INTERN_4A_API_KEY"}
     )
     assert response.status_code == 201
     assert response.json()["name"] == "Sentinel-2"

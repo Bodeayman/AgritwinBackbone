@@ -24,7 +24,7 @@ All endpoints in this router require API key authentication via the `X-API-Key` 
 **Example:**
 ```bash
 curl -X POST http://localhost:8000/api/fields/1/sensor-readings \
-  -H "X-API-Key: REDACTED_INTERN_KEY" \
+  -H "X-API-Key: YOUR_INTERN_4A_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"timestamp":"2024-01-15T10:30:00Z","soil_moisture":45.5}'
 ```

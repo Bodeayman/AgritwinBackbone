@@ -34,7 +34,7 @@ The Config module manages application configuration using Pydantic Settings. It 
 ### MinIO/S3 Storage
 - `MINIO_ENDPOINT` - MinIO server address (default: "localhost:9000")
 - `MINIO_ACCESS_KEY` - MinIO access key (default: "minioadmin")
-- `MINIO_SECRET_KEY` - MinIO secret key (default: "REDACTED_MINIO_SECRET")
+- `MINIO_SECRET_KEY` - MinIO secret key (default: "YOUR_MINIO_SECRET_KEY")
 - `MINIO_SECURE` - Use HTTPS (default: False)
 - `MINIO_BUCKET_NAME` - Default bucket name (default: "agritwin-bucket")
 
@@ -102,7 +102,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES=10080
 
 MINIO_ENDPOINT=localhost:9000
 MINIO_ACCESS_KEY=minioadmin
-MINIO_SECRET_KEY=REDACTED_MINIO_SECRET
+MINIO_SECRET_KEY=YOUR_MINIO_SECRET_KEY
 MINIO_SECURE=False
 MINIO_BUCKET_NAME=agritwin-bucket
 

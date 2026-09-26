@@ -13,18 +13,18 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
 
     # JWT Settings
-    JWT_SECRET_KEY: str = "REDACTED_JWT_SECRET"
+    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "")
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7
 
-    # Internal Module API Keys
-    INTERN_2_API_KEY: str = "REDACTED_INTERN_KEY"
-    INTERN_3_API_KEY: str = "REDACTED_INTERN_KEY"
-    INTERN_4A_API_KEY: str = "REDACTED_INTERN_KEY"
-    INTERN_4B_API_KEY: str = "REDACTED_INTERN_KEY"
-    INTERN_5_API_KEY: str = "REDACTED_INTERN_KEY"
-    INTERN_7_API_KEY: str = "REDACTED_INTERN_KEY"
-    INTERN_8_API_KEY: str = "REDACTED_INTERN_KEY"
+    # Internal Module API Keys (set via env; empty = auth effectively disabled)
+    INTERN_2_API_KEY: str = os.getenv("INTERN_2_API_KEY", "")
+    INTERN_3_API_KEY: str = os.getenv("INTERN_3_API_KEY", "")
+    INTERN_4A_API_KEY: str = os.getenv("INTERN_4A_API_KEY", "")
+    INTERN_4B_API_KEY: str = os.getenv("INTERN_4B_API_KEY", "")
+    INTERN_5_API_KEY: str = os.getenv("INTERN_5_API_KEY", "")
+    INTERN_7_API_KEY: str = os.getenv("INTERN_7_API_KEY", "")
+    INTERN_8_API_KEY: str = os.getenv("INTERN_8_API_KEY", "")
 
     # Temporary Disk Storage Path
     TEMP_IMAGE_STORAGE_PATH: str = "./storage/images"
@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     # MinIO / S3 Storage
     MINIO_ENDPOINT: str = "localhost:9000"
     MINIO_ACCESS_KEY: str = "minioadmin"
-    MINIO_SECRET_KEY: str = "REDACTED_MINIO_SECRET"
+    MINIO_SECRET_KEY: str = os.getenv("MINIO_SECRET_KEY", "")
     MINIO_SECURE: bool = False
     MINIO_BUCKET_NAME: str = "agritwin-bucket"
 

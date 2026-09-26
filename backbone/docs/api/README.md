@@ -82,7 +82,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 **Use API Key:**
 ```bash
 POST /api/fields/1/sensor-readings
-X-API-Key: REDACTED_INTERN_KEY
+X-API-Key: YOUR_INTERN_4A_API_KEY
 Content-Type: application/json
 {
   "timestamp": "2024-01-15T10:30:00Z",

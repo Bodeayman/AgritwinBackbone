@@ -325,7 +325,7 @@ AgriTwin/
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | Token expiry time | 10080 (7 days) | No |
 | `MINIO_ENDPOINT` | MinIO server address | localhost:9000 | Yes |
 | `MINIO_ACCESS_KEY` | MinIO access key | minioadmin | Yes |
-| `MINIO_SECRET_KEY` | MinIO secret key | REDACTED_MINIO_SECRET | Yes |
+| `MINIO_SECRET_KEY` | MinIO secret key | YOUR_MINIO_SECRET_KEY | Yes |
 | `MINIO_SECURE` | Use HTTPS for MinIO | False | No |
 | `MINIO_BUCKET_NAME` | Default bucket name | agritwin-bucket | Yes |
 | `BACKEND_CORS_ORIGINS` | Allowed CORS origins | * | No |
@@ -428,7 +428,7 @@ Internal internship modules authenticate using `X-API-Key` header:
 
 ```bash
 POST /api/fields/1/sensor-readings
-X-API-Key: REDACTED_INTERN_KEY
+X-API-Key: YOUR_INTERN_4A_API_KEY
 Content-Type: application/json
 {
   "timestamp": "2024-01-01T00:00:00Z",
